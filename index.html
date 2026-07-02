@@ -2,8 +2,8 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>تفاؤل — رحلة الأبطال الصغار للتوعية بالسرطان</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>تفاؤل — مغامرة الأبطال الصغار</title>
 <style>
   :root{
     --purple:#7c5cbf;
@@ -13,6 +13,7 @@
     --green:#06d6a0;
     --red:#ef476f;
     --blue:#4cc9f0;
+    --orange:#ff9f1c;
     --bg:#f6f2ff;
     --card:#ffffff;
     --text:#2d2350;
@@ -24,166 +25,147 @@
     color:var(--text);
     min-height:100vh;
     display:flex;
-    align-items:center;
+    align-items:flex-start;
     justify-content:center;
-    padding:16px;
+    padding:12px;
   }
   #app{
     width:100%;
-    max-width:640px;
+    max-width:560px;
     background:var(--card);
     border-radius:28px;
     box-shadow:0 20px 60px rgba(93,63,163,.25);
-    padding:28px 22px;
+    padding:20px 16px;
     position:relative;
     overflow:hidden;
   }
-  h1{font-size:1.6rem;color:var(--purple-dark);margin-bottom:8px;}
-  h2{font-size:1.25rem;color:var(--purple-dark);margin-bottom:12px;}
-  p{line-height:1.9;font-size:1.05rem;}
+  h1{font-size:1.5rem;color:var(--purple-dark);margin-bottom:8px;}
+  h2{font-size:1.2rem;color:var(--purple-dark);margin-bottom:10px;}
+  p{line-height:1.9;font-size:1.02rem;}
   .center{text-align:center;}
-  .big-emoji{font-size:4rem;display:block;margin:10px auto;animation:bounce 2s infinite;}
+  .big-emoji{font-size:3.6rem;display:block;margin:8px auto;animation:bounce 2s infinite;}
   @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
   @keyframes pop{0%{transform:scale(.6);opacity:0}100%{transform:scale(1);opacity:1}}
   @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
   .pop{animation:pop .35s ease;}
-  .shake{animation:shake .35s ease;}
   .btn{
     display:inline-block;
-    border:none;
-    cursor:pointer;
-    font-family:inherit;
-    font-size:1.1rem;
-    font-weight:bold;
-    color:#fff;
+    border:none;cursor:pointer;
+    font-family:inherit;font-size:1.05rem;font-weight:bold;color:#fff;
     background:linear-gradient(135deg,var(--purple),var(--pink));
-    padding:14px 30px;
-    border-radius:50px;
+    padding:13px 28px;border-radius:50px;
     box-shadow:0 6px 0 rgba(93,63,163,.35);
     transition:transform .12s, box-shadow .12s;
-    margin:8px 4px;
+    margin:6px 4px;
   }
   .btn:active{transform:translateY(4px);box-shadow:0 2px 0 rgba(93,63,163,.35);}
   .btn.secondary{background:linear-gradient(135deg,var(--blue),var(--green));box-shadow:0 6px 0 rgba(6,150,120,.35);}
-  .btn.small{font-size:.95rem;padding:10px 20px;}
+  .btn.danger{background:linear-gradient(135deg,var(--red),#ff8fa3);box-shadow:0 6px 0 rgba(180,40,70,.35);}
+  .btn.small{font-size:.92rem;padding:9px 18px;}
   input[type=text]{
-    width:100%;max-width:320px;
-    padding:12px 18px;
-    border-radius:50px;
+    width:100%;max-width:300px;
+    padding:12px 18px;border-radius:50px;
     border:3px solid var(--purple);
-    font-size:1.1rem;
-    font-family:inherit;
-    text-align:center;
-    outline:none;
-    margin:10px auto;
-    display:block;
-  }
-  .topbar{
-    display:flex;justify-content:space-between;align-items:center;
-    margin-bottom:14px;gap:8px;flex-wrap:wrap;
+    font-size:1.1rem;font-family:inherit;text-align:center;outline:none;
+    margin:10px auto;display:block;
   }
   .chip{
-    background:var(--bg);
-    border-radius:50px;
-    padding:6px 14px;
-    font-weight:bold;
-    font-size:.95rem;
-    color:var(--purple-dark);
+    background:var(--bg);border-radius:50px;padding:5px 12px;
+    font-weight:bold;font-size:.9rem;color:var(--purple-dark);
+    display:inline-flex;align-items:center;gap:4px;
   }
-  .progress-track{
-    background:#e8e2f7;border-radius:50px;height:14px;overflow:hidden;margin:6px 0 18px;
+  /* اختيار الشخصية */
+  .char-pick{display:flex;gap:14px;justify-content:center;margin:12px 0;}
+  .char-card{
+    background:var(--bg);border:4px solid transparent;border-radius:22px;
+    padding:10px 14px;cursor:pointer;text-align:center;transition:border .15s, transform .15s;
   }
-  .progress-fill{
-    height:100%;width:0%;
-    background:linear-gradient(90deg,var(--green),var(--blue));
-    border-radius:50px;
-    transition:width .4s ease;
+  .char-card.sel{border-color:var(--green);transform:scale(1.06);background:#eafff7;}
+  .char-card canvas{display:block;}
+  .char-card span{font-weight:bold;font-size:.95rem;}
+  /* خريطة المسار */
+  .map-wrap{position:relative;margin:6px auto;max-width:440px;}
+  .map-wrap svg{width:100%;height:auto;display:block;}
+  .map-node{cursor:pointer;}
+  .map-node.locked{cursor:default;opacity:.55;filter:grayscale(1);}
+  .map-node circle.ring{transition:stroke .2s;}
+  .map-node.playable circle.ring{animation:pulse 1.6s infinite;transform-origin:center;transform-box:fill-box;}
+  /* شاشة اللعب */
+  .hud{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap;margin-bottom:6px;}
+  #hearts{font-size:1.3rem;letter-spacing:2px;}
+  .meter{
+    position:relative;background:#e8e2f7;border-radius:50px;height:22px;
+    overflow:hidden;margin:4px 0 8px;border:2px solid #d5cbef;
   }
+  #meterFill{
+    height:100%;width:50%;border-radius:50px;
+    background:var(--green);
+    transition:width .3s ease, background .3s ease;
+  }
+  .meter-label{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-size:.78rem;font-weight:bold;color:var(--text);pointer-events:none;
+  }
+  .game-wrap{position:relative;border-radius:18px;overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,.15);}
+  #gc{display:block;width:100%;height:auto;touch-action:manipulation;}
+  #flash{position:absolute;inset:0;pointer-events:none;opacity:0;}
+  #flash.g{background:radial-gradient(circle,transparent 40%,rgba(6,214,160,.5));animation:flashA .45s ease;}
+  #flash.r{background:radial-gradient(circle,transparent 30%,rgba(239,71,111,.55));animation:flashA .45s ease;}
+  @keyframes flashA{0%{opacity:1}100%{opacity:0}}
+  .controls{display:flex;gap:10px;justify-content:center;margin-top:10px;direction:ltr;}
+  .ctrl{
+    flex:1;max-width:170px;
+    font-size:1.7rem;padding:12px 0;border:none;border-radius:18px;cursor:pointer;
+    background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;
+    box-shadow:0 5px 0 rgba(93,63,163,.35);
+    user-select:none;touch-action:manipulation;
+  }
+  .ctrl:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(93,63,163,.35);}
+  .pausebtn{
+    border:none;background:var(--bg);border-radius:50px;
+    font-size:1rem;padding:5px 12px;cursor:pointer;font-weight:bold;color:var(--purple-dark);
+  }
+  /* أسئلة البوابة */
   .answer{
-    display:block;width:100%;
-    text-align:right;
-    background:var(--bg);
-    border:3px solid transparent;
-    border-radius:18px;
-    padding:14px 16px;
-    font-size:1.05rem;
-    font-family:inherit;
-    font-weight:600;
-    color:var(--text);
-    cursor:pointer;
-    margin-bottom:10px;
-    transition:border .15s, background .15s;
+    display:block;width:100%;text-align:right;
+    background:var(--bg);border:3px solid transparent;border-radius:18px;
+    padding:13px 16px;font-size:1.02rem;font-family:inherit;font-weight:600;color:var(--text);
+    cursor:pointer;margin-bottom:10px;transition:border .15s, background .15s;
   }
   .answer:hover{border-color:var(--purple);}
   .answer.correct{background:#d9f9ee;border-color:var(--green);}
-  .answer.wrong{background:#ffe3ea;border-color:var(--red);}
-  .answer:disabled{cursor:default;opacity:.85;}
+  .answer.wrong{background:#ffe3ea;border-color:var(--red);animation:shake .35s ease;}
+  .answer:disabled{cursor:default;opacity:.9;}
   .feedback{
-    border-radius:18px;
-    padding:14px 16px;
-    margin:10px 0;
-    font-size:1rem;
-    line-height:1.8;
-    animation:pop .3s ease;
+    border-radius:18px;padding:13px 16px;margin:10px 0;
+    font-size:.98rem;line-height:1.8;animation:pop .3s ease;
   }
   .feedback.good{background:#d9f9ee;border:2px solid var(--green);}
   .feedback.bad{background:#ffe3ea;border:2px solid var(--red);}
   .card-item{
     background:linear-gradient(135deg,#fff,var(--bg));
-    border:3px solid var(--purple);
-    border-radius:22px;
-    padding:26px 18px;
-    text-align:center;
-    font-size:1.2rem;
-    font-weight:bold;
-    margin:14px 0;
-    animation:pop .3s ease;
+    border:3px solid var(--purple);border-radius:22px;
+    padding:20px 16px;text-align:center;font-size:1.1rem;font-weight:bold;
+    margin:12px 0;animation:pop .3s ease;
   }
-  .card-item .emoji{font-size:3rem;display:block;margin-bottom:8px;}
-  .choice-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
-  .choice-row .btn{flex:1;min-width:130px;}
-  .stars{font-size:1.8rem;letter-spacing:4px;margin:8px 0;}
-  .level-list{list-style:none;margin:16px 0;}
-  .level-list li{
-    background:var(--bg);
-    border-radius:18px;
-    padding:12px 16px;
-    margin-bottom:10px;
-    display:flex;align-items:center;gap:10px;
-    font-weight:600;
-  }
-  .badge{
-    display:inline-block;
-    background:var(--yellow);
-    border-radius:50px;
-    padding:4px 12px;
-    font-size:.85rem;
-    font-weight:bold;
-    color:#7a5c00;
-  }
-  .cert{
-    border:6px double var(--purple);
-    border-radius:22px;
-    padding:24px 16px;
-    background:linear-gradient(160deg,#fffdf5,#f3edff);
-    text-align:center;
-    margin:14px 0;
-  }
-  .cert h2{font-size:1.5rem;}
-  .cert .name{font-size:1.6rem;color:var(--pink);font-weight:bold;margin:8px 0;}
+  .card-item .emoji{font-size:2.8rem;display:block;margin-bottom:6px;}
   .fact-box{
-    background:#fff8e1;
-    border:2px dashed var(--yellow);
-    border-radius:18px;
-    padding:12px 16px;
-    margin:12px 0;
-    font-size:1rem;
-    line-height:1.8;
+    background:#fff8e1;border:2px dashed var(--yellow);border-radius:18px;
+    padding:12px 16px;margin:12px 0;font-size:.98rem;line-height:1.8;text-align:right;
   }
-  .slide-nav{display:flex;justify-content:space-between;margin-top:16px;}
-  #confetti{position:absolute;inset:0;pointer-events:none;}
-  .muted{color:#8a80a8;font-size:.9rem;}
+  .stars{font-size:1.9rem;letter-spacing:4px;margin:8px 0;}
+  .cert{
+    border:6px double var(--purple);border-radius:22px;
+    padding:22px 14px;background:linear-gradient(160deg,#fffdf5,#f3edff);
+    text-align:center;margin:12px 0;
+  }
+  .cert .name{font-size:1.5rem;color:var(--pink);font-weight:bold;margin:8px 0;}
+  #confetti{position:absolute;inset:0;pointer-events:none;z-index:5;}
+  .muted{color:#8a80a8;font-size:.88rem;}
   .heart{color:var(--red);}
+  .legend{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:8px 0;}
+  .legend .chip{font-size:.85rem;}
 </style>
 </head>
 <body>
@@ -195,469 +177,807 @@
 <script>
 "use strict";
 
-/* ================= الحالة العامة ================= */
+/* ================= الحالة العامة والحفظ ================= */
 const state = {
   name: "",
+  gender: "boy",       // boy أو girl
+  stars: [0,0,0,0,0],  // نجوم المراحل الخمس
   score: 0,
-  levelStars: [0, 0, 0, 0], // نجوم كل مرحلة (من 3)
 };
+function saveState(){
+  try{ localStorage.setItem("tafaul-save", JSON.stringify(state)); }catch(e){}
+}
+function loadState(){
+  try{
+    const s = JSON.parse(localStorage.getItem("tafaul-save"));
+    if(s && typeof s === "object"){
+      state.name = s.name || "";
+      state.gender = s.gender === "girl" ? "girl" : "boy";
+      if(Array.isArray(s.stars) && s.stars.length === 5) state.stars = s.stars.map(n=>+n||0);
+      state.score = +s.score || 0;
+    }
+  }catch(e){}
+}
+function esc(t){ return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 
 const screen = document.getElementById("screen");
-
-/* ================= أصوات بسيطة ================= */
-let audioCtx = null;
-function beep(freq, dur = 0.15, type = "sine") {
-  try {
-    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
-    const o = audioCtx.createOscillator();
-    const g = audioCtx.createGain();
-    o.type = type; o.frequency.value = freq;
-    g.gain.setValueAtTime(0.15, audioCtx.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
-    o.connect(g); g.connect(audioCtx.destination);
-    o.start(); o.stop(audioCtx.currentTime + dur);
-  } catch (e) { /* الصوت اختياري */ }
+function render(html){
+  screen.innerHTML = html;
+  screen.classList.remove("pop"); void screen.offsetWidth; screen.classList.add("pop");
+  window.scrollTo(0,0);
 }
-const soundGood = () => { beep(660, .12); setTimeout(() => beep(880, .2), 110); };
-const soundBad  = () => beep(180, .3, "square");
-const soundWin  = () => { [523,659,784,1047].forEach((f,i)=>setTimeout(()=>beep(f,.2),i*140)); };
+function starsOf(n){ return "⭐".repeat(n) + "☆".repeat(Math.max(0,3-n)); }
+
+/* ================= أصوات ================= */
+let audioCtx = null;
+function beep(freq, dur=0.15, type="sine", vol=0.14){
+  try{
+    audioCtx = audioCtx || new (window.AudioContext||window.webkitAudioContext)();
+    const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+    o.type = type; o.frequency.value = freq;
+    g.gain.setValueAtTime(vol, audioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime+dur);
+    o.connect(g); g.connect(audioCtx.destination);
+    o.start(); o.stop(audioCtx.currentTime+dur);
+  }catch(e){}
+}
+const soundGood = () => { beep(660,.1); setTimeout(()=>beep(880,.15),90); };
+const soundBad  = () => beep(170,.28,"square");
+const soundHurt = () => { beep(200,.15,"square"); setTimeout(()=>beep(130,.3,"square"),120); };
+const soundWin  = () => [523,659,784,1047].forEach((f,i)=>setTimeout(()=>beep(f,.2),i*140));
 
 /* ================= قصاصات الاحتفال ================= */
-function confetti() {
+function confetti(){
   const c = document.getElementById("confetti");
   c.width = c.offsetWidth; c.height = c.offsetHeight;
-  const ctx = c.getContext("2d");
+  const x = c.getContext("2d");
   const colors = ["#ff7eb3","#ffd166","#06d6a0","#4cc9f0","#7c5cbf"];
-  const parts = Array.from({length: 90}, () => ({
-    x: Math.random()*c.width, y: -20 - Math.random()*c.height*.5,
-    r: 4+Math.random()*6, vy: 2+Math.random()*3, vx: -1+Math.random()*2,
-    color: colors[Math.floor(Math.random()*colors.length)], rot: Math.random()*Math.PI
+  const parts = Array.from({length:90},()=>({
+    x:Math.random()*c.width, y:-20-Math.random()*c.height*.5,
+    r:4+Math.random()*6, vy:2+Math.random()*3, vx:-1+Math.random()*2,
+    color:colors[Math.floor(Math.random()*colors.length)], rot:Math.random()*Math.PI
   }));
-  let frames = 0;
+  let fr = 0;
   (function draw(){
-    ctx.clearRect(0,0,c.width,c.height);
+    x.clearRect(0,0,c.width,c.height);
     parts.forEach(p=>{
-      p.y += p.vy; p.x += p.vx; p.rot += .05;
-      ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot);
-      ctx.fillStyle = p.color; ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r*1.6);
-      ctx.restore();
+      p.y+=p.vy; p.x+=p.vx; p.rot+=.05;
+      x.save(); x.translate(p.x,p.y); x.rotate(p.rot);
+      x.fillStyle=p.color; x.fillRect(-p.r/2,-p.r/2,p.r,p.r*1.6); x.restore();
     });
-    if (++frames < 160) requestAnimationFrame(draw);
-    else ctx.clearRect(0,0,c.width,c.height);
+    if(++fr<160) requestAnimationFrame(draw);
+    else x.clearRect(0,0,c.width,c.height);
   })();
 }
 
-/* ================= أدوات العرض ================= */
-function render(html) {
-  screen.innerHTML = html;
-  screen.classList.remove("pop");
-  void screen.offsetWidth;
-  screen.classList.add("pop");
-  window.scrollTo(0, 0);
-}
-function starsOf(n) { return "⭐".repeat(n) + "☆".repeat(3 - n); }
-function topbar(levelName, progressPct) {
-  return `
-    <div class="topbar">
-      <span class="chip">👦 ${state.name || "بطلنا"}</span>
-      <span class="chip">${levelName}</span>
-      <span class="chip">🏆 ${state.score}</span>
-    </div>
-    <div class="progress-track"><div class="progress-fill" style="width:${progressPct}%"></div></div>`;
-}
-function starsFromScore(correct, total) {
-  const pct = correct / total;
-  if (pct >= 0.85) return 3;
-  if (pct >= 0.6) return 2;
-  if (pct >= 0.35) return 1;
-  return 0;
+/* ================= رسم الشخصية ================= */
+function drawKid(c, x, y, ph, gender, face, scale=1){
+  const swing = Math.sin(ph);
+  c.save(); c.translate(x,y); c.scale(scale,scale);
+  // الظل
+  c.fillStyle = "rgba(0,0,0,.16)";
+  c.beginPath(); c.ellipse(0,56,26,7,0,0,7); c.fill();
+  // الساقان
+  c.strokeStyle = "#3b5bdb"; c.lineWidth = 10; c.lineCap = "round";
+  c.beginPath(); c.moveTo(-8,18); c.lineTo(-8+swing*9,48); c.stroke();
+  c.beginPath(); c.moveTo(8,18); c.lineTo(8-swing*9,48); c.stroke();
+  // الحذاء
+  c.fillStyle = "#22223b";
+  c.beginPath(); c.ellipse(-8+swing*9,51,8,4.5,0,0,7); c.fill();
+  c.beginPath(); c.ellipse(8-swing*9,51,8,4.5,0,0,7); c.fill();
+  // الذراعان
+  const shirt = gender==="girl" ? "#ff7eb3" : "#06d6a0";
+  c.strokeStyle = shirt; c.lineWidth = 8;
+  c.beginPath(); c.moveTo(-13,-6); c.lineTo(-21-swing*6,14); c.stroke();
+  c.beginPath(); c.moveTo(13,-6); c.lineTo(21+swing*6,14); c.stroke();
+  // اليدان
+  c.fillStyle = "#ffd9b3";
+  c.beginPath(); c.arc(-21-swing*6,16,4.5,0,7); c.fill();
+  c.beginPath(); c.arc(21+swing*6,16,4.5,0,7); c.fill();
+  // الجسم
+  c.fillStyle = shirt;
+  c.beginPath();
+  if(c.roundRect) c.roundRect(-16,-14,32,36,10); else c.rect(-16,-14,32,36);
+  c.fill();
+  if(gender==="girl"){ // تنورة
+    c.beginPath(); c.moveTo(-16,14); c.lineTo(16,14); c.lineTo(22,26); c.lineTo(-22,26); c.closePath();
+    c.fillStyle = "#e0509b"; c.fill();
+  }
+  // شارة التوعية على الصدر
+  c.fillStyle = "#ffd166"; c.font = "11px serif"; c.textAlign="center";
+  c.fillText("🎗️", 0, 2);
+  // الرأس
+  c.fillStyle = "#ffd9b3";
+  c.beginPath(); c.arc(0,-34,20,0,7); c.fill();
+  // الشعر
+  c.fillStyle = "#4a3728";
+  if(gender==="girl"){
+    c.beginPath(); c.arc(0,-38,21,Math.PI*0.9,Math.PI*2.1); c.fill();
+    c.beginPath();
+    if(c.roundRect){ c.roundRect(-24,-42,9,32,4); c.roundRect(15,-42,9,32,4); }
+    else { c.rect(-24,-42,9,32); c.rect(15,-42,9,32); }
+    c.fill();
+    // فيونكة
+    c.fillStyle = "#ff4f9a";
+    c.beginPath(); c.moveTo(10,-52); c.lineTo(20,-58); c.lineTo(20,-46); c.closePath(); c.fill();
+    c.beginPath(); c.moveTo(10,-52); c.lineTo(2,-58); c.lineTo(2,-46); c.closePath(); c.fill();
+    c.beginPath(); c.arc(10,-52,3,0,7); c.fill();
+  } else {
+    c.beginPath(); c.arc(0,-40,20,Math.PI,Math.PI*2); c.fill();
+    c.beginPath(); c.arc(-14,-38,6,0,7); c.arc(14,-38,6,0,7); c.fill();
+  }
+  // العينان
+  c.fillStyle = "#2d2350";
+  if(face==="wow"){
+    c.beginPath(); c.arc(-7,-36,3.4,0,7); c.arc(7,-36,3.4,0,7); c.fill();
+  } else {
+    c.beginPath(); c.arc(-7,-36,2.6,0,7); c.arc(7,-36,2.6,0,7); c.fill();
+  }
+  // الخدود
+  c.fillStyle = "rgba(255,126,179,.5)";
+  c.beginPath(); c.arc(-13,-29,3.4,0,7); c.arc(13,-29,3.4,0,7); c.fill();
+  // الفم
+  c.strokeStyle = "#c1445f"; c.lineWidth = 2.4; c.lineCap="round";
+  c.beginPath();
+  if(face==="sad")      c.arc(0,-22,6,Math.PI*1.15,Math.PI*1.85);
+  else if(face==="wow"){ c.fillStyle="#c1445f"; c.arc(0,-25,4,0,7); c.fill(); }
+  else                  c.arc(0,-30,7,Math.PI*0.15,Math.PI*0.85);
+  if(face!=="wow") c.stroke();
+  c.restore();
 }
 
+/* ================= خلفيات البيئات ================= */
+function bgHome(c,W,H,t){
+  c.fillStyle="#ffe9d6"; c.fillRect(0,0,W,H*.72);            // جدار
+  c.fillStyle="#e8b88a"; c.fillRect(0,H*.72,W,H*.28);        // أرضية
+  // نافذة
+  c.fillStyle="#bde0fe"; c.fillRect(W*.62,60,130,110);
+  c.strokeStyle="#8f6a48"; c.lineWidth=8; c.strokeRect(W*.62,60,130,110);
+  c.beginPath(); c.moveTo(W*.62+65,60); c.lineTo(W*.62+65,170); c.stroke();
+  c.fillStyle="#fff"; // غيمة خلف النافذة
+  c.beginPath(); c.arc(W*.62+35+Math.sin(t/2)*10,95,14,0,7); c.arc(W*.62+55+Math.sin(t/2)*10,90,17,0,7); c.arc(W*.62+75+Math.sin(t/2)*10,96,13,0,7); c.fill();
+  // ستارة
+  c.fillStyle="#ff9eb5"; c.fillRect(W*.60,52,18,126); c.fillRect(W*.62+124,52,18,126);
+  // لوحة عائلية
+  c.fillStyle="#fff"; c.fillRect(70,70,86,70);
+  c.strokeStyle="#c19a6b"; c.lineWidth=6; c.strokeRect(70,70,86,70);
+  c.font="34px serif"; c.textAlign="center"; c.fillText("👨‍👩‍👧‍👦",113,118);
+  // كنبة
+  c.fillStyle="#7c5cbf";
+  c.beginPath(); if(c.roundRect) c.roundRect(30,H*.55,150,70,16); else c.rect(30,H*.55,150,70); c.fill();
+  c.fillStyle="#9d7fe0";
+  c.beginPath(); if(c.roundRect) c.roundRect(40,H*.51,55,34,10); else c.rect(40,H*.51,55,34); c.fill();
+  c.beginPath(); if(c.roundRect) c.roundRect(115,H*.51,55,34,10); else c.rect(115,H*.51,55,34); c.fill();
+  // نبتة
+  c.fillStyle="#b5651d"; c.fillRect(W-70,H*.60,34,40);
+  c.font="44px serif"; c.fillText("🪴",W-52,H*.62);
+}
+function bgSchool(c,W,H,t){
+  c.fillStyle="#fdf6e3"; c.fillRect(0,0,W,H*.72);
+  c.fillStyle="#c8b6e2"; c.fillRect(0,H*.72,W,H*.28);
+  // سبورة
+  c.fillStyle="#2e6e4e"; c.fillRect(W*.28,55,W*.44,120);
+  c.strokeStyle="#b5651d"; c.lineWidth=8; c.strokeRect(W*.28,55,W*.44,120);
+  c.fillStyle="#fff"; c.font="bold 26px sans-serif"; c.textAlign="center";
+  c.fillText("أهلاً أبطال!", W*.5, 105);
+  c.font="20px serif"; c.fillText("🎗️ + 📚 = 💪", W*.5, 145);
+  // ساعة
+  c.fillStyle="#fff"; c.beginPath(); c.arc(90,90,26,0,7); c.fill();
+  c.strokeStyle="#5d3fa3"; c.lineWidth=4; c.stroke();
+  c.beginPath(); c.moveTo(90,90); c.lineTo(90,74); c.moveTo(90,90); c.lineTo(102,90); c.lineWidth=3; c.stroke();
+  // حقائب على الجدار
+  c.font="34px serif"; c.fillText("🎒",W-60,120); c.fillText("🎒",W-110,120);
+  // خزانة كتب
+  c.fillStyle="#b5651d"; c.fillRect(20,H*.46,90,110);
+  c.font="22px serif"; c.fillText("📕📗",65,H*.46+38); c.fillText("📘📙",65,H*.46+78);
+}
+function bgMarket(c,W,H,t){
+  c.fillStyle="#e3f2fd"; c.fillRect(0,0,W,H*.72);
+  c.fillStyle="#b0bec5"; c.fillRect(0,H*.72,W,H*.28);
+  // لافتة
+  c.fillStyle="#06d6a0";
+  c.beginPath(); if(c.roundRect) c.roundRect(W*.2,40,W*.6,54,14); else c.rect(W*.2,40,W*.6,54); c.fill();
+  c.fillStyle="#fff"; c.font="bold 26px sans-serif"; c.textAlign="center";
+  c.fillText("🛒 سوبرماركت الصحة", W*.5, 75);
+  // رفوف
+  for(let r=0;r<2;r++){
+    const y = 130 + r*95;
+    c.fillStyle="#d7ccc8"; c.fillRect(30,y,W-60,66);
+    c.fillStyle="#a1887f"; c.fillRect(30,y+66,W-60,10);
+    c.font="30px serif";
+    const goods = r===0 ? ["🍎","🥦","🍊","🥛","🍞","🍓"] : ["🥚","🥕","🍌","🧀","🍇","💧"];
+    goods.forEach((g,i)=> c.fillText(g, 70+i*((W-130)/5), y+45));
+  }
+}
+function bgPark(c,W,H,t){
+  const sky = c.createLinearGradient(0,0,0,H*.72);
+  sky.addColorStop(0,"#8ecae6"); sky.addColorStop(1,"#cdeffd");
+  c.fillStyle=sky; c.fillRect(0,0,W,H*.72);
+  c.fillStyle="#8fd14f"; c.fillRect(0,H*.72,W,H*.28);
+  // شمس
+  c.fillStyle="#ffd166"; c.beginPath(); c.arc(W-80,80,34,0,7); c.fill();
+  c.strokeStyle="#ffd166"; c.lineWidth=4;
+  for(let i=0;i<8;i++){
+    const a = i*Math.PI/4 + t*.3;
+    c.beginPath(); c.moveTo(W-80+Math.cos(a)*42,80+Math.sin(a)*42);
+    c.lineTo(W-80+Math.cos(a)*54,80+Math.sin(a)*54); c.stroke();
+  }
+  // غيوم
+  c.fillStyle="#fff";
+  [[100,70],[240,110]].forEach(([gx,gy],i)=>{
+    const dx = Math.sin(t/3+i)*14;
+    c.beginPath(); c.arc(gx+dx,gy,16,0,7); c.arc(gx+22+dx,gy-6,19,0,7); c.arc(gx+44+dx,gy,15,0,7); c.fill();
+  });
+  // أشجار
+  [[60,H*.58],[W-70,H*.60]].forEach(([tx,ty])=>{
+    c.fillStyle="#8d5a2b"; c.fillRect(tx-8,ty,16,54);
+    c.fillStyle="#2d9e46";
+    c.beginPath(); c.arc(tx,ty-18,34,0,7); c.arc(tx-24,ty+2,24,0,7); c.arc(tx+24,ty+2,24,0,7); c.fill();
+  });
+  // زهور
+  c.font="22px serif"; c.textAlign="center";
+  ["🌷","🌼","🌸","🌻"].forEach((f,i)=> c.fillText(f, 50+i*((W-100)/3), H*.78));
+}
+function bgFest(c,W,H,t){
+  const sky = c.createLinearGradient(0,0,0,H*.72);
+  sky.addColorStop(0,"#c8b6ff"); sky.addColorStop(1,"#ffd6e8");
+  c.fillStyle=sky; c.fillRect(0,0,W,H*.72);
+  c.fillStyle="#e0aaff"; c.fillRect(0,H*.72,W,H*.28);
+  // لافتة المهرجان
+  c.strokeStyle="#7c5cbf"; c.lineWidth=5;
+  c.beginPath(); c.moveTo(20,60); c.quadraticCurveTo(W/2,110,W-20,60); c.stroke();
+  const flagColors=["#ff7eb3","#ffd166","#06d6a0","#4cc9f0","#ef476f","#7c5cbf","#ff9f1c"];
+  for(let i=0;i<7;i++){
+    const fx = 40 + i*(W-80)/6;
+    const fy = 60 + Math.sin((fx/W)*Math.PI)*46;
+    c.fillStyle=flagColors[i];
+    c.beginPath(); c.moveTo(fx-13,fy); c.lineTo(fx+13,fy); c.lineTo(fx,fy+26); c.closePath(); c.fill();
+  }
+  c.fillStyle="#5d3fa3"; c.font="bold 24px sans-serif"; c.textAlign="center";
+  c.fillText("🎗️ مهرجان الأمل والتوعية 🎗️", W/2, 150);
+  // بالونات
+  c.font="40px serif";
+  [[70,220],[W-70,200],[W/2,190]].forEach(([bx,by],i)=>{
+    c.fillText("🎈", bx, by + Math.sin(t*1.2+i*2)*10);
+  });
+  // خيمة
+  c.fillStyle="#ff7eb3";
+  c.beginPath(); c.moveTo(40,H*.66); c.lineTo(110,H*.44); c.lineTo(180,H*.66); c.closePath(); c.fill();
+  c.fillStyle="#fff"; c.fillRect(95,H*.56,30,H*.10);
+}
+
+/* ================= بيانات المراحل ================= */
+const WORLDS = [
+  {
+    id:"home", icon:"🏠", name:"المنزل", bg:bgHome,
+    goal:10, fallSpeed:170, spawnMs:950, hazardChance:.07,
+    mission:"استيقظ بطلنا في الصباح! اجمع العادات الصحية في المنزل وابتعد عن الضارة.",
+    tip:"جسمك يتجدد كل يوم! الماء والفواكه والنوم المبكر تجعل خلاياك قوية وسعيدة.",
+    good:[["🍎","تفاحة مفيدة"],["💧","ماء منعش"],["🥕","جزر مقرمش"],["🥛","حليب مقوٍّ"],["🍌","موزة طاقة"],["😴","نوم مبكر"]],
+    bad:[["🍭","سكر كثير"],["🥤","مشروب غازي"],["🍟","مقليات"],["📺","شاشة بلا حركة"]],
+    hazard:["🚬","دخان السجائر! خطر على رئتيك"],
+    gate:[
+      {q:"ما أفضل مشروب لجسمك؟", a:["الماء 💧","المشروبات الغازية 🥤","العصير الصناعي 🧃"], correct:0,
+       why:"الماء يساعد كل خلية في جسمك على العمل بنشاط! المشروبات السكرية أحياناً فقط."},
+      {q:"هل الجلوس بجانب شخص يدخّن آمن؟", a:["نعم، ما دمتُ لا أدخّن","لا، الدخان يضر من حوله أيضاً"], correct:1,
+       why:"التدخين السلبي يؤذي رئتي من يجلس قرب المدخن ويزيد خطر الأمراض. ابتعد عن أماكن التدخين!"},
+    ],
+  },
+  {
+    id:"school", icon:"🏫", name:"المدرسة", bg:bgSchool,
+    goal:12, fallSpeed:190, spawnMs:900, hazardChance:.08,
+    mission:"يوم دراسي جديد! اجمع العادات الصحية في المدرسة وكن قدوة لأصدقائك.",
+    tip:"غسل اليدين، الفسحة النشيطة، والفطور الصحي تجعل يومك المدرسي مليئاً بالطاقة!",
+    good:[["🍎","تفاحة الفسحة"],["🥪","ساندويتش صحي"],["🧼","غسل اليدين"],["⚽","لعب مع الأصدقاء"],["📚","معلومة مفيدة"],["💧","ماء منعش"]],
+    bad:[["🍩","دونات سكرية"],["🍬","حلوى كثيرة"],["🥤","مشروب غازي"],["🎮","جلوس بلا حركة"]],
+    hazard:["🦠","الجراثيم! اغسل يديك دائماً"],
+    gate:[
+      {q:"صديقك في الصف يتعالج من السرطان. هل تلعب معه؟", a:["نعم! السرطان ليس معدياً 🤗","لا، قد أُصاب بالعدوى"], correct:0,
+       why:"السرطان لا ينتقل أبداً باللمس أو اللعب أو مشاركة الطعام. صديقك يحتاج ضحكتك ولعبك معه!"},
+      {q:"لماذا نغسل أيدينا قبل الأكل؟", a:["لإزالة الجراثيم وحماية أجسامنا","لتصبح رائحتها جميلة فقط","لا فائدة من ذلك"], correct:0,
+       why:"الجراثيم لا تُرى بالعين! غسل اليدين بالماء والصابون يحمي جسمك كله."},
+    ],
+  },
+  {
+    id:"market", icon:"🛒", name:"السوبرماركت", bg:bgMarket,
+    goal:14, fallSpeed:210, spawnMs:850, hazardChance:.08,
+    mission:"مهمة التسوق! ساعد بطلنا في اختيار المشتريات الصحية وتجنب المغريات الضارة.",
+    tip:"نصف طبقك خضار وفواكه ملونة = دروع قوية تحمي خلايا جسمك!",
+    good:[["🥦","بروكلي البطل"],["🍊","برتقال فيتامين"],["🥛","حليب مقوٍّ"],["🍞","خبز أسمر"],["🍓","فراولة لذيذة"],["🥚","بيض مفيد"]],
+    bad:[["🍫","شوكولاتة كثيرة"],["🌭","وجبات مصنّعة"],["🍟","شيبس مقلي"],["🥤","مشروب غازي"]],
+    hazard:["🛒","عربة مسرعة! انتبه"],
+    gate:[
+      {q:"لماذا الخضار والفواكه مهمة لأجسامنا؟", a:["تعطي خلايانا دروعاً تحميها","لألوانها الجميلة فقط","لأنها رخيصة الثمن"], correct:0,
+       why:"الخضار والفواكه مليئة بالفيتامينات التي تحمي الخلايا وتقلل خطر الأمراض!"},
+      {q:"الأكل المصنّع والمقلي كل يوم...", a:["مفيد جداً للجسم","يتعب الجسم مع الوقت","يقوّي العظام"], correct:1,
+       why:"قليل منه أحياناً لا بأس، لكن كل يوم يُتعب جسمك. التنوع الصحي هو السر!"},
+    ],
+  },
+  {
+    id:"park", icon:"🌳", name:"الحديقة", bg:bgPark,
+    goal:16, fallSpeed:230, spawnMs:800, hazardChance:.09,
+    mission:"يوم مشمس في الحديقة! العب وتحرك واحمِ نفسك من الشمس القوية.",
+    tip:"ساعة حركة يومياً + واقي الشمس والقبعة = جسم قوي وجلد سليم!",
+    good:[["🧴","واقي الشمس"],["🧢","قبعة الحماية"],["⚽","كرة القدم"],["🚴","دراجة هوائية"],["💧","ماء منعش"],["🍉","بطيخ منعش"]],
+    bad:[["🍦","آيس كريم كثير"],["🥤","مشروب غازي"],["🍟","مقليات"],["📱","جلوس بلا حركة"]],
+    hazard:["☀️","شمس حارقة بدون حماية!"],
+    gate:[
+      {q:"كيف نحمي جلدنا من الشمس القوية؟", a:["واقي الشمس والقبعة والظل","لا نحتاج أي حماية","نلعب وقت الظهيرة بلا قبعة"], correct:0,
+       why:"أشعة الشمس القوية تؤذي الجلد مع الوقت. الحماية تبقي جلدك سليماً وأنت تلعب بمرح!"},
+      {q:"كم نحتاج من الحركة يومياً؟", a:["حوالي ساعة لعب وحركة","لا شيء إطلاقاً","دقيقة واحدة تكفي"], correct:0,
+       why:"ساعة من اللعب والحركة يومياً تقوّي قلبك وعضلاتك وتجعل خلاياك نشيطة!"},
+    ],
+  },
+  {
+    id:"fest", icon:"🎗️", name:"مهرجان التوعية", bg:bgFest,
+    goal:18, fallSpeed:250, spawnMs:750, hazardChance:.09,
+    mission:"المهمة الأخيرة! اجمع رسائل الأمل والدعم في مهرجان التوعية، وابتعد عن الخرافات والكلمات المحبطة.",
+    tip:"السرطان ليس معدياً وليس ذنب أحد. كلمة طيبة ورسالة أمل تصنع فرقاً كبيراً في قلب مريض!",
+    good:[["🎗️","شارة التوعية"],["💌","رسالة أمل"],["🌷","وردة للمرضى"],["🤝","يد العون"],["⭐","نجمة تفاؤل"],["🎈","بالون فرح"]],
+    bad:[["🙅","خرافة: لا تقترب منه!"],["👻","خوف بلا سبب"],["💤","تجاهل الصديق"],["😢","كلمة محبطة"]],
+    hazard:["📢","مكبر الإشاعات! لا تصدقها"],
+    gate:[
+      {q:"هل السرطان ذنب الشخص المريض؟", a:["لا! ليس ذنب أحد أبداً 💜","نعم، لأنه فعل شيئاً سيئاً"], correct:0,
+       why:"المرض ليس عقاباً أبداً. لا أحد يمرض لأنه كان سيئاً. نقف مع المريض ونساعده!"},
+      {q:"ما أجمل ما تقدمه لصديق يتعالج؟", a:["رسالة حب وزيارة ولعب هادئ","الابتعاد عنه حتى يُشفى","السخرية من سقوط شعره"], correct:0,
+       why:"شعره سينمو من جديد، وصداقتك هي أقوى دواء! كن قريباً منه دائماً. 🤗"},
+    ],
+  },
+];
+
 /* ================= شاشة البداية ================= */
-function showStart() {
+function showStart(){
   render(`
     <div class="center">
       <span class="big-emoji">🎗️</span>
-      <h1>تفاؤل — رحلة الأبطال الصغار</h1>
-      <p>لعبة ممتعة نتعلّم فيها عن مرض السرطان، وكيف نحافظ على صحتنا،
-      وكيف نكون أصدقاء رائعين لمن يمرّ بالعلاج. <span class="heart">💜</span></p>
-      <input type="text" id="playerName" maxlength="20" placeholder="اكتب اسمك هنا يا بطل!">
-      <br>
+      <h1>تفاؤل — مغامرة الأبطال الصغار</h1>
+      <p>مغامرة حركية نجمع فيها العادات الصحية، نتخطى العقبات،
+      وننشر الأمل في ٥ أماكن مختلفة! <span class="heart">💜</span></p>
+      <input type="text" id="playerName" maxlength="16" placeholder="اكتب اسمك هنا يا بطل!" value="${esc(state.name)}">
+      <p style="font-weight:bold;margin-top:4px">اختر شخصيتك:</p>
+      <div class="char-pick">
+        <div class="char-card ${state.gender==="boy"?"sel":""}" id="pickBoy" onclick="pickChar('boy')">
+          <canvas width="110" height="130"></canvas><span>ولد</span>
+        </div>
+        <div class="char-card ${state.gender==="girl"?"sel":""}" id="pickGirl" onclick="pickChar('girl')">
+          <canvas width="110" height="130"></canvas><span>بنت</span>
+        </div>
+      </div>
       <button class="btn" onclick="startGame()">🚀 ابدأ المغامرة</button>
       <p class="muted">مناسبة للأعمار من 7 إلى 14 سنة</p>
     </div>
   `);
+  drawCharPreviews();
 }
-function startGame() {
+function drawCharPreviews(){
+  const boyC = document.querySelector("#pickBoy canvas");
+  const girlC = document.querySelector("#pickGirl canvas");
+  if(boyC) drawKid(boyC.getContext("2d"), 55, 62, 0.6, "boy", "happy", 1.05);
+  if(girlC) drawKid(girlC.getContext("2d"), 55, 62, 0.6, "girl", "happy", 1.05);
+}
+function pickChar(g){
+  state.gender = g;
+  document.getElementById("pickBoy").classList.toggle("sel", g==="boy");
+  document.getElementById("pickGirl").classList.toggle("sel", g==="girl");
+  beep(600,.1);
+}
+function startGame(){
   const input = document.getElementById("playerName");
-  state.name = (input.value || "").trim() || "البطل الصغير";
-  beep(520, .15);
+  state.name = (input.value||"").trim() || "البطل الصغير";
+  saveState();
+  beep(520,.15);
   showMap();
 }
 
-/* ================= خريطة المراحل ================= */
-const LEVELS = [
-  { icon: "🔬", title: "ما هو السرطان؟", fn: () => showStory(0) },
-  { icon: "🥦", title: "أبطال العادات الصحية", fn: startSorting },
-  { icon: "🕵️", title: "حقيقة أم خرافة؟", fn: startMyths },
-  { icon: "🤝", title: "الصديق الداعم", fn: startEmpathy },
-];
-function showMap() {
-  const allDone = state.levelStars.every(s => s > 0);
-  render(`
-    ${topbar("🗺️ خريطة الرحلة", (state.levelStars.filter(s=>s>0).length/4)*100)}
-    <h2 class="center">اختر مرحلتك!</h2>
-    <ul class="level-list">
-      ${LEVELS.map((lv, i) => `
-        <li>
-          <span style="font-size:1.6rem">${lv.icon}</span>
-          <span style="flex:1">${lv.title}</span>
-          <span>${state.levelStars[i] ? starsOf(state.levelStars[i]) : ""}</span>
-          <button class="btn small ${state.levelStars[i] ? "secondary" : ""}" onclick="LEVELS[${i}].fn()">
-            ${state.levelStars[i] ? "🔁 إعادة" : "▶️ العب"}
-          </button>
-        </li>`).join("")}
-    </ul>
-    ${allDone ? `<div class="center"><button class="btn" onclick="showCertificate()">🎓 استلم شهادتك!</button></div>` : `<p class="center muted">أكمل كل المراحل لتحصل على شهادة البطل! 🎓</p>`}
-  `);
-}
+/* ================= خريطة المسار ================= */
+const NODE_POS = [[330,455],[85,365],[320,272],[85,182],[320,95]];
+function isUnlocked(i){ return i===0 || state.stars[i-1] > 0; }
+function allDone(){ return state.stars.every(s=>s>0); }
 
-/* ================= المرحلة 1: قصة + اختبار ================= */
-const STORY = [
-  { emoji: "🧱", title: "أجسامنا مبنية من خلايا",
-    text: "جسمك مبنيّ من ملايين القطع الصغيرة جداً اسمها <b>الخلايا</b>، مثل مكعبات البناء! الخلايا تنمو وتنقسم لتجعلك تكبر وتصلح جروحك." },
-  { emoji: "🚦", title: "ماذا يحدث في السرطان؟",
-    text: "أحياناً تتعطل إشارة المرور داخل خلية واحدة، فتبدأ بالانقسام والنمو <b>بدون توقف</b> وبشكل غير منظم. تجمّع هذه الخلايا هو ما نسميه <b>السرطان</b>." },
-  { emoji: "🦸", title: "الأطباء أبطال!",
-    text: "الأطباء عندهم أسلحة قوية: <b>الأدوية والعلاج والعمليات</b>. كثير من الأطفال والكبار يتعالجون ويشفون ويعودون للعب والمدرسة! واكتشاف المرض <b>مبكراً</b> يجعل العلاج أسهل." },
-  { emoji: "🤗", title: "أهم شيء نعرفه",
-    text: "السرطان <b>ليس معدياً</b> أبداً — لا ينتقل باللمس أو اللعب أو مشاركة الطعام. وهو <b>ليس ذنب أحد</b>؛ لا أحد يمرض لأنه فعل شيئاً سيئاً." },
-];
-function showStory(idx) {
-  const s = STORY[idx];
+function showMap(){
+  const nodes = WORLDS.map((w,i)=>{
+    const [x,y] = NODE_POS[i];
+    const unlocked = isUnlocked(i);
+    const done = state.stars[i] > 0;
+    const cls = unlocked ? (done ? "map-node done" : "map-node playable") : "map-node locked";
+    return `
+      <g class="${cls}" ${unlocked?`onclick="showIntro(${i})"`:""}>
+        <circle class="ring" cx="${x}" cy="${y}" r="36" fill="${done?"#d9f9ee":"#fff"}"
+          stroke="${done?"#06d6a0":unlocked?"#ff7eb3":"#bbb"}" stroke-width="5"/>
+        <text x="${x}" y="${y+3}" text-anchor="middle" font-size="30">${unlocked?w.icon:"🔒"}</text>
+        <text x="${x}" y="${y+56}" text-anchor="middle" font-size="13" font-weight="bold" fill="#5d3fa3">${w.name}</text>
+        ${done?`<text x="${x}" y="${y-44}" text-anchor="middle" font-size="15">${"⭐".repeat(state.stars[i])}</text>`:""}
+      </g>`;
+  }).join("");
+  const certUnlocked = allDone();
   render(`
-    ${topbar("🔬 المرحلة 1", ((idx+1)/(STORY.length+1))*50)}
-    <div class="card-item">
-      <span class="emoji">${s.emoji}</span>
-      <h2>${s.title}</h2>
-      <p style="font-weight:normal">${s.text}</p>
+    <div class="topbar" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:4px">
+      <span class="chip">${state.gender==="girl"?"👧":"👦"} ${esc(state.name)}</span>
+      <span class="chip">🏆 ${state.score}</span>
+      <span class="chip">⭐ ${state.stars.reduce((a,b)=>a+b,0)} / 15</span>
     </div>
-    <div class="slide-nav">
-      <button class="btn small secondary" ${idx===0?"style='visibility:hidden'":""} onclick="showStory(${idx-1})">⏭️ السابق</button>
-      <span class="chip">${idx+1} / ${STORY.length}</span>
-      ${idx < STORY.length-1
-        ? `<button class="btn small" onclick="showStory(${idx+1})">التالي ⏮️</button>`
-        : `<button class="btn small" onclick="startQuiz()">🎯 هيا للاختبار!</button>`}
+    <h2 class="center">🗺️ مسار المغامرة</h2>
+    <p class="center muted">أكمل كل مكان لتفتح الذي بعده!</p>
+    <div class="map-wrap">
+      <svg viewBox="0 0 400 520">
+        <path d="M330,455 C180,470 55,430 85,365 C110,310 260,330 320,272 C375,225 140,245 85,182 C35,125 250,150 320,95 C355,68 260,45 180,38"
+          fill="none" stroke="#c8b6e2" stroke-width="10" stroke-dasharray="2 16" stroke-linecap="round"/>
+        <g class="map-node ${certUnlocked?"playable":"locked"}" ${certUnlocked?`onclick="showCertificate()"`:""}>
+          <circle class="ring" cx="140" cy="42" r="32" fill="${certUnlocked?"#fff8e1":"#fff"}"
+            stroke="${certUnlocked?"#ffd166":"#bbb"}" stroke-width="5"/>
+          <text x="140" y="50" text-anchor="middle" font-size="26">${certUnlocked?"🎓":"🔒"}</text>
+          <text x="140" y="90" text-anchor="middle" font-size="13" font-weight="bold" fill="#5d3fa3">الشهادة</text>
+        </g>
+        ${nodes}
+      </svg>
+    </div>
+    <div class="center">
+      <button class="btn small secondary" onclick="showStart()">👤 تغيير الشخصية</button>
     </div>
   `);
 }
 
-const QUIZ = [
-  { q: "ممَّ يتكوّن جسم الإنسان؟", a: ["من ملايين الخلايا الصغيرة", "من الرمل والحجارة", "من قطع البلاستيك"], correct: 0,
-    why: "أجسامنا مبنية من ملايين الخلايا الصغيرة التي تعمل معاً مثل فريق واحد!" },
-  { q: "ماذا يحدث للخلية في مرض السرطان؟", a: ["تنام كثيراً", "تنقسم وتنمو بدون توقف", "تتحول إلى لون أزرق"], correct: 1,
-    why: "الخلية السرطانية تفقد إشارة التوقف فتنقسم بشكل غير منظم." },
-  { q: "هل ينتقل السرطان باللعب مع صديق مريض؟", a: ["نعم، ينتقل بسرعة", "فقط إذا تصافحنا", "لا، السرطان ليس معدياً أبداً"], correct: 2,
-    why: "السرطان ليس معدياً! يمكنك اللعب ومشاركة الطعام والعناق بأمان تام. 🤗" },
-  { q: "لماذا يعتبر اكتشاف المرض مبكراً مهماً؟", a: ["لأن العلاج يصبح أسهل وأنجح", "لأنه لا يهم أبداً", "لأن الدواء يصبح ألذ"], correct: 0,
-    why: "كلما اكتشف الأطباء المرض مبكراً كان العلاج أسهل وفرصة الشفاء أكبر!" },
-  { q: "هل السرطان ذنب الشخص المريض؟", a: ["نعم، لأنه لم يذاكر", "لا، ليس ذنب أحد أبداً", "نعم، لأنه لعب كثيراً"], correct: 1,
-    why: "لا أحد يمرض لأنه فعل شيئاً سيئاً. المرض ليس عقاباً وليس ذنب أحد. 💜" },
-];
-let quizIdx = 0, quizCorrect = 0;
-function startQuiz() { quizIdx = 0; quizCorrect = 0; showQuizQ(); }
-function showQuizQ() {
-  const q = QUIZ[quizIdx];
+/* ================= مقدمة المرحلة ================= */
+function showIntro(i){
+  const w = WORLDS[i];
   render(`
-    ${topbar("🎯 اختبار المرحلة 1", 50 + ((quizIdx)/QUIZ.length)*50)}
-    <h2>سؤال ${quizIdx+1} من ${QUIZ.length}</h2>
-    <div class="card-item"><span class="emoji">❓</span>${q.q}</div>
+    <div class="center">
+      <h2>${w.icon} المكان ${i+1}: ${w.name}</h2>
+      <canvas id="introKid" width="130" height="150"></canvas>
+      <div class="card-item" style="padding:14px">
+        <p style="font-weight:normal">${w.mission}</p>
+      </div>
+      <div class="legend">
+        <span class="chip">💚 اجمع: ${w.good.slice(0,4).map(g=>g[0]).join(" ")}</span>
+        <span class="chip">🚫 تجنب: ${w.bad.slice(0,3).map(b=>b[0]).join(" ")}</span>
+        <span class="chip" style="background:#ffe3ea">⚠️ عقبة: ${w.hazard[0]} تخسر قلباً!</span>
+      </div>
+      <div class="fact-box">💡 <b>معلومة البطل:</b> ${w.tip}</div>
+      <p class="muted">حرّك ${state.gender==="girl"?"البطلة":"البطل"} بالأسهم ⬅️➡️ أو الأزرار أو لمس جانبي الشاشة<br>
+      اجمع <b>${w.goal}</b> عنصراً صحياً لتُكمل المهمة!</p>
+      <button class="btn" onclick="beginPlay(${i})">🎮 هيا نلعب!</button>
+      <button class="btn small secondary" onclick="showMap()">🗺️ رجوع</button>
+    </div>
+  `);
+  const c = document.getElementById("introKid");
+  if(c) drawKid(c.getContext("2d"), 65, 72, 0.5, state.gender, "happy", 1.1);
+}
+
+/* ================= محرك اللعب ================= */
+const LANES = [120,240,360];
+const KID_Y = 580;
+let game = null;
+
+function beginPlay(i){
+  const w = WORLDS[i];
+  render(`
+    <div class="hud">
+      <span id="hearts">❤️❤️❤️</span>
+      <span class="chip">${w.icon} <span id="prog">0 / ${w.goal}</span></span>
+      <span class="chip">🏆 <span id="scoreEl">0</span></span>
+      <button class="pausebtn" onclick="togglePause()" id="pauseBtn">⏸</button>
+    </div>
+    <div class="meter">
+      <div id="meterFill"></div>
+      <span class="meter-label">مؤشر الصحة 💚</span>
+    </div>
+    <div class="game-wrap">
+      <canvas id="gc" width="480" height="720"></canvas>
+      <div id="flash"></div>
+    </div>
+    <div class="controls">
+      <button class="ctrl" id="btnL">◀</button>
+      <button class="ctrl" id="btnR">▶</button>
+    </div>
+  `);
+  game = {
+    idx:i, w, lane:1, x:LANES[1],
+    hearts:3, meter:50, collected:0, score:0,
+    items:[], floats:[], t:0, lastSpawn:0,
+    running:true, paused:false, over:false,
+    ph:0, face:"happy", faceTimer:0,
+    groundOff:0, shake:0, last:performance.now(),
+  };
+  const cv = document.getElementById("gc");
+  cv.addEventListener("pointerdown", e=>{
+    const r = cv.getBoundingClientRect();
+    moveKid((e.clientX - r.left) / r.width < .5 ? -1 : 1);
+  });
+  document.getElementById("btnL").addEventListener("pointerdown", e=>{e.preventDefault();moveKid(-1);});
+  document.getElementById("btnR").addEventListener("pointerdown", e=>{e.preventDefault();moveKid(1);});
+  updateHUD();
+  requestAnimationFrame(loop);
+}
+document.addEventListener("keydown", e=>{
+  if(!game || !game.running) return;
+  if(e.key==="ArrowLeft"){ moveKid(-1); e.preventDefault(); }
+  if(e.key==="ArrowRight"){ moveKid(1); e.preventDefault(); }
+});
+function moveKid(dir){
+  if(!game || !game.running || game.paused) return;
+  game.lane = Math.max(0, Math.min(2, game.lane + dir));
+  beep(440,.05,"triangle",.06);
+}
+function togglePause(){
+  if(!game || !game.running) return;
+  game.paused = !game.paused;
+  const b = document.getElementById("pauseBtn");
+  if(b) b.textContent = game.paused ? "▶" : "⏸";
+}
+
+function spawnItem(){
+  const w = game.w;
+  const r = Math.random();
+  let it;
+  if(r < w.hazardChance){
+    it = { e:w.hazard[0], label:w.hazard[1], kind:"hazard" };
+  } else if(r < w.hazardChance + .36){
+    const b = w.bad[Math.floor(Math.random()*w.bad.length)];
+    it = { e:b[0], label:b[1], kind:"bad" };
+  } else {
+    const g = w.good[Math.floor(Math.random()*w.good.length)];
+    it = { e:g[0], label:g[1], kind:"good" };
+  }
+  game.items.push({ ...it, lane:Math.floor(Math.random()*3), y:-40, wob:Math.random()*6 });
+}
+
+function updateHUD(){
+  const h = document.getElementById("hearts");
+  if(h) h.textContent = "❤️".repeat(game.hearts) + "🤍".repeat(3-game.hearts);
+  const p = document.getElementById("prog");
+  if(p) p.textContent = `${game.collected} / ${game.w.goal}`;
+  const s = document.getElementById("scoreEl");
+  if(s) s.textContent = game.score;
+  const m = document.getElementById("meterFill");
+  if(m){
+    m.style.width = game.meter + "%";
+    m.style.background = game.meter > 60 ? "linear-gradient(90deg,#06d6a0,#4cc9f0)"
+                       : game.meter > 30 ? "linear-gradient(90deg,#ff9f1c,#ffd166)"
+                       : "linear-gradient(90deg,#ef476f,#ff8fa3)";
+  }
+}
+function flash(cls){
+  const f = document.getElementById("flash");
+  if(!f) return;
+  f.className = ""; void f.offsetWidth; f.className = cls;
+}
+
+function hitItem(it){
+  if(it.kind === "good"){
+    game.collected++; game.score += 10;
+    game.meter = Math.min(100, game.meter + 9);
+    game.face = "happy";
+    game.floats.push({x:LANES[it.lane], y:KID_Y-80, txt:`${it.e} ${it.label} +10`, color:"#06d6a0", life:1});
+    flash("g"); soundGood();
+  } else if(it.kind === "bad"){
+    game.meter -= 16; game.score = Math.max(0, game.score - 5);
+    game.face = "sad"; game.faceTimer = .9; game.shake = 8;
+    game.floats.push({x:LANES[it.lane], y:KID_Y-80, txt:`${it.e} ${it.label}!`, color:"#ef476f", life:1});
+    flash("r"); soundBad();
+  } else { // عقبة
+    game.hearts--; game.meter -= 10;
+    game.face = "wow"; game.faceTimer = 1; game.shake = 14;
+    game.floats.push({x:LANES[it.lane], y:KID_Y-90, txt:`⚠️ ${it.label} -❤️`, color:"#ef476f", life:1.4});
+    flash("r"); soundHurt();
+  }
+  if(game.meter <= 0){
+    game.hearts--; game.meter = 45;
+    game.floats.push({x:240, y:300, txt:"💔 انخفض مؤشر الصحة كثيراً!", color:"#ef476f", life:1.5});
+    soundHurt();
+  }
+  game.meter = Math.max(0, Math.min(100, game.meter));
+  updateHUD();
+  if(game.hearts <= 0){ endPlay(false); return; }
+  if(game.collected >= game.w.goal){ endPlay(true); }
+}
+
+function endPlay(success){
+  game.running = false;
+  setTimeout(()=> success ? showGate(0) : showFail(), 450);
+}
+
+function loop(now){
+  if(!game || !game.running){ return; }
+  const dt = Math.min(.05, (now - game.last)/1000);
+  game.last = now;
+  const c = document.getElementById("gc");
+  if(!c){ game.running = false; return; }
+  const x = c.getContext("2d");
+  const W = c.width, H = c.height;
+
+  if(!game.paused){
+    game.t += dt;
+    game.ph += dt*9;
+    game.groundOff = (game.groundOff + dt*140) % 60;
+    if(game.faceTimer > 0){ game.faceTimer -= dt; if(game.faceTimer<=0) game.face="happy"; }
+    if(game.shake > 0) game.shake = Math.max(0, game.shake - dt*40);
+    // توليد العناصر
+    if((game.t*1000 - game.lastSpawn) > game.w.spawnMs){
+      game.lastSpawn = game.t*1000;
+      spawnItem();
+    }
+    // تحريك الشخصية
+    game.x += (LANES[game.lane] - game.x) * Math.min(1, dt*14);
+    // تحريك العناصر والتصادم
+    for(let i=game.items.length-1; i>=0; i--){
+      const it = game.items[i];
+      it.y += game.w.fallSpeed * dt;
+      if(it.y > KID_Y-45 && it.y < KID_Y+35 && it.lane === game.lane){
+        game.items.splice(i,1);
+        hitItem(it);
+        if(!game.running) return;
+      } else if(it.y > H+40){
+        game.items.splice(i,1);
+      }
+    }
+    // النصوص الطائرة
+    for(let i=game.floats.length-1; i>=0; i--){
+      const f = game.floats[i];
+      f.y -= dt*45; f.life -= dt;
+      if(f.life <= 0) game.floats.splice(i,1);
+    }
+  }
+
+  /* ---- الرسم ---- */
+  x.save();
+  if(game.shake > 0) x.translate((Math.random()-.5)*game.shake, (Math.random()-.5)*game.shake);
+  game.w.bg(x, W, H, game.t);
+  // ممر المشي مع خطوط متحركة
+  x.fillStyle = "rgba(255,255,255,.25)";
+  x.fillRect(60, 500, W-120, 180);
+  x.strokeStyle = "rgba(93,63,163,.25)"; x.lineWidth = 3; x.setLineDash([18,42]);
+  x.lineDashOffset = game.groundOff;
+  [180,300].forEach(lx=>{ x.beginPath(); x.moveTo(lx,500); x.lineTo(lx,H); x.stroke(); });
+  x.setLineDash([]);
+  // العناصر
+  x.textAlign = "center";
+  game.items.forEach(it=>{
+    const ix = LANES[it.lane] + Math.sin((it.y+it.wob*40)/34)*7;
+    if(it.kind === "hazard"){
+      x.fillStyle = `rgba(239,71,111,${.28 + Math.sin(game.t*7)*.14})`;
+      x.beginPath(); x.arc(ix, it.y-13, 32, 0, 7); x.fill();
+    }
+    x.font = "40px serif";
+    x.fillStyle = "#000";
+    x.fillText(it.e, ix, it.y);
+  });
+  // الشخصية واسمها
+  drawKid(x, game.x, KID_Y, game.paused ? 0 : game.ph, state.gender, game.face);
+  const nm = esc(state.name);
+  x.font = "bold 15px sans-serif";
+  const tw = x.measureText(nm).width + 18;
+  x.fillStyle = "rgba(255,255,255,.9)";
+  x.beginPath();
+  if(x.roundRect) x.roundRect(game.x-tw/2, KID_Y-92, tw, 24, 12); else x.rect(game.x-tw/2, KID_Y-92, tw, 24);
+  x.fill();
+  x.fillStyle = "#5d3fa3"; x.fillText(nm, game.x, KID_Y-75);
+  // النصوص الطائرة
+  game.floats.forEach(f=>{
+    x.globalAlpha = Math.max(0, Math.min(1, f.life));
+    x.font = "bold 19px sans-serif";
+    x.strokeStyle = "#fff"; x.lineWidth = 4; x.strokeText(f.txt, f.x, f.y);
+    x.fillStyle = f.color; x.fillText(f.txt, f.x, f.y);
+    x.globalAlpha = 1;
+  });
+  if(game.paused){
+    x.fillStyle = "rgba(45,35,80,.55)"; x.fillRect(0,0,W,H);
+    x.fillStyle = "#fff"; x.font = "bold 38px sans-serif";
+    x.fillText("⏸ استراحة", W/2, H/2);
+  }
+  x.restore();
+
+  requestAnimationFrame(loop);
+}
+
+/* ================= سؤال البوابة ================= */
+function showGate(qi){
+  const w = game.w;
+  const q = w.gate[qi];
+  render(`
+    <div class="center"><h2>🚧 بوابة المعرفة ${qi+1} / ${w.gate.length}</h2>
+    <p class="muted">أجب لتفتح البوابة وتحصل على نقاط إضافية!</p></div>
+    <div class="card-item"><span class="emoji">🗝️</span>${q.q}</div>
     <div id="answers">
-      ${q.a.map((ans,i)=>`<button class="answer" onclick="answerQuiz(${i})">${["🅰️","🅱️","🅾️"][i]} ${ans}</button>`).join("")}
+      ${q.a.map((ans,ai)=>`<button class="answer" onclick="answerGate(${qi},${ai})">${["🅰️","🅱️","🅾️"][ai]} ${ans}</button>`).join("")}
     </div>
     <div id="fb"></div>
   `);
 }
-function answerQuiz(i) {
-  const q = QUIZ[quizIdx];
+function answerGate(qi, ai){
+  const w = game.w;
+  const q = w.gate[qi];
   const btns = document.querySelectorAll(".answer");
   btns.forEach(b=>b.disabled = true);
   btns[q.correct].classList.add("correct");
-  const good = i === q.correct;
-  if (good) { quizCorrect++; state.score += 10; soundGood(); }
-  else { btns[i].classList.add("wrong"); btns[i].classList.add("shake"); soundBad(); }
+  const good = ai === q.correct;
+  if(good){ game.score += 25; soundGood(); }
+  else { btns[ai].classList.add("wrong"); soundBad(); }
   document.getElementById("fb").innerHTML = `
     <div class="feedback ${good?"good":"bad"}">
-      <b>${good ? "🎉 إجابة رائعة!" : "😊 لا بأس، تعلمنا شيئاً جديداً!"}</b><br>${q.why}
+      <b>${good ? "🗝️ فُتحت البوابة! +25" : "😊 لا بأس، تعلمنا معلومة جديدة!"}</b><br>${q.why}
     </div>
-    <div class="center"><button class="btn small" onclick="nextQuiz()">${quizIdx < QUIZ.length-1 ? "السؤال التالي ➡️" : "🏁 النتيجة"}</button></div>`;
-}
-function nextQuiz() {
-  if (++quizIdx < QUIZ.length) showQuizQ();
-  else endLevel(0, quizCorrect, QUIZ.length, "🔬 ما هو السرطان؟");
-}
-
-/* ================= المرحلة 2: فرز العادات ================= */
-const HABITS = [
-  { emoji: "🍎", text: "أكل الفواكه والخضروات كل يوم", healthy: true,  why: "الفواكه والخضروات تعطي جسمك دروعاً تحمي خلاياك!" },
-  { emoji: "🚬", text: "الجلوس قرب المدخنين واستنشاق الدخان", healthy: false, why: "دخان السجائر يؤذي الرئتين حتى لمن يجلس بجانب المدخن. ابتعد عنه دائماً!" },
-  { emoji: "⚽", text: "اللعب والحركة ساعة كل يوم", healthy: true,  why: "الرياضة تجعل جسمك قوياً وخلاياك سعيدة ونشيطة!" },
-  { emoji: "🧴", text: "وضع واقي الشمس عند اللعب خارجاً", healthy: true,  why: "واقي الشمس والقبعة يحميان جلدك من أشعة الشمس القوية." },
-  { emoji: "🍟", text: "أكل الوجبات السريعة والمقلية كل يوم", healthy: false, why: "قليل منها لا بأس، لكن كل يوم؟ جسمك يحتاج طعاماً متنوعاً ومفيداً!" },
-  { emoji: "😴", text: "النوم مبكراً 9-10 ساعات", healthy: true,  why: "أثناء النوم يرمم جسمك خلاياه ويشحن طاقتك!" },
-  { emoji: "🥤", text: "شرب المشروبات الغازية بدل الماء دائماً", healthy: false, why: "السكر الكثير يتعب الجسم. الماء هو المشروب البطل! 💧" },
-  { emoji: "🩺", text: "زيارة الطبيب للفحص الدوري", healthy: true,  why: "الفحص المبكر يساعد الأطباء على اكتشاف أي مشكلة وعلاجها بسرعة." },
-  { emoji: "📱", text: "الجلوس أمام الشاشات طوال اليوم بلا حركة", healthy: false, why: "جسمك يحب الحركة! قسّم وقتك بين الشاشة واللعب والحركة." },
-  { emoji: "🧼", text: "غسل اليدين والاهتمام بالنظافة", healthy: true,  why: "النظافة تحميك من الجراثيم وتحافظ على صحة جسمك كله." },
-];
-let habitIdx = 0, habitCorrect = 0, habitOrder = [];
-function startSorting() {
-  habitIdx = 0; habitCorrect = 0;
-  habitOrder = [...HABITS].sort(() => Math.random() - .5);
-  showHabit();
-}
-function showHabit() {
-  const h = habitOrder[habitIdx];
-  render(`
-    ${topbar("🥦 المرحلة 2", (habitIdx/habitOrder.length)*100)}
-    <h2 class="center">هل هذه عادة صحية أم ضارة؟</h2>
-    <div class="card-item">
-      <span class="emoji">${h.emoji}</span>
-      ${h.text}
-    </div>
-    <div class="choice-row">
-      <button class="btn secondary" onclick="answerHabit(true)">💪 عادة صحية</button>
-      <button class="btn" style="background:linear-gradient(135deg,var(--red),#ff8fa3);box-shadow:0 6px 0 rgba(180,40,70,.35)" onclick="answerHabit(false)">🚫 عادة ضارة</button>
-    </div>
-    <div id="fb"></div>
-    <p class="center muted">${habitIdx+1} / ${habitOrder.length}</p>
-  `);
-}
-function answerHabit(choice) {
-  const h = habitOrder[habitIdx];
-  document.querySelectorAll(".choice-row .btn").forEach(b=>b.disabled = true);
-  const good = choice === h.healthy;
-  if (good) { habitCorrect++; state.score += 10; soundGood(); }
-  else soundBad();
-  document.getElementById("fb").innerHTML = `
-    <div class="feedback ${good?"good":"bad"}">
-      <b>${good ? "🌟 أحسنت!" : "🤔 ليس تماماً!"}</b>
-      هذه عادة ${h.healthy ? "صحية 💚" : "ضارة ❤️‍🩹"}.<br>${h.why}
-    </div>
-    <div class="center"><button class="btn small" onclick="nextHabit()">${habitIdx < habitOrder.length-1 ? "التالي ➡️" : "🏁 النتيجة"}</button></div>`;
-}
-function nextHabit() {
-  if (++habitIdx < habitOrder.length) showHabit();
-  else endLevel(1, habitCorrect, habitOrder.length, "🥦 أبطال العادات الصحية");
-}
-
-/* ================= المرحلة 3: حقيقة أم خرافة ================= */
-const MYTHS = [
-  { text: "السرطان مرض معدٍ ينتقل بين الناس", fact: false,
-    why: "خرافة! السرطان لا ينتقل أبداً باللمس أو العناق أو مشاركة الطعام أو اللعب." },
-  { text: "كثير من مرضى السرطان يشفون ويعودون لحياتهم", fact: true,
-    why: "حقيقة! العلاج يتطور كل يوم، وملايين الأشخاص تغلبوا على السرطان ويعيشون حياة سعيدة." },
-  { text: "سقوط الشعر أثناء العلاج يعني أن المريض لن يتحسن", fact: false,
-    why: "خرافة! بعض الأدوية القوية تسبب سقوط الشعر مؤقتاً، لكنه ينمو من جديد بعد العلاج. 💇" },
-  { text: "الفحص المبكر يزيد فرص الشفاء", fact: true,
-    why: "حقيقة! كلما اكتُشف المرض مبكراً كان علاجه أسهل وأسرع." },
-  { text: "الشخص المريض بالسرطان لا يستطيع اللعب أو الضحك", fact: false,
-    why: "خرافة! المرضى يحبون اللعب والضحك والأصدقاء، وقد يحتاجون للراحة أحياناً فقط." },
-  { text: "العادات الصحية مثل الرياضة والأكل المفيد تساعد على الوقاية", fact: true,
-    why: "حقيقة! العادات الصحية تقوّي جسمك وتقلل فرص الإصابة بأمراض كثيرة." },
-  { text: "السرطان يصيب الشخص لأنه كان سيئاً أو مشاغباً", fact: false,
-    why: "خرافة! المرض ليس عقاباً أبداً، وليس ذنب أي شخص." },
-  { text: "الشارة الوردية 🎗️ رمز عالمي للتوعية بالسرطان ودعم المرضى", fact: true,
-    why: "حقيقة! نلبس الشارة لنقول للمرضى: نحن معكم ونساندكم! 💜" },
-];
-let mythIdx = 0, mythCorrect = 0, mythOrder = [];
-function startMyths() {
-  mythIdx = 0; mythCorrect = 0;
-  mythOrder = [...MYTHS].sort(() => Math.random() - .5);
-  showMyth();
-}
-function showMyth() {
-  const m = mythOrder[mythIdx];
-  render(`
-    ${topbar("🕵️ المرحلة 3", (mythIdx/mythOrder.length)*100)}
-    <h2 class="center">كن محقق الحقائق! 🔍</h2>
-    <div class="card-item">
-      <span class="emoji">🗯️</span>
-      "${m.text}"
-    </div>
-    <div class="choice-row">
-      <button class="btn secondary" onclick="answerMyth(true)">✅ حقيقة</button>
-      <button class="btn" style="background:linear-gradient(135deg,var(--red),#ff8fa3);box-shadow:0 6px 0 rgba(180,40,70,.35)" onclick="answerMyth(false)">❌ خرافة</button>
-    </div>
-    <div id="fb"></div>
-    <p class="center muted">${mythIdx+1} / ${mythOrder.length}</p>
-  `);
-}
-function answerMyth(choice) {
-  const m = mythOrder[mythIdx];
-  document.querySelectorAll(".choice-row .btn").forEach(b=>b.disabled = true);
-  const good = choice === m.fact;
-  if (good) { mythCorrect++; state.score += 10; soundGood(); }
-  else soundBad();
-  document.getElementById("fb").innerHTML = `
-    <div class="feedback ${good?"good":"bad"}">
-      <b>${good ? "🕵️ محقق بارع!" : "🔍 معلومة جديدة!"}</b><br>${m.why}
-    </div>
-    <div class="center"><button class="btn small" onclick="nextMyth()">${mythIdx < mythOrder.length-1 ? "التالي ➡️" : "🏁 النتيجة"}</button></div>`;
-}
-function nextMyth() {
-  if (++mythIdx < mythOrder.length) showMyth();
-  else endLevel(2, mythCorrect, mythOrder.length, "🕵️ حقيقة أم خرافة؟");
-}
-
-/* ================= المرحلة 4: الصديق الداعم ================= */
-const SCENARIOS = [
-  { situation: "صديقك سالم غاب عن المدرسة لأنه يتعالج من السرطان. ماذا تفعل؟",
-    emoji: "🏫",
-    options: [
-      { t: "أرسل له رسالة أو رسمة جميلة وأطمئن عليه", best: true },
-      { t: "أتجاهله لأنه لن يعود قريباً", best: false },
-      { t: "أخاف من الاتصال به", best: false },
-    ],
-    why: "الرسائل والرسمات تخبر صديقك أنك تفكر فيه وتنتظر عودته. هذا يعطيه قوة كبيرة! 💌" },
-  { situation: "عاد سالم للمدرسة وقد سقط شعره بسبب العلاج. بعض الأطفال ينظرون إليه باستغراب. ماذا تفعل؟",
-    emoji: "🧢",
-    options: [
-      { t: "أضحك عليه مع الآخرين", best: false },
-      { t: "أجلس بجانبه وأعامله كصديقي كما كان دائماً", best: true },
-      { t: "أبتعد عنه حتى يعود شعره", best: false },
-    ],
-    why: "صديقك هو نفس الشخص الرائع! جلوسك معه يريه أن الصداقة أقوى من أي مرض. 🤝" },
-  { situation: "سالم متعب اليوم ولا يستطيع اللعب معك في الفسحة. ماذا تفعل؟",
-    emoji: "🪑",
-    options: [
-      { t: "أغضب منه لأنه لا يريد اللعب", best: false },
-      { t: "أتركه وأذهب بلا كلام", best: false },
-      { t: "أجلس معه نتحدث أو نلعب لعبة هادئة", best: true },
-    ],
-    why: "العلاج يجعل الجسم متعباً أحياناً. الجلوس معه والحديث الهادئ صداقة حقيقية! 💜" },
-  { situation: "زميل يقول: «لا تقترب من سالم حتى لا تُصاب بالعدوى!». ماذا ترد؟",
-    emoji: "📢",
-    options: [
-      { t: "أصدقه وأبتعد عن سالم", best: false },
-      { t: "أشرح له أن السرطان ليس معدياً أبداً", best: true },
-      { t: "أسكت ولا أقول شيئاً", best: false },
-    ],
-    why: "أنت الآن سفير للمعرفة! السرطان لا يُعدي، ونشر المعلومة الصحيحة يحمي أصدقاءنا من الوحدة. 🎗️" },
-  { situation: "تريد أن تدعم مرضى السرطان في مدينتك. ما أجمل فكرة؟",
-    emoji: "💡",
-    options: [
-      { t: "المشاركة في يوم توعوي أو رسم بطاقات أمل للمرضى", best: true },
-      { t: "لا شيء، أنا صغير ولا أستطيع المساعدة", best: false },
-      { t: "الحزن في المنزل فقط", best: false },
-    ],
-    why: "حتى الصغار أبطال! بطاقة أمل، شارة وردية، أو كلمة طيبة تصنع فرقاً كبيراً في قلب مريض. 🌈" },
-];
-let scenIdx = 0, scenCorrect = 0;
-function startEmpathy() { scenIdx = 0; scenCorrect = 0; showScenario(); }
-function showScenario() {
-  const s = SCENARIOS[scenIdx];
-  const shuffled = s.options.map((o,i)=>({ ...o, i })).sort(() => Math.random() - .5);
-  render(`
-    ${topbar("🤝 المرحلة 4", (scenIdx/SCENARIOS.length)*100)}
-    <h2 class="center">ماذا يفعل الصديق البطل؟</h2>
-    <div class="card-item">
-      <span class="emoji">${s.emoji}</span>
-      <p style="font-weight:normal">${s.situation}</p>
-    </div>
-    <div id="answers">
-      ${shuffled.map(o=>`<button class="answer" data-best="${o.best}" onclick="answerScenario(this)">${o.t}</button>`).join("")}
-    </div>
-    <div id="fb"></div>
-    <p class="center muted">${scenIdx+1} / ${SCENARIOS.length}</p>
-  `);
-}
-function answerScenario(btn) {
-  const s = SCENARIOS[scenIdx];
-  const btns = document.querySelectorAll(".answer");
-  btns.forEach(b=>{
-    b.disabled = true;
-    if (b.dataset.best === "true") b.classList.add("correct");
-  });
-  const good = btn.dataset.best === "true";
-  if (good) { scenCorrect++; state.score += 10; soundGood(); }
-  else { btn.classList.add("wrong","shake"); soundBad(); }
-  document.getElementById("fb").innerHTML = `
-    <div class="feedback ${good?"good":"bad"}">
-      <b>${good ? "💜 قلبك كبير!" : "🌱 لنتعلم معاً!"}</b><br>${s.why}
-    </div>
-    <div class="center"><button class="btn small" onclick="nextScenario()">${scenIdx < SCENARIOS.length-1 ? "الموقف التالي ➡️" : "🏁 النتيجة"}</button></div>`;
-}
-function nextScenario() {
-  if (++scenIdx < SCENARIOS.length) showScenario();
-  else endLevel(3, scenCorrect, SCENARIOS.length, "🤝 الصديق الداعم");
+    <div class="center"><button class="btn small" onclick="${qi < w.gate.length-1 ? `showGate(${qi+1})` : "finishLevel()"}">
+      ${qi < w.gate.length-1 ? "البوابة التالية ➡️" : "🏁 أكمل المهمة"}
+    </button></div>`;
 }
 
 /* ================= نهاية المرحلة ================= */
-function endLevel(levelIndex, correct, total, title) {
-  const stars = Math.max(1, starsFromScore(correct, total)); // نجمة واحدة على الأقل للتشجيع
-  state.levelStars[levelIndex] = Math.max(state.levelStars[levelIndex], stars);
-  soundWin();
-  confetti();
+function finishLevel(){
+  const i = game.idx;
+  const stars = Math.max(1, game.hearts);
+  state.stars[i] = Math.max(state.stars[i], stars);
+  state.score += game.score;
+  saveState();
+  soundWin(); confetti();
+  const next = i < WORLDS.length-1 ? i+1 : null;
   render(`
-    ${topbar(title, 100)}
     <div class="center">
-      <span class="big-emoji">${stars === 3 ? "🏆" : stars === 2 ? "🎉" : "💪"}</span>
-      <h2>أنهيت المرحلة!</h2>
+      <span class="big-emoji">${stars===3?"🏆":stars===2?"🎉":"💪"}</span>
+      <h2>أنهيت مهمة ${WORLDS[i].name}!</h2>
       <div class="stars">${starsOf(stars)}</div>
-      <p>أجبت على <b>${correct}</b> من <b>${total}</b> بشكل صحيح.</p>
-      ${stars < 3 ? `<p class="muted">جرّب مرة أخرى لتجمع 3 نجوم! ⭐⭐⭐</p>` : `<p class="muted">علامة كاملة! أنت نجم حقيقي! 🌟</p>`}
-      <div class="fact-box">💡 <b>هل تعلم؟</b> ${randomFact()}</div>
-      <button class="btn secondary" onclick="LEVELS[${levelIndex}].fn()">🔁 إعادة المرحلة</button>
-      <button class="btn" onclick="showMap()">🗺️ خريطة الرحلة</button>
+      <p>جمعت <b>${game.collected}</b> عنصراً صحياً وحصلت على <b>${game.score}</b> نقطة،
+      وبقي لديك <b>${game.hearts}</b> ${game.hearts===1?"قلب":"قلوب"} ${"❤️".repeat(game.hearts)}</p>
+      ${stars<3?`<p class="muted">حافظ على قلوبك الثلاثة لتحصل على ٣ نجوم! ⭐⭐⭐</p>`:`<p class="muted">مهمة مثالية بدون خسارة أي قلب! 🌟</p>`}
+      <div class="fact-box">💡 <b>تذكّر:</b> ${WORLDS[i].tip}</div>
+      ${next!==null
+        ? `<button class="btn" onclick="showIntro(${next})">➡️ المكان التالي: ${WORLDS[next].icon} ${WORLDS[next].name}</button>`
+        : `<button class="btn" onclick="showCertificate()">🎓 استلم شهادتك!</button>`}
+      <button class="btn small secondary" onclick="showMap()">🗺️ المسار</button>
+      <button class="btn small secondary" onclick="beginPlay(${i})">🔁 إعادة</button>
     </div>
   `);
+  game = null;
 }
-const FUN_FACTS = [
-  "جسمك يصنع ملايين الخلايا الجديدة كل ثانية!",
-  "الضحك يقوّي جهاز المناعة — اضحك كثيراً! 😄",
-  "شهر أكتوبر هو شهر التوعية العالمي بسرطان الثدي، ولونه وردي! 🎀",
-  "الرابع من فبراير هو اليوم العالمي للسرطان، حيث يتّحد العالم كله للتوعية. 🌍",
-  "شرب الماء والنوم الجيد يساعدان خلاياك على العمل بأفضل شكل! 💧",
-  "كثير من الأطباء المشهورين قرروا دراسة الطب وهم في عمرك الآن!",
-];
-function randomFact() {
-  return FUN_FACTS[Math.floor(Math.random() * FUN_FACTS.length)];
+function showFail(){
+  const i = game.idx;
+  render(`
+    <div class="center">
+      <span class="big-emoji">💔</span>
+      <h2>نفدت القلوب!</h2>
+      <p>لا بأس يا ${esc(state.name)}، كل بطل يتعثر ثم ينهض أقوى! 💪</p>
+      <div class="fact-box">💡 <b>نصيحة:</b> ركّز على العناصر الصحية ${WORLDS[i].good.slice(0,3).map(g=>g[0]).join(" ")}
+      وابتعد عن العقبة ${WORLDS[i].hazard[0]} فهي تخسرك قلباً كاملاً!</div>
+      <button class="btn" onclick="beginPlay(${i})">🔁 حاول مرة أخرى</button>
+      <button class="btn small secondary" onclick="showMap()">🗺️ المسار</button>
+    </div>
+  `);
+  game = null;
 }
 
 /* ================= الشهادة ================= */
-function showCertificate() {
-  const totalStars = state.levelStars.reduce((a,b)=>a+b,0);
-  soundWin();
-  confetti();
+function showCertificate(){
+  const totalStars = state.stars.reduce((a,b)=>a+b,0);
+  soundWin(); confetti();
   render(`
     <div class="cert">
-      <span style="font-size:3rem">🎗️🎓</span>
+      <span style="font-size:2.8rem">🎗️🎓</span>
       <h2>شهادة بطل التوعية</h2>
       <p>تشهد لعبة <b>تفاؤل</b> بأن</p>
-      <div class="name">${state.name} 🌟</div>
-      <p>أكمل رحلة الأبطال الصغار للتوعية بمرض السرطان بنجاح،
-      وأصبح <b>سفيراً للأمل</b> يعرف كيف يحافظ على صحته ويدعم أصدقاءه!</p>
-      <div class="stars">${"⭐".repeat(totalStars)}</div>
-      <p class="chip" style="display:inline-block">🏆 النقاط: ${state.score} | النجوم: ${totalStars} / 12</p>
+      <div class="name">${esc(state.name)} ${state.gender==="girl"?"👧":"👦"} 🌟</div>
+      <p>أكمل${state.gender==="girl"?"ت":""} مغامرة الأبطال الصغار في المنزل والمدرسة والسوبرماركت والحديقة ومهرجان التوعية،
+      وأصبح${state.gender==="girl"?"ت":""} <b>سفير${state.gender==="girl"?"ة":""} للأمل</b>!</p>
+      <div class="stars">${"⭐".repeat(Math.min(totalStars,15))}</div>
+      <p class="chip">🏆 النقاط: ${state.score} | النجوم: ${totalStars} / 15</p>
     </div>
     <div class="fact-box">
       🎗️ <b>رسالة البطل:</b> السرطان ليس معدياً، وليس ذنب أحد، والأمل موجود دائماً.
-      كن صديقاً داعماً، وعش حياة صحية، وانشر التفاؤل! 💜
+      عادات صحية + قلب داعم = بطل حقيقي! 💜
     </div>
     <div class="center">
-      <button class="btn secondary" onclick="showMap()">🗺️ العودة للخريطة</button>
-      <button class="btn" onclick="resetGame()">🔄 لعبة جديدة</button>
+      <button class="btn secondary" onclick="showMap()">🗺️ العودة للمسار</button>
+      <button class="btn danger small" onclick="resetGame()">🔄 لعبة جديدة من البداية</button>
     </div>
   `);
 }
-function resetGame() {
+function resetGame(){
+  state.stars = [0,0,0,0,0];
   state.score = 0;
-  state.levelStars = [0,0,0,0];
+  saveState();
   showStart();
 }
 
 /* انطلق! */
+loadState();
 showStart();
 </script>
 </body>
