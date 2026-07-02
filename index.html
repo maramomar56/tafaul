@@ -6,17 +6,10 @@
 <title>تفاؤل — مغامرة الأبطال الصغار</title>
 <style>
   :root{
-    --purple:#7c5cbf;
-    --purple-dark:#5d3fa3;
-    --pink:#ff7eb3;
-    --yellow:#ffd166;
-    --green:#06d6a0;
-    --red:#ef476f;
-    --blue:#4cc9f0;
-    --orange:#ff9f1c;
-    --bg:#f6f2ff;
-    --card:#ffffff;
-    --text:#2d2350;
+    --purple:#7c5cbf; --purple-dark:#5d3fa3;
+    --pink:#ff7eb3; --yellow:#ffd166; --green:#06d6a0;
+    --red:#ef476f; --blue:#4cc9f0; --orange:#ff9f1c;
+    --bg:#f6f2ff; --card:#ffffff; --text:#2d2350;
   }
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
   body{
@@ -24,22 +17,16 @@
     background:linear-gradient(160deg,#e9defa 0%,#fbfcdb 100%);
     color:var(--text);
     min-height:100vh;
-    display:flex;
-    align-items:flex-start;
-    justify-content:center;
+    display:flex;align-items:flex-start;justify-content:center;
     padding:12px;
   }
   #app{
-    width:100%;
-    max-width:560px;
-    background:var(--card);
-    border-radius:28px;
+    width:100%;max-width:560px;
+    background:var(--card);border-radius:28px;
     box-shadow:0 20px 60px rgba(93,63,163,.25);
-    padding:20px 16px;
-    position:relative;
-    overflow:hidden;
+    padding:20px 16px;position:relative;overflow:hidden;
   }
-  h1{font-size:1.5rem;color:var(--purple-dark);margin-bottom:8px;}
+  h1{font-size:1.45rem;color:var(--purple-dark);margin-bottom:8px;}
   h2{font-size:1.2rem;color:var(--purple-dark);margin-bottom:10px;}
   p{line-height:1.9;font-size:1.02rem;}
   .center{text-align:center;}
@@ -48,108 +35,130 @@
   @keyframes pop{0%{transform:scale(.6);opacity:0}100%{transform:scale(1);opacity:1}}
   @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
   @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+  @keyframes popIn{0%{transform:scale(0) translateY(20px)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
   .pop{animation:pop .35s ease;}
   .btn{
-    display:inline-block;
-    border:none;cursor:pointer;
+    display:inline-block;border:none;cursor:pointer;
     font-family:inherit;font-size:1.05rem;font-weight:bold;color:#fff;
     background:linear-gradient(135deg,var(--purple),var(--pink));
     padding:13px 28px;border-radius:50px;
     box-shadow:0 6px 0 rgba(93,63,163,.35);
-    transition:transform .12s, box-shadow .12s;
-    margin:6px 4px;
+    transition:transform .12s, box-shadow .12s;margin:6px 4px;
   }
   .btn:active{transform:translateY(4px);box-shadow:0 2px 0 rgba(93,63,163,.35);}
   .btn.secondary{background:linear-gradient(135deg,var(--blue),var(--green));box-shadow:0 6px 0 rgba(6,150,120,.35);}
   .btn.danger{background:linear-gradient(135deg,var(--red),#ff8fa3);box-shadow:0 6px 0 rgba(180,40,70,.35);}
   .btn.small{font-size:.92rem;padding:9px 18px;}
   input[type=text]{
-    width:100%;max-width:300px;
-    padding:12px 18px;border-radius:50px;
-    border:3px solid var(--purple);
-    font-size:1.1rem;font-family:inherit;text-align:center;outline:none;
-    margin:10px auto;display:block;
+    width:100%;max-width:300px;padding:12px 18px;border-radius:50px;
+    border:3px solid var(--purple);font-size:1.1rem;font-family:inherit;
+    text-align:center;outline:none;margin:10px auto;display:block;
   }
   .chip{
     background:var(--bg);border-radius:50px;padding:5px 12px;
     font-weight:bold;font-size:.9rem;color:var(--purple-dark);
     display:inline-flex;align-items:center;gap:4px;
   }
-  /* اختيار الشخصية */
   .char-pick{display:flex;gap:14px;justify-content:center;margin:12px 0;}
   .char-card{
     background:var(--bg);border:4px solid transparent;border-radius:22px;
     padding:10px 14px;cursor:pointer;text-align:center;transition:border .15s, transform .15s;
   }
   .char-card.sel{border-color:var(--green);transform:scale(1.06);background:#eafff7;}
-  .char-card canvas{display:block;}
   .char-card span{font-weight:bold;font-size:.95rem;}
-  /* خريطة المسار */
+  /* الخريطة */
   .map-wrap{position:relative;margin:6px auto;max-width:440px;}
   .map-wrap svg{width:100%;height:auto;display:block;}
   .map-node{cursor:pointer;}
   .map-node.locked{cursor:default;opacity:.55;filter:grayscale(1);}
-  .map-node circle.ring{transition:stroke .2s;}
   .map-node.playable circle.ring{animation:pulse 1.6s infinite;transform-origin:center;transform-box:fill-box;}
-  /* شاشة اللعب */
+  /* HUD */
   .hud{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap;margin-bottom:6px;}
-  #hearts{font-size:1.3rem;letter-spacing:2px;}
+  #hearts{font-size:1.25rem;letter-spacing:2px;}
   .meter{
     position:relative;background:#e8e2f7;border-radius:50px;height:22px;
     overflow:hidden;margin:4px 0 8px;border:2px solid #d5cbef;
   }
-  #meterFill{
-    height:100%;width:50%;border-radius:50px;
-    background:var(--green);
-    transition:width .3s ease, background .3s ease;
-  }
+  #meterFill{height:100%;width:50%;border-radius:50px;background:var(--green);transition:width .3s ease, background .3s ease;}
   .meter-label{
     position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
     font-size:.78rem;font-weight:bold;color:var(--text);pointer-events:none;
   }
   .game-wrap{position:relative;border-radius:18px;overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,.15);}
-  #gc{display:block;width:100%;height:auto;touch-action:manipulation;}
+  #gc{display:block;width:100%;height:auto;touch-action:none;}
   #flash{position:absolute;inset:0;pointer-events:none;opacity:0;}
   #flash.g{background:radial-gradient(circle,transparent 40%,rgba(6,214,160,.5));animation:flashA .45s ease;}
   #flash.r{background:radial-gradient(circle,transparent 30%,rgba(239,71,111,.55));animation:flashA .45s ease;}
   @keyframes flashA{0%{opacity:1}100%{opacity:0}}
   .controls{display:flex;gap:10px;justify-content:center;margin-top:10px;direction:ltr;}
   .ctrl{
-    flex:1;max-width:170px;
-    font-size:1.7rem;padding:12px 0;border:none;border-radius:18px;cursor:pointer;
+    flex:1;max-width:170px;font-size:1.5rem;padding:12px 0;border:none;border-radius:18px;cursor:pointer;
     background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;
-    box-shadow:0 5px 0 rgba(93,63,163,.35);
-    user-select:none;touch-action:manipulation;
+    box-shadow:0 5px 0 rgba(93,63,163,.35);user-select:none;touch-action:manipulation;font-weight:bold;
   }
   .ctrl:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(93,63,163,.35);}
-  .pausebtn{
-    border:none;background:var(--bg);border-radius:50px;
-    font-size:1rem;padding:5px 12px;cursor:pointer;font-weight:bold;color:var(--purple-dark);
+  .ctrl.jump{max-width:260px;background:linear-gradient(135deg,var(--green),var(--blue));box-shadow:0 5px 0 rgba(6,150,120,.35);}
+  /* تنبيهات */
+  #toast{
+    position:absolute;left:50%;bottom:90px;transform:translateX(-50%);
+    max-width:88%;padding:10px 18px;border-radius:16px;font-weight:bold;font-size:.95rem;
+    color:#fff;background:rgba(45,35,80,.92);text-align:center;z-index:20;
+    opacity:0;pointer-events:none;transition:opacity .25s;line-height:1.6;
   }
-  /* أسئلة البوابة */
+  #toast.show{opacity:1;}
+  #toast.good{background:rgba(4,150,110,.94);}
+  #toast.bad{background:rgba(210,50,90,.94);}
+  /* السوبرماركت */
+  .shelf-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0;}
+  .shelf-item{
+    background:linear-gradient(180deg,#fff, #f1ecff);
+    border:3px solid #d5cbef;border-radius:16px;
+    padding:10px 4px 6px;text-align:center;cursor:pointer;
+    font-family:inherit;transition:transform .12s, border .12s;
+  }
+  .shelf-item .pe{font-size:2rem;display:block;}
+  .shelf-item .pn{font-size:.72rem;font-weight:bold;color:var(--purple-dark);}
+  .shelf-item:active{transform:scale(.94);}
+  .shelf-item.found{border-color:var(--green);background:#d9f9ee;pointer-events:none;}
+  .shelf-item.wrong{border-color:var(--red);background:#ffe3ea;animation:shake .3s;}
+  .list-paper{
+    background:#fffdf0;border:3px dashed var(--yellow);border-radius:18px;
+    padding:14px;margin:10px auto;max-width:320px;text-align:center;
+  }
+  .list-paper .li{font-size:1.05rem;font-weight:bold;margin:4px 0;}
+  .cartbar{display:flex;gap:6px;align-items:center;justify-content:center;flex-wrap:wrap;
+    background:var(--bg);border-radius:14px;padding:8px;margin-top:8px;min-height:44px;font-size:1.3rem;}
+  /* المهرجان */
+  .whack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0;}
+  .hole{
+    position:relative;aspect-ratio:1;border:none;border-radius:20px;cursor:pointer;
+    background:linear-gradient(180deg,#c8b6ff,#a78bfa);
+    font-family:inherit;overflow:hidden;padding:0;
+    box-shadow:inset 0 -6px 0 rgba(93,63,163,.3);
+  }
+  .hole .tent{font-size:2rem;opacity:.5;}
+  .hole .popup{
+    position:absolute;inset:4px;border-radius:16px;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;animation:popIn .18s ease;
+  }
+  .hole .popup.myth{background:#3d3554;color:#fff;}
+  .hole .popup.hope{background:#ffe3f1;color:#c1256b;}
+  .hole .popup .pe{font-size:1.9rem;}
+  .hole .popup .pt{font-size:.72rem;font-weight:bold;line-height:1.3;padding:0 4px;}
+  /* عناصر عامة */
   .answer{
-    display:block;width:100%;text-align:right;
-    background:var(--bg);border:3px solid transparent;border-radius:18px;
-    padding:13px 16px;font-size:1.02rem;font-family:inherit;font-weight:600;color:var(--text);
+    display:block;width:100%;text-align:right;background:var(--bg);
+    border:3px solid transparent;border-radius:18px;padding:13px 16px;
+    font-size:1.02rem;font-family:inherit;font-weight:600;color:var(--text);
     cursor:pointer;margin-bottom:10px;transition:border .15s, background .15s;
   }
   .answer:hover{border-color:var(--purple);}
-  .answer.correct{background:#d9f9ee;border-color:var(--green);}
-  .answer.wrong{background:#ffe3ea;border-color:var(--red);animation:shake .35s ease;}
-  .answer:disabled{cursor:default;opacity:.9;}
-  .feedback{
-    border-radius:18px;padding:13px 16px;margin:10px 0;
-    font-size:.98rem;line-height:1.8;animation:pop .3s ease;
-  }
-  .feedback.good{background:#d9f9ee;border:2px solid var(--green);}
-  .feedback.bad{background:#ffe3ea;border:2px solid var(--red);}
   .card-item{
     background:linear-gradient(135deg,#fff,var(--bg));
     border:3px solid var(--purple);border-radius:22px;
-    padding:20px 16px;text-align:center;font-size:1.1rem;font-weight:bold;
+    padding:18px 16px;text-align:center;font-size:1.05rem;font-weight:bold;
     margin:12px 0;animation:pop .3s ease;
   }
-  .card-item .emoji{font-size:2.8rem;display:block;margin-bottom:6px;}
   .fact-box{
     background:#fff8e1;border:2px dashed var(--yellow);border-radius:18px;
     padding:12px 16px;margin:12px 0;font-size:.98rem;line-height:1.8;text-align:right;
@@ -161,11 +170,19 @@
     text-align:center;margin:12px 0;
   }
   .cert .name{font-size:1.5rem;color:var(--pink);font-weight:bold;margin:8px 0;}
-  #confetti{position:absolute;inset:0;pointer-events:none;z-index:5;}
-  .muted{color:#8a80a8;font-size:.88rem;}
+  #confetti{position:absolute;inset:0;pointer-events:none;z-index:30;}
+  .muted{color:#8a80a8;font-size:.88rem;line-height:1.8;}
   .heart{color:var(--red);}
-  .legend{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:8px 0;}
-  .legend .chip{font-size:.85rem;}
+  .howto{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:8px 0;}
+  .howto .chip{font-size:.83rem;}
+  .pausebtn{border:none;background:var(--bg);border-radius:50px;font-size:1rem;padding:5px 12px;cursor:pointer;font-weight:bold;color:var(--purple-dark);}
+  .sunbtn{
+    position:absolute;left:50%;bottom:22px;transform:translateX(-50%);
+    border:none;border-radius:50px;padding:14px 30px;font-size:1.25rem;font-weight:bold;
+    font-family:inherit;color:#7a4d00;background:linear-gradient(135deg,#ffd166,#ffb703);
+    box-shadow:0 6px 0 rgba(180,120,0,.4);cursor:pointer;z-index:15;
+    animation:pulse .5s infinite;
+  }
 </style>
 </head>
 <body>
@@ -177,16 +194,9 @@
 <script>
 "use strict";
 
-/* ================= الحالة العامة والحفظ ================= */
-const state = {
-  name: "",
-  gender: "boy",       // boy أو girl
-  stars: [0,0,0,0,0],  // نجوم المراحل الخمس
-  score: 0,
-};
-function saveState(){
-  try{ localStorage.setItem("tafaul-save", JSON.stringify(state)); }catch(e){}
-}
+/* ================= الحالة والحفظ ================= */
+const state = { name:"", gender:"boy", stars:[0,0,0,0,0], score:0 };
+function saveState(){ try{ localStorage.setItem("tafaul-save", JSON.stringify(state)); }catch(e){} }
 function loadState(){
   try{
     const s = JSON.parse(localStorage.getItem("tafaul-save"));
@@ -201,6 +211,11 @@ function loadState(){
 function esc(t){ return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 
 const screen = document.getElementById("screen");
+let L = null; // بيانات المرحلة النشطة
+function stopLevel(){
+  if(L){ L.active = false; (L.timers||[]).forEach(t=>{clearTimeout(t);clearInterval(t);}); }
+  L = null;
+}
 function render(html){
   screen.innerHTML = html;
   screen.classList.remove("pop"); void screen.offsetWidth; screen.classList.add("pop");
@@ -208,7 +223,7 @@ function render(html){
 }
 function starsOf(n){ return "⭐".repeat(n) + "☆".repeat(Math.max(0,3-n)); }
 
-/* ================= أصوات ================= */
+/* ================= الأصوات ================= */
 let audioCtx = null;
 function beep(freq, dur=0.15, type="sine", vol=0.14){
   try{
@@ -225,8 +240,10 @@ const soundGood = () => { beep(660,.1); setTimeout(()=>beep(880,.15),90); };
 const soundBad  = () => beep(170,.28,"square");
 const soundHurt = () => { beep(200,.15,"square"); setTimeout(()=>beep(130,.3,"square"),120); };
 const soundWin  = () => [523,659,784,1047].forEach((f,i)=>setTimeout(()=>beep(f,.2),i*140));
+const soundJump = () => beep(500,.12,"triangle",.1);
+const soundWhack= () => { beep(300,.06,"square",.12); setTimeout(()=>beep(700,.1),60); };
 
-/* ================= قصاصات الاحتفال ================= */
+/* ================= قصاصات ================= */
 function confetti(){
   const c = document.getElementById("confetti");
   c.width = c.offsetWidth; c.height = c.offsetHeight;
@@ -254,42 +271,33 @@ function confetti(){
 function drawKid(c, x, y, ph, gender, face, scale=1){
   const swing = Math.sin(ph);
   c.save(); c.translate(x,y); c.scale(scale,scale);
-  // الظل
   c.fillStyle = "rgba(0,0,0,.16)";
   c.beginPath(); c.ellipse(0,56,26,7,0,0,7); c.fill();
-  // الساقان
   c.strokeStyle = "#3b5bdb"; c.lineWidth = 10; c.lineCap = "round";
   c.beginPath(); c.moveTo(-8,18); c.lineTo(-8+swing*9,48); c.stroke();
   c.beginPath(); c.moveTo(8,18); c.lineTo(8-swing*9,48); c.stroke();
-  // الحذاء
   c.fillStyle = "#22223b";
   c.beginPath(); c.ellipse(-8+swing*9,51,8,4.5,0,0,7); c.fill();
   c.beginPath(); c.ellipse(8-swing*9,51,8,4.5,0,0,7); c.fill();
-  // الذراعان
   const shirt = gender==="girl" ? "#ff7eb3" : "#06d6a0";
   c.strokeStyle = shirt; c.lineWidth = 8;
   c.beginPath(); c.moveTo(-13,-6); c.lineTo(-21-swing*6,14); c.stroke();
   c.beginPath(); c.moveTo(13,-6); c.lineTo(21+swing*6,14); c.stroke();
-  // اليدان
   c.fillStyle = "#ffd9b3";
   c.beginPath(); c.arc(-21-swing*6,16,4.5,0,7); c.fill();
   c.beginPath(); c.arc(21+swing*6,16,4.5,0,7); c.fill();
-  // الجسم
   c.fillStyle = shirt;
   c.beginPath();
   if(c.roundRect) c.roundRect(-16,-14,32,36,10); else c.rect(-16,-14,32,36);
   c.fill();
-  if(gender==="girl"){ // تنورة
+  if(gender==="girl"){
     c.beginPath(); c.moveTo(-16,14); c.lineTo(16,14); c.lineTo(22,26); c.lineTo(-22,26); c.closePath();
     c.fillStyle = "#e0509b"; c.fill();
   }
-  // شارة التوعية على الصدر
-  c.fillStyle = "#ffd166"; c.font = "11px serif"; c.textAlign="center";
+  c.font = "11px serif"; c.textAlign="center";
   c.fillText("🎗️", 0, 2);
-  // الرأس
   c.fillStyle = "#ffd9b3";
   c.beginPath(); c.arc(0,-34,20,0,7); c.fill();
-  // الشعر
   c.fillStyle = "#4a3728";
   if(gender==="girl"){
     c.beginPath(); c.arc(0,-38,21,Math.PI*0.9,Math.PI*2.1); c.fill();
@@ -297,7 +305,6 @@ function drawKid(c, x, y, ph, gender, face, scale=1){
     if(c.roundRect){ c.roundRect(-24,-42,9,32,4); c.roundRect(15,-42,9,32,4); }
     else { c.rect(-24,-42,9,32); c.rect(15,-42,9,32); }
     c.fill();
-    // فيونكة
     c.fillStyle = "#ff4f9a";
     c.beginPath(); c.moveTo(10,-52); c.lineTo(20,-58); c.lineTo(20,-46); c.closePath(); c.fill();
     c.beginPath(); c.moveTo(10,-52); c.lineTo(2,-58); c.lineTo(2,-46); c.closePath(); c.fill();
@@ -306,233 +313,231 @@ function drawKid(c, x, y, ph, gender, face, scale=1){
     c.beginPath(); c.arc(0,-40,20,Math.PI,Math.PI*2); c.fill();
     c.beginPath(); c.arc(-14,-38,6,0,7); c.arc(14,-38,6,0,7); c.fill();
   }
-  // العينان
   c.fillStyle = "#2d2350";
-  if(face==="wow"){
-    c.beginPath(); c.arc(-7,-36,3.4,0,7); c.arc(7,-36,3.4,0,7); c.fill();
-  } else {
-    c.beginPath(); c.arc(-7,-36,2.6,0,7); c.arc(7,-36,2.6,0,7); c.fill();
-  }
-  // الخدود
+  const eyeR = face==="wow" ? 3.4 : 2.6;
+  c.beginPath(); c.arc(-7,-36,eyeR,0,7); c.arc(7,-36,eyeR,0,7); c.fill();
   c.fillStyle = "rgba(255,126,179,.5)";
   c.beginPath(); c.arc(-13,-29,3.4,0,7); c.arc(13,-29,3.4,0,7); c.fill();
-  // الفم
   c.strokeStyle = "#c1445f"; c.lineWidth = 2.4; c.lineCap="round";
+  if(face==="sad"){ c.beginPath(); c.arc(0,-22,6,Math.PI*1.15,Math.PI*1.85); c.stroke(); }
+  else if(face==="wow"){ c.fillStyle="#c1445f"; c.beginPath(); c.arc(0,-25,4,0,7); c.fill(); }
+  else { c.beginPath(); c.arc(0,-30,7,Math.PI*0.15,Math.PI*0.85); c.stroke(); }
+  c.restore();
+}
+/* الشخصية من الخلف (لممر المدرسة) */
+function drawKidBack(c, x, y, ph, gender, scale=1){
+  const swing = Math.sin(ph);
+  c.save(); c.translate(x,y); c.scale(scale,scale);
+  c.fillStyle = "rgba(0,0,0,.16)";
+  c.beginPath(); c.ellipse(0,56,26,7,0,0,7); c.fill();
+  c.strokeStyle = "#3b5bdb"; c.lineWidth = 10; c.lineCap = "round";
+  c.beginPath(); c.moveTo(-8,18); c.lineTo(-8+swing*9,48); c.stroke();
+  c.beginPath(); c.moveTo(8,18); c.lineTo(8-swing*9,48); c.stroke();
+  c.fillStyle = "#22223b";
+  c.beginPath(); c.ellipse(-8+swing*9,51,8,4.5,0,0,7); c.fill();
+  c.beginPath(); c.ellipse(8-swing*9,51,8,4.5,0,0,7); c.fill();
+  const shirt = gender==="girl" ? "#ff7eb3" : "#06d6a0";
+  c.strokeStyle = shirt; c.lineWidth = 8;
+  c.beginPath(); c.moveTo(-13,-6); c.lineTo(-21+swing*6,14); c.stroke();
+  c.beginPath(); c.moveTo(13,-6); c.lineTo(21-swing*6,14); c.stroke();
+  c.fillStyle = shirt;
   c.beginPath();
-  if(face==="sad")      c.arc(0,-22,6,Math.PI*1.15,Math.PI*1.85);
-  else if(face==="wow"){ c.fillStyle="#c1445f"; c.arc(0,-25,4,0,7); c.fill(); }
-  else                  c.arc(0,-30,7,Math.PI*0.15,Math.PI*0.85);
-  if(face!=="wow") c.stroke();
+  if(c.roundRect) c.roundRect(-16,-14,32,36,10); else c.rect(-16,-14,32,36);
+  c.fill();
+  if(gender==="girl"){
+    c.beginPath(); c.moveTo(-16,14); c.lineTo(16,14); c.lineTo(22,26); c.lineTo(-22,26); c.closePath();
+    c.fillStyle = "#e0509b"; c.fill();
+  }
+  // حقيبة الظهر
+  c.fillStyle = "#ef476f";
+  c.beginPath();
+  if(c.roundRect) c.roundRect(-12,-12,24,28,8); else c.rect(-12,-12,24,28);
+  c.fill();
+  c.strokeStyle = "#c1304f"; c.lineWidth = 3;
+  c.beginPath(); c.moveTo(0,-12); c.lineTo(0,16); c.stroke();
+  // الرأس من الخلف: شعر كامل
+  c.fillStyle = "#4a3728";
+  c.beginPath(); c.arc(0,-34,20,0,7); c.fill();
+  if(gender==="girl"){
+    // ضفيرتان
+    c.beginPath();
+    if(c.roundRect){ c.roundRect(-26,-36,9,30,4); c.roundRect(17,-36,9,30,4); }
+    else { c.rect(-26,-36,9,30); c.rect(17,-36,9,30); }
+    c.fill();
+    c.fillStyle = "#ff4f9a";
+    c.beginPath(); c.arc(-21,-8,4,0,7); c.arc(21,-8,4,0,7); c.fill();
+  }
   c.restore();
 }
 
-/* ================= خلفيات البيئات ================= */
-function bgHome(c,W,H,t){
-  c.fillStyle="#ffe9d6"; c.fillRect(0,0,W,H*.72);            // جدار
-  c.fillStyle="#e8b88a"; c.fillRect(0,H*.72,W,H*.28);        // أرضية
-  // نافذة
-  c.fillStyle="#bde0fe"; c.fillRect(W*.62,60,130,110);
-  c.strokeStyle="#8f6a48"; c.lineWidth=8; c.strokeRect(W*.62,60,130,110);
-  c.beginPath(); c.moveTo(W*.62+65,60); c.lineTo(W*.62+65,170); c.stroke();
-  c.fillStyle="#fff"; // غيمة خلف النافذة
-  c.beginPath(); c.arc(W*.62+35+Math.sin(t/2)*10,95,14,0,7); c.arc(W*.62+55+Math.sin(t/2)*10,90,17,0,7); c.arc(W*.62+75+Math.sin(t/2)*10,96,13,0,7); c.fill();
-  // ستارة
-  c.fillStyle="#ff9eb5"; c.fillRect(W*.60,52,18,126); c.fillRect(W*.62+124,52,18,126);
-  // لوحة عائلية
-  c.fillStyle="#fff"; c.fillRect(70,70,86,70);
-  c.strokeStyle="#c19a6b"; c.lineWidth=6; c.strokeRect(70,70,86,70);
-  c.font="34px serif"; c.textAlign="center"; c.fillText("👨‍👩‍👧‍👦",113,118);
-  // كنبة
-  c.fillStyle="#7c5cbf";
-  c.beginPath(); if(c.roundRect) c.roundRect(30,H*.55,150,70,16); else c.rect(30,H*.55,150,70); c.fill();
-  c.fillStyle="#9d7fe0";
-  c.beginPath(); if(c.roundRect) c.roundRect(40,H*.51,55,34,10); else c.rect(40,H*.51,55,34); c.fill();
-  c.beginPath(); if(c.roundRect) c.roundRect(115,H*.51,55,34,10); else c.rect(115,H*.51,55,34); c.fill();
-  // نبتة
-  c.fillStyle="#b5651d"; c.fillRect(W-70,H*.60,34,40);
-  c.font="44px serif"; c.fillText("🪴",W-52,H*.62);
+/* ================= أدوات مشتركة للمراحل ================= */
+function hudHtml(goalLabel){
+  return `
+    <div class="hud">
+      <span id="hearts">❤️❤️❤️</span>
+      <span class="chip" id="goalChip">${goalLabel}</span>
+      <span class="chip">🏆 <span id="scoreEl">0</span></span>
+      <span class="chip" id="timerChip" style="display:none">⏱ <span id="timerEl"></span></span>
+    </div>
+    <div class="meter">
+      <div id="meterFill"></div>
+      <span class="meter-label">مؤشر الصحة 💚</span>
+    </div>`;
 }
-function bgSchool(c,W,H,t){
-  c.fillStyle="#fdf6e3"; c.fillRect(0,0,W,H*.72);
-  c.fillStyle="#c8b6e2"; c.fillRect(0,H*.72,W,H*.28);
-  // سبورة
-  c.fillStyle="#2e6e4e"; c.fillRect(W*.28,55,W*.44,120);
-  c.strokeStyle="#b5651d"; c.lineWidth=8; c.strokeRect(W*.28,55,W*.44,120);
-  c.fillStyle="#fff"; c.font="bold 26px sans-serif"; c.textAlign="center";
-  c.fillText("أهلاً أبطال!", W*.5, 105);
-  c.font="20px serif"; c.fillText("🎗️ + 📚 = 💪", W*.5, 145);
-  // ساعة
-  c.fillStyle="#fff"; c.beginPath(); c.arc(90,90,26,0,7); c.fill();
-  c.strokeStyle="#5d3fa3"; c.lineWidth=4; c.stroke();
-  c.beginPath(); c.moveTo(90,90); c.lineTo(90,74); c.moveTo(90,90); c.lineTo(102,90); c.lineWidth=3; c.stroke();
-  // حقائب على الجدار
-  c.font="34px serif"; c.fillText("🎒",W-60,120); c.fillText("🎒",W-110,120);
-  // خزانة كتب
-  c.fillStyle="#b5651d"; c.fillRect(20,H*.46,90,110);
-  c.font="22px serif"; c.fillText("📕📗",65,H*.46+38); c.fillText("📘📙",65,H*.46+78);
-}
-function bgMarket(c,W,H,t){
-  c.fillStyle="#e3f2fd"; c.fillRect(0,0,W,H*.72);
-  c.fillStyle="#b0bec5"; c.fillRect(0,H*.72,W,H*.28);
-  // لافتة
-  c.fillStyle="#06d6a0";
-  c.beginPath(); if(c.roundRect) c.roundRect(W*.2,40,W*.6,54,14); else c.rect(W*.2,40,W*.6,54); c.fill();
-  c.fillStyle="#fff"; c.font="bold 26px sans-serif"; c.textAlign="center";
-  c.fillText("🛒 سوبرماركت الصحة", W*.5, 75);
-  // رفوف
-  for(let r=0;r<2;r++){
-    const y = 130 + r*95;
-    c.fillStyle="#d7ccc8"; c.fillRect(30,y,W-60,66);
-    c.fillStyle="#a1887f"; c.fillRect(30,y+66,W-60,10);
-    c.font="30px serif";
-    const goods = r===0 ? ["🍎","🥦","🍊","🥛","🍞","🍓"] : ["🥚","🥕","🍌","🧀","🍇","💧"];
-    goods.forEach((g,i)=> c.fillText(g, 70+i*((W-130)/5), y+45));
+function updateHUD(){
+  if(!L) return;
+  const h = document.getElementById("hearts");
+  if(h) h.textContent = "❤️".repeat(Math.max(0,L.hearts)) + "🤍".repeat(Math.max(0,3-L.hearts));
+  const s = document.getElementById("scoreEl");
+  if(s) s.textContent = L.score;
+  const m = document.getElementById("meterFill");
+  if(m){
+    m.style.width = L.meter + "%";
+    m.style.background = L.meter > 60 ? "linear-gradient(90deg,#06d6a0,#4cc9f0)"
+                       : L.meter > 30 ? "linear-gradient(90deg,#ff9f1c,#ffd166)"
+                       : "linear-gradient(90deg,#ef476f,#ff8fa3)";
   }
 }
-function bgPark(c,W,H,t){
-  const sky = c.createLinearGradient(0,0,0,H*.72);
-  sky.addColorStop(0,"#8ecae6"); sky.addColorStop(1,"#cdeffd");
-  c.fillStyle=sky; c.fillRect(0,0,W,H*.72);
-  c.fillStyle="#8fd14f"; c.fillRect(0,H*.72,W,H*.28);
-  // شمس
-  c.fillStyle="#ffd166"; c.beginPath(); c.arc(W-80,80,34,0,7); c.fill();
-  c.strokeStyle="#ffd166"; c.lineWidth=4;
-  for(let i=0;i<8;i++){
-    const a = i*Math.PI/4 + t*.3;
-    c.beginPath(); c.moveTo(W-80+Math.cos(a)*42,80+Math.sin(a)*42);
-    c.lineTo(W-80+Math.cos(a)*54,80+Math.sin(a)*54); c.stroke();
+let toastTimer = null;
+function toast(msg, type="", ms=1900){
+  let t = document.getElementById("toast");
+  if(!t){
+    t = document.createElement("div"); t.id = "toast";
+    document.getElementById("app").appendChild(t);
   }
-  // غيوم
-  c.fillStyle="#fff";
-  [[100,70],[240,110]].forEach(([gx,gy],i)=>{
-    const dx = Math.sin(t/3+i)*14;
-    c.beginPath(); c.arc(gx+dx,gy,16,0,7); c.arc(gx+22+dx,gy-6,19,0,7); c.arc(gx+44+dx,gy,15,0,7); c.fill();
-  });
-  // أشجار
-  [[60,H*.58],[W-70,H*.60]].forEach(([tx,ty])=>{
-    c.fillStyle="#8d5a2b"; c.fillRect(tx-8,ty,16,54);
-    c.fillStyle="#2d9e46";
-    c.beginPath(); c.arc(tx,ty-18,34,0,7); c.arc(tx-24,ty+2,24,0,7); c.arc(tx+24,ty+2,24,0,7); c.fill();
-  });
-  // زهور
-  c.font="22px serif"; c.textAlign="center";
-  ["🌷","🌼","🌸","🌻"].forEach((f,i)=> c.fillText(f, 50+i*((W-100)/3), H*.78));
+  t.className = ""; void t.offsetWidth;
+  t.innerHTML = msg; t.className = "show " + type;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>{ t.className = ""; }, ms);
 }
-function bgFest(c,W,H,t){
-  const sky = c.createLinearGradient(0,0,0,H*.72);
-  sky.addColorStop(0,"#c8b6ff"); sky.addColorStop(1,"#ffd6e8");
-  c.fillStyle=sky; c.fillRect(0,0,W,H*.72);
-  c.fillStyle="#e0aaff"; c.fillRect(0,H*.72,W,H*.28);
-  // لافتة المهرجان
-  c.strokeStyle="#7c5cbf"; c.lineWidth=5;
-  c.beginPath(); c.moveTo(20,60); c.quadraticCurveTo(W/2,110,W-20,60); c.stroke();
-  const flagColors=["#ff7eb3","#ffd166","#06d6a0","#4cc9f0","#ef476f","#7c5cbf","#ff9f1c"];
-  for(let i=0;i<7;i++){
-    const fx = 40 + i*(W-80)/6;
-    const fy = 60 + Math.sin((fx/W)*Math.PI)*46;
-    c.fillStyle=flagColors[i];
-    c.beginPath(); c.moveTo(fx-13,fy); c.lineTo(fx+13,fy); c.lineTo(fx,fy+26); c.closePath(); c.fill();
+function flash(cls){
+  const f = document.getElementById("flash");
+  if(!f) return;
+  f.className = ""; void f.offsetWidth; f.className = cls;
+}
+function gain(pts, meterUp, msg){
+  if(!L) return;
+  L.score += pts; L.meter = Math.min(100, L.meter + meterUp);
+  if(msg) toast(msg, "good", 1500);
+  flash("g"); soundGood(); updateHUD();
+}
+function damage(meterDown, msg){
+  if(!L) return false;
+  L.meter -= meterDown;
+  if(msg) toast(msg, "bad", 2100);
+  flash("r"); soundBad();
+  if(L.meter <= 0){
+    L.hearts--; L.meter = 45;
+    toast("💔 انخفض مؤشر الصحة كثيراً! خسرت قلباً", "bad", 2300);
+    soundHurt();
   }
-  c.fillStyle="#5d3fa3"; c.font="bold 24px sans-serif"; c.textAlign="center";
-  c.fillText("🎗️ مهرجان الأمل والتوعية 🎗️", W/2, 150);
-  // بالونات
-  c.font="40px serif";
-  [[70,220],[W-70,200],[W/2,190]].forEach(([bx,by],i)=>{
-    c.fillText("🎈", bx, by + Math.sin(t*1.2+i*2)*10);
-  });
-  // خيمة
-  c.fillStyle="#ff7eb3";
-  c.beginPath(); c.moveTo(40,H*.66); c.lineTo(110,H*.44); c.lineTo(180,H*.66); c.closePath(); c.fill();
-  c.fillStyle="#fff"; c.fillRect(95,H*.56,30,H*.10);
+  L.meter = Math.max(0, Math.min(100, L.meter));
+  updateHUD();
+  if(L.hearts <= 0){ failLevel(); return true; }
+  return false;
+}
+function loseHeart(msg){
+  if(!L) return false;
+  L.hearts--;
+  if(msg) toast("💔 " + msg, "bad", 2300);
+  flash("r"); soundHurt(); updateHUD();
+  if(L.hearts <= 0){ failLevel(); return true; }
+  return false;
 }
 
-/* ================= بيانات المراحل ================= */
-const WORLDS = [
+function completeLevel(statsHtml){
+  const i = L.i, hearts = L.hearts, score = L.score;
+  const stars = Math.max(1, hearts);
+  state.stars[i] = Math.max(state.stars[i], stars);
+  state.score += score;
+  saveState();
+  stopLevel();
+  soundWin(); confetti();
+  const w = WORLD_META[i];
+  const next = i < 4 ? i+1 : null;
+  render(`
+    <div class="center">
+      <span class="big-emoji">${stars===3?"🏆":stars===2?"🎉":"💪"}</span>
+      <h2>أنهيت مهمة ${w.name}!</h2>
+      <div class="stars">${starsOf(stars)}</div>
+      <p>${statsHtml}</p>
+      ${stars<3?`<p class="muted">حافظ على قلوبك الثلاثة لتحصل على ٣ نجوم! ⭐⭐⭐</p>`:`<p class="muted">مهمة مثالية بدون خسارة أي قلب! 🌟</p>`}
+      <div class="fact-box">💡 <b>تذكّر:</b> ${w.tip}</div>
+      ${next!==null
+        ? `<button class="btn" onclick="showIntro(${next})">➡️ التالي: ${WORLD_META[next].icon} ${WORLD_META[next].name}</button>`
+        : `<button class="btn" onclick="showCertificate()">🎓 استلم شهادتك!</button>`}
+      <button class="btn small secondary" onclick="showMap()">🗺️ المسار</button>
+    </div>
+  `);
+}
+function failLevel(){
+  const i = L.i;
+  const w = WORLD_META[i];
+  stopLevel();
+  render(`
+    <div class="center">
+      <span class="big-emoji">💔</span>
+      <h2>نفدت القلوب!</h2>
+      <p>لا بأس يا ${esc(state.name)}، كل بطل يتعثر ثم ينهض أقوى! 💪</p>
+      <div class="fact-box">💡 <b>نصيحة:</b> ${w.failTip}</div>
+      <button class="btn" onclick="showIntro(${i})">🔁 حاول مرة أخرى</button>
+      <button class="btn small secondary" onclick="showMap()">🗺️ المسار</button>
+    </div>
+  `);
+}
+
+/* ================= تعريف العوالم ================= */
+const WORLD_META = [
   {
-    id:"home", icon:"🏠", name:"المنزل", bg:bgHome,
-    goal:10, fallSpeed:170, spawnMs:950, hazardChance:.07,
-    mission:"استيقظ بطلنا في الصباح! اجمع العادات الصحية في المنزل وابتعد عن الضارة.",
-    tip:"جسمك يتجدد كل يوم! الماء والفواكه والنوم المبكر تجعل خلاياك قوية وسعيدة.",
-    good:[["🍎","تفاحة مفيدة"],["💧","ماء منعش"],["🥕","جزر مقرمش"],["🥛","حليب مقوٍّ"],["🍌","موزة طاقة"],["😴","نوم مبكر"]],
-    bad:[["🍭","سكر كثير"],["🥤","مشروب غازي"],["🍟","مقليات"],["📺","شاشة بلا حركة"]],
-    hazard:["🚬","دخان السجائر! خطر على رئتيك"],
-    gate:[
-      {q:"ما أفضل مشروب لجسمك؟", a:["الماء 💧","المشروبات الغازية 🥤","العصير الصناعي 🧃"], correct:0,
-       why:"الماء يساعد كل خلية في جسمك على العمل بنشاط! المشروبات السكرية أحياناً فقط."},
-      {q:"هل الجلوس بجانب شخص يدخّن آمن؟", a:["نعم، ما دمتُ لا أدخّن","لا، الدخان يضر من حوله أيضاً"], correct:1,
-       why:"التدخين السلبي يؤذي رئتي من يجلس قرب المدخن ويزيد خطر الأمراض. ابتعد عن أماكن التدخين!"},
-    ],
+    icon:"🏠", name:"المنزل", type:"استكشاف بانورامي",
+    desc:"استيقظ بطلنا في بيت واسع! <b>اسحب الشاشة يميناً ويساراً</b> لتنظر حول الغرف كأنك بداخلها، وابحث عن <b>6 اختيارات صحية</b> مخبأة قبل انتهاء الوقت.",
+    how:["👆 اسحب لتنظر حولك","🔍 اضغط الأشياء الصحية","⚠️ الأشياء الضارة تنقص صحتك","⏱ انتبه للوقت!"],
+    tip:"بيتك مليء بالاختيارات: الماء والفواكه والنظافة تجعل خلاياك قوية، والدخان ممنوع في بيوت الأبطال!",
+    failTip:"انظر جيداً في كل أنحاء البيت (اسحب الشاشة!) واضغط فقط على الأشياء الصحية مثل 💧🍎🥛، ولا تضغط الحلويات والدخان!",
+    start:()=>hmStart(),
   },
   {
-    id:"school", icon:"🏫", name:"المدرسة", bg:bgSchool,
-    goal:12, fallSpeed:190, spawnMs:900, hazardChance:.08,
-    mission:"يوم دراسي جديد! اجمع العادات الصحية في المدرسة وكن قدوة لأصدقائك.",
-    tip:"غسل اليدين، الفسحة النشيطة، والفطور الصحي تجعل يومك المدرسي مليئاً بالطاقة!",
-    good:[["🍎","تفاحة الفسحة"],["🥪","ساندويتش صحي"],["🧼","غسل اليدين"],["⚽","لعب مع الأصدقاء"],["📚","معلومة مفيدة"],["💧","ماء منعش"]],
-    bad:[["🍩","دونات سكرية"],["🍬","حلوى كثيرة"],["🥤","مشروب غازي"],["🎮","جلوس بلا حركة"]],
-    hazard:["🦠","الجراثيم! اغسل يديك دائماً"],
-    gate:[
-      {q:"صديقك في الصف يتعالج من السرطان. هل تلعب معه؟", a:["نعم! السرطان ليس معدياً 🤗","لا، قد أُصاب بالعدوى"], correct:0,
-       why:"السرطان لا ينتقل أبداً باللمس أو اللعب أو مشاركة الطعام. صديقك يحتاج ضحكتك ولعبك معه!"},
-      {q:"لماذا نغسل أيدينا قبل الأكل؟", a:["لإزالة الجراثيم وحماية أجسامنا","لتصبح رائحتها جميلة فقط","لا فائدة من ذلك"], correct:0,
-       why:"الجراثيم لا تُرى بالعين! غسل اليدين بالماء والصابون يحمي جسمك كله."},
-    ],
+    icon:"🏫", name:"ممر المدرسة", type:"ركض ثلاثي الأبعاد",
+    desc:"اركض داخل <b>ممر المدرسة ثلاثي الأبعاد</b>! مع كل سؤال ستظهر <b>بوابتان</b> في نهاية الممر — اختر جهة الإجابة الصحيحة واعبر من بوابتها قبل فوات الأوان!",
+    how:["🏃 أنت تركض تلقائياً","⬅️➡️ تحرك نحو البوابة الصحيحة","🚪 8 بوابات معرفة","❌ البوابة الخاطئة تنقص صحتك"],
+    tip:"السرطان ليس معدياً ولا ذنب أحد — شارك أصدقاءك هذه الحقائق لتكونوا أبطالاً معاً!",
+    failTip:"اقرأ السؤال أعلى الشاشة بسرعة، وتحرك مبكراً نحو جهة الإجابة الصحيحة قبل وصول البوابات!",
+    start:()=>scStart(),
   },
   {
-    id:"market", icon:"🛒", name:"السوبرماركت", bg:bgMarket,
-    goal:14, fallSpeed:210, spawnMs:850, hazardChance:.08,
-    mission:"مهمة التسوق! ساعد بطلنا في اختيار المشتريات الصحية وتجنب المغريات الضارة.",
+    icon:"🛒", name:"السوبرماركت", type:"تحدي الذاكرة",
+    desc:"معك <b>قائمة تسوق صحية</b> — احفظها جيداً لأنها ستختفي! ثم ابحث عنها بين رفوف السوبرماركت المليئة بالمغريات، واملأ عربتك قبل انتهاء الوقت. 3 جولات تزداد صعوبة!",
+    how:["📝 احفظ القائمة قبل أن تختفي","🛒 اضغط منتجات قائمتك فقط","🍫 المنتجات الضارة تنقص صحتك","⏱ لكل جولة وقت محدد"],
     tip:"نصف طبقك خضار وفواكه ملونة = دروع قوية تحمي خلايا جسمك!",
-    good:[["🥦","بروكلي البطل"],["🍊","برتقال فيتامين"],["🥛","حليب مقوٍّ"],["🍞","خبز أسمر"],["🍓","فراولة لذيذة"],["🥚","بيض مفيد"]],
-    bad:[["🍫","شوكولاتة كثيرة"],["🌭","وجبات مصنّعة"],["🍟","شيبس مقلي"],["🥤","مشروب غازي"]],
-    hazard:["🛒","عربة مسرعة! انتبه"],
-    gate:[
-      {q:"لماذا الخضار والفواكه مهمة لأجسامنا؟", a:["تعطي خلايانا دروعاً تحميها","لألوانها الجميلة فقط","لأنها رخيصة الثمن"], correct:0,
-       why:"الخضار والفواكه مليئة بالفيتامينات التي تحمي الخلايا وتقلل خطر الأمراض!"},
-      {q:"الأكل المصنّع والمقلي كل يوم...", a:["مفيد جداً للجسم","يتعب الجسم مع الوقت","يقوّي العظام"], correct:1,
-       why:"قليل منه أحياناً لا بأس، لكن كل يوم يُتعب جسمك. التنوع الصحي هو السر!"},
-    ],
+    failTip:"ركّز في حفظ القائمة قبل اختفائها، وتجاهل الحلويات والمقليات مهما كانت مغرية!",
+    start:()=>mkStart(),
   },
   {
-    id:"park", icon:"🌳", name:"الحديقة", bg:bgPark,
-    goal:16, fallSpeed:230, spawnMs:800, hazardChance:.09,
-    mission:"يوم مشمس في الحديقة! العب وتحرك واحمِ نفسك من الشمس القوية.",
+    icon:"🌳", name:"الحديقة", type:"عدّاء وقفز",
+    desc:"انطلق في <b>سباق جري حقيقي</b> داخل الحديقة! <b>اقفز</b> فوق العقبات، اجمع الماء والفواكه في الهواء، وعندما تشتد الشمس ☀️ اضغط زر <b>واقي الشمس 🧴</b> بسرعة قبل أن تحرقك!",
+    how:["⬆️ اضغط للقفز فوق العقبات","🍉 اجمع العناصر الصحية","☀️ عند إنذار الشمس اضغط 🧴 بسرعة","🏁 اركض حتى نهاية المسار"],
     tip:"ساعة حركة يومياً + واقي الشمس والقبعة = جسم قوي وجلد سليم!",
-    good:[["🧴","واقي الشمس"],["🧢","قبعة الحماية"],["⚽","كرة القدم"],["🚴","دراجة هوائية"],["💧","ماء منعش"],["🍉","بطيخ منعش"]],
-    bad:[["🍦","آيس كريم كثير"],["🥤","مشروب غازي"],["🍟","مقليات"],["📱","جلوس بلا حركة"]],
-    hazard:["☀️","شمس حارقة بدون حماية!"],
-    gate:[
-      {q:"كيف نحمي جلدنا من الشمس القوية؟", a:["واقي الشمس والقبعة والظل","لا نحتاج أي حماية","نلعب وقت الظهيرة بلا قبعة"], correct:0,
-       why:"أشعة الشمس القوية تؤذي الجلد مع الوقت. الحماية تبقي جلدك سليماً وأنت تلعب بمرح!"},
-      {q:"كم نحتاج من الحركة يومياً؟", a:["حوالي ساعة لعب وحركة","لا شيء إطلاقاً","دقيقة واحدة تكفي"], correct:0,
-       why:"ساعة من اللعب والحركة يومياً تقوّي قلبك وعضلاتك وتجعل خلاياك نشيطة!"},
-    ],
+    failTip:"اقفز مبكراً قبل وصول العقبة، وعندما يظهر زر 🧴 الأصفر اضغطه فوراً!",
+    start:()=>pkStart(),
   },
   {
-    id:"fest", icon:"🎗️", name:"مهرجان التوعية", bg:bgFest,
-    goal:18, fallSpeed:250, spawnMs:750, hazardChance:.09,
-    mission:"المهمة الأخيرة! اجمع رسائل الأمل والدعم في مهرجان التوعية، وابتعد عن الخرافات والكلمات المحبطة.",
-    tip:"السرطان ليس معدياً وليس ذنب أحد. كلمة طيبة ورسالة أمل تصنع فرقاً كبيراً في قلب مريض!",
-    good:[["🎗️","شارة التوعية"],["💌","رسالة أمل"],["🌷","وردة للمرضى"],["🤝","يد العون"],["⭐","نجمة تفاؤل"],["🎈","بالون فرح"]],
-    bad:[["🙅","خرافة: لا تقترب منه!"],["👻","خوف بلا سبب"],["💤","تجاهل الصديق"],["😢","كلمة محبطة"]],
-    hazard:["📢","مكبر الإشاعات! لا تصدقها"],
-    gate:[
-      {q:"هل السرطان ذنب الشخص المريض؟", a:["لا! ليس ذنب أحد أبداً 💜","نعم، لأنه فعل شيئاً سيئاً"], correct:0,
-       why:"المرض ليس عقاباً أبداً. لا أحد يمرض لأنه كان سيئاً. نقف مع المريض ونساعده!"},
-      {q:"ما أجمل ما تقدمه لصديق يتعالج؟", a:["رسالة حب وزيارة ولعب هادئ","الابتعاد عنه حتى يُشفى","السخرية من سقوط شعره"], correct:0,
-       why:"شعره سينمو من جديد، وصداقتك هي أقوى دواء! كن قريباً منه دائماً. 🤗"},
-    ],
+    icon:"🎗️", name:"مهرجان التوعية", type:"اضرب الخرافة",
+    desc:"الخرافات المزعجة 👻 تفسد مهرجان التوعية! <b>اضرب كل خرافة</b> تطل برأسها من الخيام بسرعة، لكن <b>احذر</b>: لا تضرب رسائل الأمل 💌 أبداً! كن أسرع كلما تقدمت.",
+    how:["👻 اضرب الخرافات فور ظهورها","💌 لا تلمس رسائل الأمل!","💨 السرعة تزداد تدريجياً","🎯 اهزم 15 خرافة لتفوز"],
+    tip:"كل خرافة نصححها تحمي مريضاً من الوحدة: السرطان لا يُعدي، وليس ذنب أحد، والشفاء ممكن!",
+    failTip:"انظر للشكل قبل الضرب: الخرافة داكنة مع 👻، ورسالة الأمل وردية مع 💌🎗️ — اضرب الداكنة فقط!",
+    start:()=>fsStart(),
   },
 ];
 
 /* ================= شاشة البداية ================= */
 function showStart(){
+  stopLevel();
   render(`
     <div class="center">
       <span class="big-emoji">🎗️</span>
       <h1>تفاؤل — مغامرة الأبطال الصغار</h1>
-      <p>مغامرة حركية نجمع فيها العادات الصحية، نتخطى العقبات،
-      وننشر الأمل في ٥ أماكن مختلفة! <span class="heart">💜</span></p>
+      <p>٥ أماكن، ٥ ألعاب مختلفة تماماً: استكشف، اركض، احفظ، اقفز، وحطّم الخرافات! <span class="heart">💜</span></p>
       <input type="text" id="playerName" maxlength="16" placeholder="اكتب اسمك هنا يا بطل!" value="${esc(state.name)}">
       <p style="font-weight:bold;margin-top:4px">اختر شخصيتك:</p>
       <div class="char-pick">
@@ -547,9 +552,6 @@ function showStart(){
       <p class="muted">مناسبة للأعمار من 7 إلى 14 سنة</p>
     </div>
   `);
-  drawCharPreviews();
-}
-function drawCharPreviews(){
   const boyC = document.querySelector("#pickBoy canvas");
   const girlC = document.querySelector("#pickGirl canvas");
   if(boyC) drawKid(boyC.getContext("2d"), 55, 62, 0.6, "boy", "happy", 1.05);
@@ -564,18 +566,17 @@ function pickChar(g){
 function startGame(){
   const input = document.getElementById("playerName");
   state.name = (input.value||"").trim() || "البطل الصغير";
-  saveState();
-  beep(520,.15);
+  saveState(); beep(520,.15);
   showMap();
 }
 
-/* ================= خريطة المسار ================= */
+/* ================= الخريطة ================= */
 const NODE_POS = [[330,455],[85,365],[320,272],[85,182],[320,95]];
 function isUnlocked(i){ return i===0 || state.stars[i-1] > 0; }
 function allDone(){ return state.stars.every(s=>s>0); }
-
 function showMap(){
-  const nodes = WORLDS.map((w,i)=>{
+  stopLevel();
+  const nodes = WORLD_META.map((w,i)=>{
     const [x,y] = NODE_POS[i];
     const unlocked = isUnlocked(i);
     const done = state.stars[i] > 0;
@@ -591,13 +592,13 @@ function showMap(){
   }).join("");
   const certUnlocked = allDone();
   render(`
-    <div class="topbar" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:4px">
+    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:4px">
       <span class="chip">${state.gender==="girl"?"👧":"👦"} ${esc(state.name)}</span>
       <span class="chip">🏆 ${state.score}</span>
       <span class="chip">⭐ ${state.stars.reduce((a,b)=>a+b,0)} / 15</span>
     </div>
     <h2 class="center">🗺️ مسار المغامرة</h2>
-    <p class="center muted">أكمل كل مكان لتفتح الذي بعده!</p>
+    <p class="center muted">كل مكان لعبة مختلفة تماماً — أكملها لتفتح التالية!</p>
     <div class="map-wrap">
       <svg viewBox="0 0 400 520">
         <path d="M330,455 C180,470 55,430 85,365 C110,310 260,330 320,272 C375,225 140,245 85,182 C35,125 250,150 320,95 C355,68 260,45 180,38"
@@ -619,23 +620,19 @@ function showMap(){
 
 /* ================= مقدمة المرحلة ================= */
 function showIntro(i){
-  const w = WORLDS[i];
+  stopLevel();
+  const w = WORLD_META[i];
   render(`
     <div class="center">
-      <h2>${w.icon} المكان ${i+1}: ${w.name}</h2>
+      <span class="chip" style="background:#ffe9f3">${w.type}</span>
+      <h2 style="margin-top:8px">${w.icon} المكان ${i+1}: ${w.name}</h2>
       <canvas id="introKid" width="130" height="150"></canvas>
       <div class="card-item" style="padding:14px">
-        <p style="font-weight:normal">${w.mission}</p>
+        <p style="font-weight:normal">${w.desc.replace("{name}", esc(state.name))}</p>
       </div>
-      <div class="legend">
-        <span class="chip">💚 اجمع: ${w.good.slice(0,4).map(g=>g[0]).join(" ")}</span>
-        <span class="chip">🚫 تجنب: ${w.bad.slice(0,3).map(b=>b[0]).join(" ")}</span>
-        <span class="chip" style="background:#ffe3ea">⚠️ عقبة: ${w.hazard[0]} تخسر قلباً!</span>
-      </div>
+      <div class="howto">${w.how.map(h=>`<span class="chip">${h}</span>`).join("")}</div>
       <div class="fact-box">💡 <b>معلومة البطل:</b> ${w.tip}</div>
-      <p class="muted">حرّك ${state.gender==="girl"?"البطلة":"البطل"} بالأسهم ⬅️➡️ أو الأزرار أو لمس جانبي الشاشة<br>
-      اجمع <b>${w.goal}</b> عنصراً صحياً لتُكمل المهمة!</p>
-      <button class="btn" onclick="beginPlay(${i})">🎮 هيا نلعب!</button>
+      <button class="btn" onclick="WORLD_META[${i}].start()">🎮 هيا نلعب!</button>
       <button class="btn small secondary" onclick="showMap()">🗺️ رجوع</button>
     </div>
   `);
@@ -643,319 +640,833 @@ function showIntro(i){
   if(c) drawKid(c.getContext("2d"), 65, 72, 0.5, state.gender, "happy", 1.1);
 }
 
-/* ================= محرك اللعب ================= */
-const LANES = [120,240,360];
-const KID_Y = 580;
-let game = null;
-
-function beginPlay(i){
-  const w = WORLDS[i];
+/* ============================================================
+   المرحلة 1: المنزل — استكشاف بانورامي (ابحث عن الصحي)
+   ============================================================ */
+const HM_W = 1440; // عرض البيت الكامل
+const HM_SPOTS = [
+  // صحية
+  {x:180, y:432, e:"🪥", good:true,  label:"فرشاة الأسنان", why:"تنظيف الأسنان صباحاً ومساءً!"},
+  {x:318, y:562, e:"⚽", good:true,  label:"كرة النشاط", why:"الحركة تجعل خلاياك نشيطة!"},
+  {x:620, y:472, e:"🍎", good:true,  label:"تفاحة الطاولة", why:"فاكهة بدل الحلوى!"},
+  {x:905, y:415, e:"🥛", good:true,  label:"حليب الثلاجة", why:"كالسيوم لعظام قوية!"},
+  {x:1065,y:452, e:"💧", good:true,  label:"كوب الماء", why:"الماء صديق كل خلية!"},
+  {x:1245,y:440, e:"🧼", good:true,  label:"صابون النظافة", why:"غسل اليدين يطرد الجراثيم!"},
+  // ضارة
+  {x:545, y:472, e:"🍭", good:false, label:"مصاصة سكرية", why:"السكر الكثير يتعب جسمك!"},
+  {x:700, y:540, e:"🥤", good:false, label:"مشروب غازي", why:"الماء أفضل بكثير!"},
+  {x:420, y:555, e:"🎮", good:false, label:"لعب طوال الليل", why:"جسمك يحتاج النوم ليرمم خلاياه!"},
+  {x:1000,y:540, e:"🍟", good:false, label:"مقليات", why:"ليست كل يوم!"},
+  {x:760, y:452, e:"🚬", good:false, label:"سيجارة الضيف", why:"الدخان يؤذي رئتي الجميع! بيوت الأبطال بلا تدخين"},
+];
+function hmStart(){
+  stopLevel();
   render(`
-    <div class="hud">
-      <span id="hearts">❤️❤️❤️</span>
-      <span class="chip">${w.icon} <span id="prog">0 / ${w.goal}</span></span>
-      <span class="chip">🏆 <span id="scoreEl">0</span></span>
-      <button class="pausebtn" onclick="togglePause()" id="pauseBtn">⏸</button>
-    </div>
-    <div class="meter">
-      <div id="meterFill"></div>
-      <span class="meter-label">مؤشر الصحة 💚</span>
-    </div>
+    ${hudHtml("🔍 <span id='foundEl'>0</span> / 6")}
     <div class="game-wrap">
-      <canvas id="gc" width="480" height="720"></canvas>
+      <canvas id="gc" width="480" height="620"></canvas>
       <div id="flash"></div>
     </div>
     <div class="controls">
-      <button class="ctrl" id="btnL">◀</button>
-      <button class="ctrl" id="btnR">▶</button>
+      <button class="ctrl" id="btnL">⟸ انظر</button>
+      <button class="ctrl" id="btnR">انظر ⟹</button>
+    </div>
+    <p class="center muted">👆 اسحب الشاشة أو استخدم الأزرار لتنظر حول البيت</p>
+  `);
+  L = {
+    i:0, type:"home", active:true, timers:[],
+    hearts:3, meter:50, score:0,
+    cam: 0, camV: 0, found: 0, time: 75, t:0, last: performance.now(),
+    spots: HM_SPOTS.map(s=>({...s, taken:false})),
+    drag: null,
+  };
+  const cv = document.getElementById("gc");
+  const scaleOf = () => cv.getBoundingClientRect().width / cv.width;
+  cv.addEventListener("pointerdown", e=>{
+    if(!L || L.type!=="home") return;
+    L.drag = { sx:e.clientX, cam:L.cam, moved:false };
+    cv.setPointerCapture(e.pointerId);
+  });
+  cv.addEventListener("pointermove", e=>{
+    if(!L || L.type!=="home" || !L.drag) return;
+    const dx = (e.clientX - L.drag.sx) / scaleOf();
+    if(Math.abs(dx) > 8) L.drag.moved = true;
+    L.cam = Math.max(0, Math.min(HM_W-480, L.drag.cam - dx));
+  });
+  cv.addEventListener("pointerup", e=>{
+    if(!L || L.type!=="home") return;
+    const wasDrag = L.drag && L.drag.moved;
+    L.drag = null;
+    if(wasDrag) return;
+    const r = cv.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width * 480 + L.cam;
+    const py = (e.clientY - r.top) / r.height * 620;
+    hmClick(px, py);
+  });
+  document.getElementById("btnL").addEventListener("pointerdown", ()=>{ if(L&&L.type==="home") L.camV = -420; });
+  document.getElementById("btnL").addEventListener("pointerup",   ()=>{ if(L&&L.type==="home") L.camV = 0; });
+  document.getElementById("btnR").addEventListener("pointerdown", ()=>{ if(L&&L.type==="home") L.camV = 420; });
+  document.getElementById("btnR").addEventListener("pointerup",   ()=>{ if(L&&L.type==="home") L.camV = 0; });
+  document.getElementById("timerChip").style.display = "";
+  updateHUD();
+  requestAnimationFrame(hmLoop);
+}
+function hmClick(px, py){
+  for(const s of L.spots){
+    if(s.taken) continue;
+    if(Math.hypot(px-s.x, py-s.y) < 34){
+      if(s.good){
+        s.taken = true; L.found++;
+        gain(15, 8, `✅ ${s.e} <b>${s.label}</b> — ${s.why}`);
+        const f = document.getElementById("foundEl");
+        if(f) f.textContent = L.found;
+        if(L.found >= 6){
+          const bonus = Math.max(0, Math.round(L.time)) * 2;
+          L.score += bonus;
+          setTimeout(()=>{ if(L) completeLevel(`وجدت كل الاختيارات الصحية الستة! 🔍<br>مكافأة الوقت المتبقي: <b>+${bonus}</b> نقطة`); }, 600);
+        }
+      } else {
+        s.taken = true;
+        damage(18, `${s.e} <b>${s.label}</b>! ${s.why}`);
+      }
+      return;
+    }
+  }
+}
+function hmLoop(now){
+  if(!L || L.type!=="home" || !L.active) return;
+  const dt = Math.min(.05,(now-L.last)/1000); L.last = now; L.t += dt;
+  L.cam = Math.max(0, Math.min(HM_W-480, L.cam + L.camV*dt));
+  L.time -= dt;
+  const te = document.getElementById("timerEl");
+  if(te) te.textContent = Math.max(0, Math.ceil(L.time));
+  if(L.time <= 0){
+    L.time = 40;
+    if(loseHeart("انتهى الوقت! خذ 40 ثانية إضافية")) return;
+  }
+  const cv = document.getElementById("gc");
+  if(!cv){ L.active=false; return; }
+  const c = cv.getContext("2d");
+  c.save();
+  c.translate(-L.cam, 0);
+  hmDrawHouse(c, L.t);
+  // العناصر
+  c.textAlign = "center"; c.font = "34px serif";
+  L.spots.forEach(s=>{
+    if(s.taken){
+      if(s.good){ c.font="30px serif"; c.fillText("✅", s.x, s.y); c.font="34px serif"; }
+      return;
+    }
+    const bob = Math.sin(L.t*2 + s.x)*4;
+    // هالة خفيفة للتلميح
+    c.fillStyle = "rgba(255,255,255,.35)";
+    c.beginPath(); c.arc(s.x, s.y-12+bob, 26, 0, 7); c.fill();
+    c.fillText(s.e, s.x, s.y+bob);
+  });
+  c.restore();
+  // مؤشر البانوراما
+  c.fillStyle = "rgba(93,63,163,.25)";
+  c.beginPath(); if(c.roundRect) c.roundRect(120, 596, 240, 10, 5); else c.rect(120,596,240,10); c.fill();
+  c.fillStyle = "#7c5cbf";
+  const pw = 240 * (480/HM_W);
+  c.beginPath(); if(c.roundRect) c.roundRect(120 + (L.cam/(HM_W-480))*(240-pw), 596, pw, 10, 5); else c.rect(120,596,pw,10); c.fill();
+  requestAnimationFrame(hmLoop);
+}
+function hmDrawHouse(c, t){
+  // ===== غرفة النوم (0-480) =====
+  c.fillStyle="#e6dbff"; c.fillRect(0,0,480,500);
+  c.fillStyle="#c9b8f0"; c.fillRect(0,500,480,120);
+  // نافذة ليلية → صباحية
+  c.fillStyle="#bde0fe"; c.fillRect(60,60,140,110);
+  c.strokeStyle="#8f6a48"; c.lineWidth=8; c.strokeRect(60,60,140,110);
+  c.fillStyle="#ffd166"; c.beginPath(); c.arc(130,105,22,0,7); c.fill(); // شمس الصباح
+  // سرير
+  c.fillStyle="#7c5cbf";
+  c.beginPath(); if(c.roundRect) c.roundRect(240,470,190,80,14); else c.rect(240,470,190,80); c.fill();
+  c.fillStyle="#fff";
+  c.beginPath(); if(c.roundRect) c.roundRect(250,455,60,30,8); else c.rect(250,455,60,30); c.fill();
+  c.fillStyle="#ff9eb5";
+  c.beginPath(); if(c.roundRect) c.roundRect(240,490,190,30,8); else c.rect(240,490,190,30); c.fill();
+  // رف
+  c.fillStyle="#b5651d"; c.fillRect(130,450,120,12);
+  c.font="26px serif"; c.textAlign="center"; c.fillText("📖", 230, 445);
+  c.fillStyle="#5d3fa3"; c.font="bold 16px sans-serif"; c.fillText("😴 غرفة النوم", 240, 34);
+  // ===== الصالة (480-960) =====
+  c.fillStyle="#ffe9d6"; c.fillRect(480,0,480,500);
+  c.fillStyle="#e8b88a"; c.fillRect(480,500,480,120);
+  // كنبة
+  c.fillStyle="#06a17c";
+  c.beginPath(); if(c.roundRect) c.roundRect(500,480,170,75,16); else c.rect(500,480,170,75); c.fill();
+  c.fillStyle="#0bc493";
+  c.beginPath(); if(c.roundRect) c.roundRect(512,455,60,36,10); else c.rect(512,455,60,36); c.fill();
+  c.beginPath(); if(c.roundRect) c.roundRect(596,455,60,36,10); else c.rect(596,455,60,36); c.fill();
+  // تلفاز
+  c.fillStyle="#2d2350"; c.fillRect(760,300,150,90);
+  c.fillStyle="#4cc9f0"; c.fillRect(768,308,134,74);
+  c.fillStyle="#2d2350"; c.fillRect(820,390,30,16);
+  // طاولة
+  c.fillStyle="#b5651d";
+  c.beginPath(); if(c.roundRect) c.roundRect(560,490,180,16,6); else c.rect(560,490,180,16); c.fill();
+  c.fillRect(575,506,12,50); c.fillRect(713,506,12,50);
+  // لوحة عائلية
+  c.fillStyle="#fff"; c.fillRect(520,80,90,70);
+  c.strokeStyle="#c19a6b"; c.lineWidth=6; c.strokeRect(520,80,90,70);
+  c.font="32px serif"; c.fillText("👨‍👩‍👧‍👦", 565, 128);
+  c.fillStyle="#5d3fa3"; c.font="bold 16px sans-serif"; c.fillText("📺 الصالة", 720, 34);
+  // ===== المطبخ (960-1440) =====
+  c.fillStyle="#dff7ec"; c.fillRect(960,0,480,500);
+  c.fillStyle="#9bd4b8"; c.fillRect(960,500,480,120);
+  // ثلاجة
+  c.fillStyle="#e9ecef";
+  c.beginPath(); if(c.roundRect) c.roundRect(860,330,110,220,12); else c.rect(860,330,110,220); c.fill();
+  c.strokeStyle="#adb5bd"; c.lineWidth=4;
+  c.beginPath(); c.moveTo(860,430); c.lineTo(970,430); c.stroke();
+  c.fillStyle="#adb5bd"; c.fillRect(955,360,8,40); c.fillRect(955,450,8,40);
+  // كاونتر ومغسلة
+  c.fillStyle="#74c69d"; c.fillRect(1000,470,380,26);
+  c.fillStyle="#40916c"; c.fillRect(1000,496,380,70);
+  c.fillStyle="#e9ecef";
+  c.beginPath(); if(c.roundRect) c.roundRect(1180,452,110,22,8); else c.rect(1180,452,110,22); c.fill();
+  c.strokeStyle="#6c757d"; c.lineWidth=5;
+  c.beginPath(); c.moveTo(1235,452); c.lineTo(1235,430); c.lineTo(1215,430); c.stroke();
+  // خزانة علوية
+  c.fillStyle="#b5651d"; c.fillRect(1050,90,300,80);
+  c.strokeStyle="#8d4f16"; c.lineWidth=4;
+  c.beginPath(); c.moveTo(1150,90); c.lineTo(1150,170); c.moveTo(1250,90); c.lineTo(1250,170); c.stroke();
+  c.font="26px serif"; c.fillText("🥫", 1100, 140); c.fillText("🥣", 1200, 140); c.fillText("🍯", 1300, 140);
+  c.fillStyle="#5d3fa3"; c.font="bold 16px sans-serif"; c.fillText("🍎 المطبخ", 1200, 34);
+}
+
+/* ============================================================
+   المرحلة 2: ممر المدرسة — ركض منظور ثلاثي الأبعاد مع بوابات
+   ============================================================ */
+const SC_QUESTIONS = [
+  {q:"هل السرطان مرض معدٍ؟", a:["نعم 😷","لا! أبداً 🤗"], correct:1, why:"لا ينتقل باللمس أو اللعب أو الطعام"},
+  {q:"ما الأفضل لفطور البطل؟", a:["🍎 تفاحة وحليب","🍩 دونات ومشروب غازي"], correct:0, why:"الفطور الصحي = طاقة ليوم كامل"},
+  {q:"غسل اليدين قبل الأكل؟", a:["مضيعة وقت","يحمي من الجراثيم 🧼"], correct:1, why:"الجراثيم لا تُرى بالعين!"},
+  {q:"سقط شعر صديقك بسبب العلاج...", a:["أسانده، سيعود شعره 💜","أضحك عليه"], correct:0, why:"الشعر ينمو من جديد بعد العلاج"},
+  {q:"الفحص المبكر للمرض...", a:["يجعل العلاج أسهل 🩺","لا فائدة منه"], correct:0, why:"كلما اكتُشف مبكراً كان الشفاء أقرب"},
+  {q:"هل المرض عقاب للمريض؟", a:["نعم بسبب أخطائه","لا! ليس ذنب أحد 💜"], correct:1, why:"لا أحد يمرض لأنه فعل شيئاً سيئاً"},
+  {q:"ساعة حركة ولعب كل يوم؟", a:["تقوّي الجسم 💪","بلا فائدة"], correct:0, why:"الرياضة تجعل خلاياك قوية ونشيطة"},
+  {q:"صديقك المريض يحتاج منك...", a:["الابتعاد عنه","دعمك ولعبك معه 🤝"], correct:1, why:"الصداقة أقوى دواء!"},
+];
+function scStart(){
+  stopLevel();
+  render(`
+    ${hudHtml(`🚪 <span id='gateEl'>0</span> / ${SC_QUESTIONS.length}`)}
+    <div class="game-wrap">
+      <canvas id="gc" width="480" height="620"></canvas>
+      <div id="flash"></div>
+    </div>
+    <div class="controls">
+      <button class="ctrl" id="btnL">⬅ يسار</button>
+      <button class="ctrl" id="btnR">يمين ➡</button>
     </div>
   `);
-  game = {
-    idx:i, w, lane:1, x:LANES[1],
-    hearts:3, meter:50, collected:0, score:0,
-    items:[], floats:[], t:0, lastSpawn:0,
-    running:true, paused:false, over:false,
-    ph:0, face:"happy", faceTimer:0,
-    groundOff:0, shake:0, last:performance.now(),
+  L = {
+    i:1, type:"school", active:true, timers:[],
+    hearts:3, meter:50, score:0,
+    qi:0, side:0, // -1 يسار / 1 يمين / 0 وسط
+    z:1, zSpeed:.22, t:0, last:performance.now(),
+    resolved:false,
   };
   const cv = document.getElementById("gc");
   cv.addEventListener("pointerdown", e=>{
+    if(!L || L.type!=="school") return;
     const r = cv.getBoundingClientRect();
-    moveKid((e.clientX - r.left) / r.width < .5 ? -1 : 1);
+    L.side = (e.clientX - r.left)/r.width < .5 ? -1 : 1;
+    beep(440,.05,"triangle",.06);
   });
-  document.getElementById("btnL").addEventListener("pointerdown", e=>{e.preventDefault();moveKid(-1);});
-  document.getElementById("btnR").addEventListener("pointerdown", e=>{e.preventDefault();moveKid(1);});
+  document.getElementById("btnL").addEventListener("pointerdown", ()=>{ if(L&&L.type==="school"){ L.side=-1; beep(440,.05,"triangle",.06);} });
+  document.getElementById("btnR").addEventListener("pointerdown", ()=>{ if(L&&L.type==="school"){ L.side=1; beep(440,.05,"triangle",.06);} });
   updateHUD();
-  requestAnimationFrame(loop);
+  requestAnimationFrame(scLoop);
 }
 document.addEventListener("keydown", e=>{
-  if(!game || !game.running) return;
-  if(e.key==="ArrowLeft"){ moveKid(-1); e.preventDefault(); }
-  if(e.key==="ArrowRight"){ moveKid(1); e.preventDefault(); }
+  if(!L) return;
+  if(L.type==="school"){
+    if(e.key==="ArrowLeft"){ L.side=-1; e.preventDefault(); }
+    if(e.key==="ArrowRight"){ L.side=1; e.preventDefault(); }
+  }
+  if(L.type==="park" && (e.key===" "||e.key==="ArrowUp")){ pkJump(); e.preventDefault(); }
+  if(L.type==="home"){
+    if(e.key==="ArrowLeft"){ L.cam=Math.max(0,L.cam-60); e.preventDefault(); }
+    if(e.key==="ArrowRight"){ L.cam=Math.min(HM_W-480,L.cam+60); e.preventDefault(); }
+  }
 });
-function moveKid(dir){
-  if(!game || !game.running || game.paused) return;
-  game.lane = Math.max(0, Math.min(2, game.lane + dir));
-  beep(440,.05,"triangle",.06);
+const VPX=240, VPY=195;
+function scProj(lx, z){
+  const n = Math.pow(1-z, 1.6);
+  const s = .1 + n*.9;
+  return { x: VPX + lx*190*s, y: VPY + 400*s, s };
 }
-function togglePause(){
-  if(!game || !game.running) return;
-  game.paused = !game.paused;
-  const b = document.getElementById("pauseBtn");
-  if(b) b.textContent = game.paused ? "▶" : "⏸";
-}
-
-function spawnItem(){
-  const w = game.w;
-  const r = Math.random();
-  let it;
-  if(r < w.hazardChance){
-    it = { e:w.hazard[0], label:w.hazard[1], kind:"hazard" };
-  } else if(r < w.hazardChance + .36){
-    const b = w.bad[Math.floor(Math.random()*w.bad.length)];
-    it = { e:b[0], label:b[1], kind:"bad" };
-  } else {
-    const g = w.good[Math.floor(Math.random()*w.good.length)];
-    it = { e:g[0], label:g[1], kind:"good" };
-  }
-  game.items.push({ ...it, lane:Math.floor(Math.random()*3), y:-40, wob:Math.random()*6 });
-}
-
-function updateHUD(){
-  const h = document.getElementById("hearts");
-  if(h) h.textContent = "❤️".repeat(game.hearts) + "🤍".repeat(3-game.hearts);
-  const p = document.getElementById("prog");
-  if(p) p.textContent = `${game.collected} / ${game.w.goal}`;
-  const s = document.getElementById("scoreEl");
-  if(s) s.textContent = game.score;
-  const m = document.getElementById("meterFill");
-  if(m){
-    m.style.width = game.meter + "%";
-    m.style.background = game.meter > 60 ? "linear-gradient(90deg,#06d6a0,#4cc9f0)"
-                       : game.meter > 30 ? "linear-gradient(90deg,#ff9f1c,#ffd166)"
-                       : "linear-gradient(90deg,#ef476f,#ff8fa3)";
-  }
-}
-function flash(cls){
-  const f = document.getElementById("flash");
-  if(!f) return;
-  f.className = ""; void f.offsetWidth; f.className = cls;
-}
-
-function hitItem(it){
-  if(it.kind === "good"){
-    game.collected++; game.score += 10;
-    game.meter = Math.min(100, game.meter + 9);
-    game.face = "happy";
-    game.floats.push({x:LANES[it.lane], y:KID_Y-80, txt:`${it.e} ${it.label} +10`, color:"#06d6a0", life:1});
-    flash("g"); soundGood();
-  } else if(it.kind === "bad"){
-    game.meter -= 16; game.score = Math.max(0, game.score - 5);
-    game.face = "sad"; game.faceTimer = .9; game.shake = 8;
-    game.floats.push({x:LANES[it.lane], y:KID_Y-80, txt:`${it.e} ${it.label}!`, color:"#ef476f", life:1});
-    flash("r"); soundBad();
-  } else { // عقبة
-    game.hearts--; game.meter -= 10;
-    game.face = "wow"; game.faceTimer = 1; game.shake = 14;
-    game.floats.push({x:LANES[it.lane], y:KID_Y-90, txt:`⚠️ ${it.label} -❤️`, color:"#ef476f", life:1.4});
-    flash("r"); soundHurt();
-  }
-  if(game.meter <= 0){
-    game.hearts--; game.meter = 45;
-    game.floats.push({x:240, y:300, txt:"💔 انخفض مؤشر الصحة كثيراً!", color:"#ef476f", life:1.5});
-    soundHurt();
-  }
-  game.meter = Math.max(0, Math.min(100, game.meter));
-  updateHUD();
-  if(game.hearts <= 0){ endPlay(false); return; }
-  if(game.collected >= game.w.goal){ endPlay(true); }
-}
-
-function endPlay(success){
-  game.running = false;
-  setTimeout(()=> success ? showGate(0) : showFail(), 450);
-}
-
-function loop(now){
-  if(!game || !game.running){ return; }
-  const dt = Math.min(.05, (now - game.last)/1000);
-  game.last = now;
-  const c = document.getElementById("gc");
-  if(!c){ game.running = false; return; }
-  const x = c.getContext("2d");
-  const W = c.width, H = c.height;
-
-  if(!game.paused){
-    game.t += dt;
-    game.ph += dt*9;
-    game.groundOff = (game.groundOff + dt*140) % 60;
-    if(game.faceTimer > 0){ game.faceTimer -= dt; if(game.faceTimer<=0) game.face="happy"; }
-    if(game.shake > 0) game.shake = Math.max(0, game.shake - dt*40);
-    // توليد العناصر
-    if((game.t*1000 - game.lastSpawn) > game.w.spawnMs){
-      game.lastSpawn = game.t*1000;
-      spawnItem();
+function scLoop(now){
+  if(!L || L.type!=="school" || !L.active) return;
+  const dt = Math.min(.05,(now-L.last)/1000); L.last = now; L.t += dt;
+  L.z -= L.zSpeed*dt;
+  // الوصول للبوابة
+  if(L.z <= 0.06 && !L.resolved){
+    L.resolved = true;
+    const q = SC_QUESTIONS[L.qi];
+    const chosen = L.side === -1 ? 0 : 1;
+    if(L.side === 0 || chosen !== q.correct){
+      if(damage(22, `🚪 ${L.side===0?"لم تختر بوابة!":"بوابة خاطئة!"} — ${q.why}`)) return;
+    } else {
+      gain(20, 7, `🎉 صحيح! ${q.why}`);
     }
-    // تحريك الشخصية
-    game.x += (LANES[game.lane] - game.x) * Math.min(1, dt*14);
-    // تحريك العناصر والتصادم
-    for(let i=game.items.length-1; i>=0; i--){
-      const it = game.items[i];
-      it.y += game.w.fallSpeed * dt;
-      if(it.y > KID_Y-45 && it.y < KID_Y+35 && it.lane === game.lane){
-        game.items.splice(i,1);
-        hitItem(it);
-        if(!game.running) return;
-      } else if(it.y > H+40){
-        game.items.splice(i,1);
+    const g = document.getElementById("gateEl");
+    if(g) g.textContent = L.qi+1;
+    L.qi++;
+    if(L.qi >= SC_QUESTIONS.length){
+      setTimeout(()=>{ if(L) completeLevel(`عبرت <b>${SC_QUESTIONS.length}</b> بوابات معرفة في ممر المدرسة ثلاثي الأبعاد! 🏃`); }, 500);
+      L.active = false;
+      return;
+    }
+    L.z = 1; L.side = 0; L.resolved = false;
+    L.zSpeed = Math.min(.34, L.zSpeed + .015);
+  }
+  scDraw();
+  requestAnimationFrame(scLoop);
+}
+function scDraw(){
+  const cv = document.getElementById("gc");
+  if(!cv){ L.active=false; return; }
+  const c = cv.getContext("2d");
+  const W=480, H=620;
+  // سقف وأرضية وجدران بمنظور
+  c.fillStyle="#fdf0d5"; c.fillRect(0,0,W,H);       // جدران بعيدة
+  // السقف
+  c.fillStyle="#e8e0f5";
+  c.beginPath(); c.moveTo(0,0); c.lineTo(W,0); c.lineTo(VPX+60,VPY-40); c.lineTo(VPX-60,VPY-40); c.closePath(); c.fill();
+  // الأرضية
+  const fl = c.createLinearGradient(0,VPY,0,H);
+  fl.addColorStop(0,"#cbb9ec"); fl.addColorStop(1,"#a58fd8");
+  c.fillStyle=fl;
+  c.beginPath(); c.moveTo(VPX-60,VPY); c.lineTo(VPX+60,VPY); c.lineTo(W+80,H); c.lineTo(-80,H); c.closePath(); c.fill();
+  // الجدار الأيسر والأيمن
+  c.fillStyle="#f5e3c8";
+  c.beginPath(); c.moveTo(0,0); c.lineTo(VPX-60,VPY-40); c.lineTo(VPX-60,VPY); c.lineTo(-80,H); c.lineTo(0,H); c.closePath(); c.fill();
+  c.beginPath(); c.moveTo(W,0); c.lineTo(VPX+60,VPY-40); c.lineTo(VPX+60,VPY); c.lineTo(W+80,H); c.lineTo(W,H); c.closePath(); c.fill();
+  // خطوط الأرضية متحركة (إحساس الجري)
+  c.strokeStyle="rgba(255,255,255,.5)"; c.lineWidth=2;
+  for(let k=0;k<7;k++){
+    const zz = ((k/7) + (L.t*L.zSpeed*3)) % 1;
+    const p = scProj(0, zz);
+    const halfW = 60 + (1-zz < 1 ? Math.pow(1-zz,1.6) : 1) * 340;
+    const pl = scProj(-1.6, zz), pr = scProj(1.6, zz);
+    c.beginPath(); c.moveTo(pl.x, p.y); c.lineTo(pr.x, p.y); c.stroke();
+  }
+  // أبواب صفوف على الجدران
+  c.fillStyle="#8d5a2b";
+  [[0.25,-1],[0.55,-1],[0.85,-1],[0.4,1],[0.7,1]].forEach(([zz,sd])=>{
+    const zAnim = (zz + L.t*L.zSpeed*.6) % 1;
+    const p = scProj(sd*1.45, zAnim);
+    const dw = 40*p.s, dh = 110*p.s;
+    c.globalAlpha = Math.min(1, p.s*1.4);
+    c.fillRect(p.x-dw/2, p.y-dh, dw, dh);
+    c.globalAlpha = 1;
+  });
+  // لافتات على الجدار
+  c.font="bold 15px sans-serif"; c.textAlign="center"; c.fillStyle="#5d3fa3";
+  c.fillText("🎗️ ممر المعرفة 🎗️", VPX, VPY-50);
+  // البوابتان
+  const q = SC_QUESTIONS[L.qi];
+  if(q && L.z > 0.05){
+    [[-0.62, 0],[0.62, 1]].forEach(([lx, ai])=>{
+      const p = scProj(lx, L.z);
+      const gw = 150*p.s, gh = 190*p.s;
+      const isCorrectSide = null; // لا نكشف الإجابة
+      c.fillStyle = ai===0 ? "#4cc9f0" : "#ff9f1c";
+      // عمودان
+      c.fillRect(p.x-gw/2, p.y-gh, gw*.13, gh);
+      c.fillRect(p.x+gw/2-gw*.13, p.y-gh, gw*.13, gh);
+      // قوس علوي
+      c.beginPath();
+      if(c.roundRect) c.roundRect(p.x-gw/2, p.y-gh-16*p.s, gw, 26*p.s, 8*p.s); else c.rect(p.x-gw/2, p.y-gh-16*p.s, gw, 26*p.s);
+      c.fill();
+      // نص الإجابة
+      if(p.s > .25){
+        const fs = Math.max(10, 17*p.s);
+        c.font = `bold ${fs}px sans-serif`;
+        c.fillStyle="#fff";
+        const bw = Math.min(gw*.96, c.measureText(q.a[ai]).width + 14);
+        c.fillStyle = "rgba(45,35,80,.85)";
+        c.beginPath();
+        if(c.roundRect) c.roundRect(p.x-bw/2, p.y-gh/2-fs, bw, fs*1.7, 8); else c.rect(p.x-bw/2, p.y-gh/2-fs, bw, fs*1.7);
+        c.fill();
+        c.fillStyle="#fff";
+        c.fillText(q.a[ai], p.x, p.y-gh/2+fs*.25);
+      }
+    });
+  }
+  // السؤال أعلى الشاشة
+  if(q){
+    c.fillStyle="rgba(93,63,163,.92)";
+    c.beginPath();
+    if(c.roundRect) c.roundRect(30, 12, W-60, 54, 16); else c.rect(30,12,W-60,54);
+    c.fill();
+    c.fillStyle="#fff"; c.font="bold 19px sans-serif";
+    c.fillText(q.q, W/2, 45);
+    // عداد المسافة للبوابة
+    c.fillStyle="rgba(255,255,255,.3)";
+    c.beginPath(); if(c.roundRect) c.roundRect(60, 56, W-120, 6, 3); else c.rect(60,56,W-120,6); c.fill();
+    c.fillStyle="#ffd166";
+    c.beginPath(); if(c.roundRect) c.roundRect(60, 56, (W-120)*(1-L.z), 6, 3); else c.rect(60,56,(W-120)*(1-L.z),6); c.fill();
+  }
+  // الشخصية من الخلف تركض
+  const kx = VPX + L.side*118;
+  drawKidBack(c, kx, 520, L.t*11, state.gender, 1.05);
+  // الاسم
+  c.font="bold 14px sans-serif";
+  const nm = esc(state.name);
+  const tw = c.measureText(nm).width + 16;
+  c.fillStyle="rgba(255,255,255,.9)";
+  c.beginPath();
+  if(c.roundRect) c.roundRect(kx-tw/2, 430, tw, 22, 11); else c.rect(kx-tw/2, 430, tw, 22);
+  c.fill();
+  c.fillStyle="#5d3fa3"; c.fillText(nm, kx, 446);
+}
+
+/* ============================================================
+   المرحلة 3: السوبرماركت — تحدي قائمة التسوق (ذاكرة)
+   ============================================================ */
+const MK_HEALTHY = [
+  ["🥦","بروكلي"],["🍊","برتقال"],["🥛","حليب"],["🍞","خبز أسمر"],
+  ["🍓","فراولة"],["🥚","بيض"],["🍎","تفاح"],["🥕","جزر"],
+  ["💧","ماء"],["🍌","موز"],["🧀","جبن"],["🍇","عنب"],
+];
+const MK_JUNK = [
+  ["🍫","شوكولاتة"],["🌭","نقانق"],["🍟","شيبس"],["🥤","غازي"],
+  ["🍩","دونات"],["🍭","مصاصة"],
+];
+function mkStart(){ mkRound(0); }
+function mkRound(round){
+  stopLevel();
+  const listSize = 4 + round;
+  const pool = [...MK_HEALTHY].sort(()=>Math.random()-.5);
+  const list = pool.slice(0, listSize);
+  const otherHealthy = pool.slice(listSize, listSize + (12 - listSize - 4));
+  const junk = [...MK_JUNK].sort(()=>Math.random()-.5).slice(0,4);
+  const grid = [...list, ...otherHealthy, ...junk].sort(()=>Math.random()-.5);
+  const prevHearts = L && L.type==="market-carry" ? L.hearts : (window.__mkCarry ? window.__mkCarry.hearts : 3);
+  const carry = window.__mkCarry || { hearts:3, meter:50, score:0 };
+  if(round === 0) window.__mkCarry = { hearts:3, meter:50, score:0 };
+  const cur = window.__mkCarry;
+  // شاشة حفظ القائمة
+  render(`
+    ${hudHtml(`🛒 الجولة ${round+1} / 3`)}
+    <div class="center">
+      <h2>📝 احفظ قائمة التسوق!</h2>
+      <p class="muted">ستختفي القائمة بعد <span id="memT" style="font-weight:bold;color:var(--red)">7</span> ثوانٍ...</p>
+      <div class="list-paper">
+        ${list.map(x=>`<div class="li">${x[0]} ${x[1]}</div>`).join("")}
+      </div>
+    </div>
+  `);
+  L = {
+    i:2, type:"market", active:true, timers:[],
+    hearts:cur.hearts, meter:cur.meter, score:cur.score,
+    round, list, grid, found:0, time:0,
+  };
+  updateHUD();
+  let mem = 7;
+  const iv = setInterval(()=>{
+    if(!L || L.type!=="market" || L.round!==round){ clearInterval(iv); return; }
+    mem--;
+    const el = document.getElementById("memT");
+    if(el) el.textContent = mem;
+    if(mem <= 0){ clearInterval(iv); mkShelves(); }
+  }, 1000);
+  L.timers.push(iv);
+}
+function mkShelves(){
+  const listSize = L.list.length;
+  render(`
+    ${hudHtml(`🛒 الجولة ${L.round+1} / 3 — <span id='foundEl'>0</span>/${listSize}`)}
+    <p class="center muted" style="margin-bottom:4px">⏱ <span id="mkTime" style="font-weight:bold">${20+L.round*5}</span> ثانية — أين منتجات قائمتك؟</p>
+    <div class="shelf-grid">
+      ${L.grid.map((x,i)=>`
+        <button class="shelf-item" id="sh${i}" onclick="mkPick(${i})">
+          <span class="pe">${x[0]}</span><span class="pn">${x[1]}</span>
+        </button>`).join("")}
+    </div>
+    <div class="cartbar" id="cart">🛒</div>
+  `);
+  updateHUD();
+  L.time = 20 + L.round*5;
+  const iv = setInterval(()=>{
+    if(!L || L.type!=="market"){ clearInterval(iv); return; }
+    L.time--;
+    const el = document.getElementById("mkTime");
+    if(el) el.textContent = L.time;
+    if(L.time <= 0){
+      clearInterval(iv);
+      if(!loseHeart("انتهى وقت الجولة! أعدها من جديد")){
+        const r = L.round;
+        setTimeout(()=>{ if(L) mkRound(r); }, 1200);
       }
     }
-    // النصوص الطائرة
-    for(let i=game.floats.length-1; i>=0; i--){
-      const f = game.floats[i];
-      f.y -= dt*45; f.life -= dt;
-      if(f.life <= 0) game.floats.splice(i,1);
+  }, 1000);
+  L.timers.push(iv);
+}
+function mkPick(i){
+  if(!L || L.type!=="market") return;
+  const item = L.grid[i];
+  const el = document.getElementById("sh"+i);
+  const inList = L.list.some(x=>x[0]===item[0]);
+  const isJunk = MK_JUNK.some(x=>x[0]===item[0]);
+  if(inList && el && !el.classList.contains("found")){
+    el.classList.add("found");
+    L.found++;
+    gain(15, 6, `✅ ${item[0]} ${item[1]} — في القائمة!`);
+    const f = document.getElementById("foundEl");
+    if(f) f.textContent = L.found;
+    const cart = document.getElementById("cart");
+    if(cart) cart.innerHTML += " " + item[0];
+    if(L.found >= L.list.length){
+      const bonus = L.time * 3;
+      L.score += bonus;
+      window.__mkCarry = { hearts:L.hearts, meter:L.meter, score:L.score };
+      const r = L.round;
+      if(r >= 2){
+        setTimeout(()=>{ if(L) completeLevel(`أكملت 3 قوائم تسوق صحية بذاكرة بطل! 🧠<br>مكافأة سرعة الجولة الأخيرة: <b>+${bonus}</b>`); }, 700);
+      } else {
+        toast(`🎉 أكملت الجولة ${r+1}! مكافأة السرعة +${bonus}`, "good", 1800);
+        setTimeout(()=>{ if(L) mkRound(r+1); }, 1600);
+      }
+    }
+  } else if(isJunk){
+    if(el){ el.classList.add("wrong"); setTimeout(()=>el.classList.remove("wrong"), 400); }
+    damage(16, `${item[0]} ${item[1]}! ليست في قائمتك الصحية!`);
+  } else {
+    if(el){ el.classList.add("wrong"); setTimeout(()=>el.classList.remove("wrong"), 400); }
+    L.score = Math.max(0, L.score - 5);
+    toast(`🤔 ${item[0]} صحي لكنه ليس في قائمتك!`, "", 1400);
+    updateHUD();
+  }
+}
+
+/* ============================================================
+   المرحلة 4: الحديقة — عدّاء جانبي مع قفز وواقي الشمس
+   ============================================================ */
+const PK_GOAL = 2000; // مسافة
+function pkStart(){
+  stopLevel();
+  render(`
+    ${hudHtml("🏁 <span id='distEl'>0</span>%")}
+    <div class="game-wrap">
+      <canvas id="gc" width="480" height="620"></canvas>
+      <div id="flash"></div>
+      <div id="sunSlot"></div>
+    </div>
+    <div class="controls">
+      <button class="ctrl jump" id="btnJ">⬆ اقفز!</button>
+    </div>
+  `);
+  L = {
+    i:3, type:"park", active:true, timers:[],
+    hearts:3, meter:50, score:0,
+    dist:0, speed:230,
+    ky:0, vy:0, onGround:true,
+    objs:[], lastSpawn:0, spawnGap:1.35,
+    sunTimer:8 + Math.random()*4, sunActive:false, sunLeft:0,
+    inv:0, t:0, last:performance.now(),
+    face:"happy", faceTimer:0,
+  };
+  const cv = document.getElementById("gc");
+  cv.addEventListener("pointerdown", ()=>pkJump());
+  document.getElementById("btnJ").addEventListener("pointerdown", e=>{e.preventDefault(); pkJump();});
+  updateHUD();
+  requestAnimationFrame(pkLoop);
+}
+function pkJump(){
+  if(!L || L.type!=="park" || !L.active) return;
+  if(L.onGround){
+    L.vy = -640; L.onGround = false;
+    soundJump();
+  }
+}
+function pkSpawn(){
+  const r = Math.random();
+  if(r < .42){
+    // عقبة أرضية
+    const obs = [["🚬","سحابة دخان"],["🚧","حاجز"],["🪨","صخرة"]][Math.floor(Math.random()*3)];
+    L.objs.push({kind:"obs", e:obs[0], label:obs[1], x:540, y:548});
+  } else {
+    // عنصر صحي: أرضي أو في الهواء (يتطلب قفزة)
+    const its = [["💧","ماء"],["🍉","بطيخ"],["🍊","برتقال"],["🧢","قبعة"],["⚽","كرة"]];
+    const it = its[Math.floor(Math.random()*its.length)];
+    const air = Math.random() < .5;
+    L.objs.push({kind:"good", e:it[0], label:it[1], x:540, y: air ? 455 : 545});
+  }
+}
+function pkLoop(now){
+  if(!L || L.type!=="park" || !L.active) return;
+  const dt = Math.min(.05,(now-L.last)/1000); L.last = now; L.t += dt;
+  L.dist += L.speed*dt;
+  L.speed = Math.min(330, L.speed + dt*4);
+  if(L.inv > 0) L.inv -= dt;
+  if(L.faceTimer > 0){ L.faceTimer -= dt; if(L.faceTimer <= 0) L.face = "happy"; }
+  const de = document.getElementById("distEl");
+  if(de) de.textContent = Math.min(100, Math.round(L.dist/PK_GOAL*100));
+  if(L.dist >= PK_GOAL){
+    L.active = false;
+    setTimeout(()=>{ if(L) completeLevel(`قطعت مسار الحديقة كاملاً جرياً وقفزاً! 🏃💨`); }, 400);
+    return;
+  }
+  // فيزياء القفز
+  if(!L.onGround){
+    L.vy += 1650*dt;
+    L.ky += L.vy*dt;
+    if(L.ky >= 0){ L.ky = 0; L.vy = 0; L.onGround = true; }
+  }
+  // توليد
+  L.lastSpawn += dt;
+  if(L.lastSpawn > L.spawnGap){
+    L.lastSpawn = 0;
+    L.spawnGap = Math.max(.85, L.spawnGap - .015);
+    pkSpawn();
+  }
+  // حدث الشمس
+  if(!L.sunActive){
+    L.sunTimer -= dt;
+    if(L.sunTimer <= 0){
+      L.sunActive = true; L.sunLeft = 2.6;
+      const slot = document.getElementById("sunSlot");
+      if(slot) slot.innerHTML = `<button class="sunbtn" onclick="pkSunscreen()">🧴 ضع واقي الشمس!</button>`;
+      beep(880,.3,"sawtooth",.1);
+    }
+  } else {
+    L.sunLeft -= dt;
+    if(L.sunLeft <= 0){
+      L.sunActive = false; L.sunTimer = 10 + Math.random()*5;
+      const slot = document.getElementById("sunSlot");
+      if(slot) slot.innerHTML = "";
+      L.face = "sad"; L.faceTimer = 1;
+      if(damage(20, "☀️ ضربة شمس! ضع الواقي فور ظهور الزر")) return;
     }
   }
-
-  /* ---- الرسم ---- */
-  x.save();
-  if(game.shake > 0) x.translate((Math.random()-.5)*game.shake, (Math.random()-.5)*game.shake);
-  game.w.bg(x, W, H, game.t);
-  // ممر المشي مع خطوط متحركة
-  x.fillStyle = "rgba(255,255,255,.25)";
-  x.fillRect(60, 500, W-120, 180);
-  x.strokeStyle = "rgba(93,63,163,.25)"; x.lineWidth = 3; x.setLineDash([18,42]);
-  x.lineDashOffset = game.groundOff;
-  [180,300].forEach(lx=>{ x.beginPath(); x.moveTo(lx,500); x.lineTo(lx,H); x.stroke(); });
-  x.setLineDash([]);
+  // تحريك العناصر والتصادم
+  const kidX = 110, kidY = 545 + L.ky;
+  for(let i=L.objs.length-1;i>=0;i--){
+    const o = L.objs[i];
+    o.x -= L.speed*dt;
+    if(o.x < -40){ L.objs.splice(i,1); continue; }
+    if(Math.abs(o.x - kidX) < 34 && Math.abs(o.y - kidY) < 46){
+      L.objs.splice(i,1);
+      if(o.kind === "good"){
+        L.score += 10; L.meter = Math.min(100, L.meter+7);
+        soundGood(); flash("g"); updateHUD();
+      } else if(L.inv <= 0){
+        L.inv = 1.1; L.face = "wow"; L.faceTimer = .9;
+        if(damage(22, `${o.e} ${o.label}! اقفز فوق العقبات`)) return;
+      }
+    }
+  }
+  pkDraw(kidX, kidY);
+  requestAnimationFrame(pkLoop);
+}
+function pkSunscreen(){
+  if(!L || L.type!=="park" || !L.sunActive) return;
+  L.sunActive = false; L.sunTimer = 10 + Math.random()*5;
+  const slot = document.getElementById("sunSlot");
+  if(slot) slot.innerHTML = "";
+  gain(15, 5, "🧴 حماية ممتازة! جلدك بأمان");
+}
+function pkDraw(kidX, kidY){
+  const cv = document.getElementById("gc");
+  if(!cv){ L.active = false; return; }
+  const c = cv.getContext("2d");
+  const W=480,H=620;
+  // سماء
+  const sky = c.createLinearGradient(0,0,0,440);
+  sky.addColorStop(0, L.sunActive ? "#ffd899" : "#8ecae6");
+  sky.addColorStop(1, L.sunActive ? "#ffe8c2" : "#d8f3ff");
+  c.fillStyle = sky; c.fillRect(0,0,W,440);
+  // شمس
+  const sunR = L.sunActive ? 46+Math.sin(L.t*10)*5 : 34;
+  c.fillStyle = L.sunActive ? "#ff9500" : "#ffd166";
+  c.beginPath(); c.arc(400,80,sunR,0,7); c.fill();
+  if(L.sunActive){
+    c.strokeStyle="rgba(255,120,0,.7)"; c.lineWidth=5;
+    for(let i=0;i<10;i++){
+      const a = i*Math.PI/5 + L.t*2;
+      c.beginPath(); c.moveTo(400+Math.cos(a)*(sunR+8),80+Math.sin(a)*(sunR+8));
+      c.lineTo(400+Math.cos(a)*(sunR+26),80+Math.sin(a)*(sunR+26)); c.stroke();
+    }
+  }
+  // غيوم بطيئة
+  c.fillStyle="rgba(255,255,255,.9)";
+  [[.3,90,60],[.55,300,130],[.4,180,50]].forEach(([sp,cx,cy],i)=>{
+    const gx = ((cx - L.dist*sp*.12) % (W+140) + W+140) % (W+140) - 70;
+    c.beginPath(); c.arc(gx,cy,16,0,7); c.arc(gx+20,cy-6,20,0,7); c.arc(gx+42,cy,15,0,7); c.fill();
+  });
+  // أشجار بعيدة (باراللاكس بطيء)
+  for(let k=0;k<4;k++){
+    const tx = ((k*170 - L.dist*.35) % (W+180) + W+180) % (W+180) - 90;
+    c.fillStyle="#74c69d";
+    c.beginPath(); c.arc(tx,395,42,0,7); c.fill();
+    c.fillStyle="#8d5a2b"; c.fillRect(tx-6,415,12,32);
+  }
+  // أشجار قريبة (أسرع)
+  for(let k=0;k<3;k++){
+    const tx = ((k*260 - L.dist*.7) % (W+240) + W+240) % (W+240) - 120;
+    c.fillStyle="#2d9e46";
+    c.beginPath(); c.arc(tx,380,58,0,7); c.arc(tx-38,410,38,0,7); c.arc(tx+38,410,38,0,7); c.fill();
+    c.fillStyle="#8d5a2b"; c.fillRect(tx-9,420,18,50);
+  }
+  // أرض
+  c.fillStyle="#8fd14f"; c.fillRect(0,440,W,H-440);
+  c.fillStyle="#7bc043"; c.fillRect(0,570,W,50);
+  // زهور متحركة مع الأرض
+  c.font="20px serif"; c.textAlign="center";
+  for(let k=0;k<5;k++){
+    const fx = ((k*130 - L.dist) % (W+80) + W+80) % (W+80) - 40;
+    c.fillText(["🌼","🌷","🌸","🌻","🌺"][k], fx, 600);
+  }
+  // خط الجري
+  c.strokeStyle="rgba(255,255,255,.6)"; c.lineWidth=3; c.setLineDash([26,30]);
+  c.lineDashOffset = L.dist % 56;
+  c.beginPath(); c.moveTo(0,568); c.lineTo(W,568); c.stroke();
+  c.setLineDash([]);
   // العناصر
-  x.textAlign = "center";
-  game.items.forEach(it=>{
-    const ix = LANES[it.lane] + Math.sin((it.y+it.wob*40)/34)*7;
-    if(it.kind === "hazard"){
-      x.fillStyle = `rgba(239,71,111,${.28 + Math.sin(game.t*7)*.14})`;
-      x.beginPath(); x.arc(ix, it.y-13, 32, 0, 7); x.fill();
+  c.font="36px serif";
+  L.objs.forEach(o=>{
+    if(o.kind==="obs" && o.e==="🚬"){
+      c.fillStyle="rgba(120,120,120,.5)";
+      c.beginPath(); c.arc(o.x,o.y-16,24,0,7); c.arc(o.x-16,o.y-6,16,0,7); c.arc(o.x+16,o.y-6,16,0,7); c.fill();
     }
-    x.font = "40px serif";
-    x.fillStyle = "#000";
-    x.fillText(it.e, ix, it.y);
+    c.fillText(o.e, o.x, o.y);
   });
-  // الشخصية واسمها
-  drawKid(x, game.x, KID_Y, game.paused ? 0 : game.ph, state.gender, game.face);
-  const nm = esc(state.name);
-  x.font = "bold 15px sans-serif";
-  const tw = x.measureText(nm).width + 18;
-  x.fillStyle = "rgba(255,255,255,.9)";
-  x.beginPath();
-  if(x.roundRect) x.roundRect(game.x-tw/2, KID_Y-92, tw, 24, 12); else x.rect(game.x-tw/2, KID_Y-92, tw, 24);
-  x.fill();
-  x.fillStyle = "#5d3fa3"; x.fillText(nm, game.x, KID_Y-75);
-  // النصوص الطائرة
-  game.floats.forEach(f=>{
-    x.globalAlpha = Math.max(0, Math.min(1, f.life));
-    x.font = "bold 19px sans-serif";
-    x.strokeStyle = "#fff"; x.lineWidth = 4; x.strokeText(f.txt, f.x, f.y);
-    x.fillStyle = f.color; x.fillText(f.txt, f.x, f.y);
-    x.globalAlpha = 1;
-  });
-  if(game.paused){
-    x.fillStyle = "rgba(45,35,80,.55)"; x.fillRect(0,0,W,H);
-    x.fillStyle = "#fff"; x.font = "bold 38px sans-serif";
-    x.fillText("⏸ استراحة", W/2, H/2);
+  // شريط التقدم كمسار
+  c.fillStyle="rgba(93,63,163,.2)";
+  c.beginPath(); if(c.roundRect) c.roundRect(40, 20, W-80, 12, 6); else c.rect(40,20,W-80,12); c.fill();
+  c.fillStyle="#7c5cbf";
+  c.beginPath(); if(c.roundRect) c.roundRect(40, 20, (W-80)*Math.min(1,L.dist/PK_GOAL), 12, 6); else c.rect(40,20,(W-80)*Math.min(1,L.dist/PK_GOAL),12); c.fill();
+  c.font="16px serif"; c.fillText("🏁", 40 + (W-80)*Math.min(1,L.dist/PK_GOAL), 16);
+  // الشخصية (تومض عند المناعة المؤقتة)
+  if(!(L.inv > 0 && Math.floor(L.t*10)%2===0)){
+    drawKid(c, kidX, kidY, L.onGround ? L.t*12 : .8, state.gender, L.face);
   }
-  x.restore();
-
-  requestAnimationFrame(loop);
+  // الاسم
+  const nm = esc(state.name);
+  c.font="bold 14px sans-serif";
+  const tw = c.measureText(nm).width + 16;
+  c.fillStyle="rgba(255,255,255,.9)";
+  c.beginPath();
+  if(c.roundRect) c.roundRect(kidX-tw/2, kidY-96, tw, 22, 11); else c.rect(kidX-tw/2, kidY-96, tw, 22);
+  c.fill();
+  c.fillStyle="#5d3fa3"; c.fillText(nm, kidX, kidY-80);
 }
 
-/* ================= سؤال البوابة ================= */
-function showGate(qi){
-  const w = game.w;
-  const q = w.gate[qi];
+/* ============================================================
+   المرحلة 5: مهرجان التوعية — اضرب الخرافة!
+   ============================================================ */
+const FS_MYTHS = [
+  {t:"السرطان معدي!", fix:"لا يُعدي أبداً — العب وعانق صديقك بأمان! 🤗"},
+  {t:"المرض ذنبه!", fix:"ليس ذنب أحد أبداً! 💜"},
+  {t:"لا شفاء منه!", fix:"ملايين شُفوا وعادوا لحياتهم! 🌟"},
+  {t:"ابتعدوا عنه!", fix:"المريض يحتاج قربنا ودعمنا! 🤝"},
+  {t:"شعره لن يعود!", fix:"الشعر ينمو من جديد بعد العلاج! 💇"},
+  {t:"لا تلمس أغراضه!", fix:"المشاركة آمنة تماماً! 🧸"},
+];
+const FS_HOPES = ["🎗️","💌","🌷","⭐","🎈"];
+const FS_GOAL = 15;
+function fsStart(){
+  stopLevel();
   render(`
-    <div class="center"><h2>🚧 بوابة المعرفة ${qi+1} / ${w.gate.length}</h2>
-    <p class="muted">أجب لتفتح البوابة وتحصل على نقاط إضافية!</p></div>
-    <div class="card-item"><span class="emoji">🗝️</span>${q.q}</div>
-    <div id="answers">
-      ${q.a.map((ans,ai)=>`<button class="answer" onclick="answerGate(${qi},${ai})">${["🅰️","🅱️","🅾️"][ai]} ${ans}</button>`).join("")}
-    </div>
-    <div id="fb"></div>
-  `);
-}
-function answerGate(qi, ai){
-  const w = game.w;
-  const q = w.gate[qi];
-  const btns = document.querySelectorAll(".answer");
-  btns.forEach(b=>b.disabled = true);
-  btns[q.correct].classList.add("correct");
-  const good = ai === q.correct;
-  if(good){ game.score += 25; soundGood(); }
-  else { btns[ai].classList.add("wrong"); soundBad(); }
-  document.getElementById("fb").innerHTML = `
-    <div class="feedback ${good?"good":"bad"}">
-      <b>${good ? "🗝️ فُتحت البوابة! +25" : "😊 لا بأس، تعلمنا معلومة جديدة!"}</b><br>${q.why}
-    </div>
-    <div class="center"><button class="btn small" onclick="${qi < w.gate.length-1 ? `showGate(${qi+1})` : "finishLevel()"}">
-      ${qi < w.gate.length-1 ? "البوابة التالية ➡️" : "🏁 أكمل المهمة"}
-    </button></div>`;
-}
-
-/* ================= نهاية المرحلة ================= */
-function finishLevel(){
-  const i = game.idx;
-  const stars = Math.max(1, game.hearts);
-  state.stars[i] = Math.max(state.stars[i], stars);
-  state.score += game.score;
-  saveState();
-  soundWin(); confetti();
-  const next = i < WORLDS.length-1 ? i+1 : null;
-  render(`
-    <div class="center">
-      <span class="big-emoji">${stars===3?"🏆":stars===2?"🎉":"💪"}</span>
-      <h2>أنهيت مهمة ${WORLDS[i].name}!</h2>
-      <div class="stars">${starsOf(stars)}</div>
-      <p>جمعت <b>${game.collected}</b> عنصراً صحياً وحصلت على <b>${game.score}</b> نقطة،
-      وبقي لديك <b>${game.hearts}</b> ${game.hearts===1?"قلب":"قلوب"} ${"❤️".repeat(game.hearts)}</p>
-      ${stars<3?`<p class="muted">حافظ على قلوبك الثلاثة لتحصل على ٣ نجوم! ⭐⭐⭐</p>`:`<p class="muted">مهمة مثالية بدون خسارة أي قلب! 🌟</p>`}
-      <div class="fact-box">💡 <b>تذكّر:</b> ${WORLDS[i].tip}</div>
-      ${next!==null
-        ? `<button class="btn" onclick="showIntro(${next})">➡️ المكان التالي: ${WORLDS[next].icon} ${WORLDS[next].name}</button>`
-        : `<button class="btn" onclick="showCertificate()">🎓 استلم شهادتك!</button>`}
-      <button class="btn small secondary" onclick="showMap()">🗺️ المسار</button>
-      <button class="btn small secondary" onclick="beginPlay(${i})">🔁 إعادة</button>
+    ${hudHtml(`👻 <span id='bustEl'>0</span> / ${FS_GOAL}`)}
+    <p class="center muted" style="margin-bottom:2px">اضرب الخرافات الداكنة 👻 — لا تلمس رسائل الأمل الوردية 💌</p>
+    <div class="whack-grid">
+      ${Array.from({length:9},(_,i)=>`
+        <button class="hole" id="hole${i}" onclick="fsWhack(${i})">
+          <span class="tent">🎪</span>
+        </button>`).join("")}
     </div>
   `);
-  game = null;
+  L = {
+    i:4, type:"fest", active:true, timers:[],
+    hearts:3, meter:50, score:0,
+    busted:0, interval:1150, upTime:1500, pops:{},
+  };
+  updateHUD();
+  fsSchedule();
 }
-function showFail(){
-  const i = game.idx;
-  render(`
-    <div class="center">
-      <span class="big-emoji">💔</span>
-      <h2>نفدت القلوب!</h2>
-      <p>لا بأس يا ${esc(state.name)}، كل بطل يتعثر ثم ينهض أقوى! 💪</p>
-      <div class="fact-box">💡 <b>نصيحة:</b> ركّز على العناصر الصحية ${WORLDS[i].good.slice(0,3).map(g=>g[0]).join(" ")}
-      وابتعد عن العقبة ${WORLDS[i].hazard[0]} فهي تخسرك قلباً كاملاً!</div>
-      <button class="btn" onclick="beginPlay(${i})">🔁 حاول مرة أخرى</button>
-      <button class="btn small secondary" onclick="showMap()">🗺️ المسار</button>
-    </div>
-  `);
-  game = null;
+function fsSchedule(){
+  if(!L || L.type!=="fest" || !L.active) return;
+  const tm = setTimeout(()=>{ fsPop(); fsSchedule(); }, L.interval);
+  L.timers.push(tm);
+}
+function fsPop(){
+  if(!L || L.type!=="fest" || !L.active) return;
+  const free = Array.from({length:9},(_,i)=>i).filter(i=>!L.pops[i]);
+  if(!free.length) return;
+  const i = free[Math.floor(Math.random()*free.length)];
+  const isMyth = Math.random() < .62;
+  const data = isMyth
+    ? { myth:true, m: FS_MYTHS[Math.floor(Math.random()*FS_MYTHS.length)] }
+    : { myth:false, e: FS_HOPES[Math.floor(Math.random()*FS_HOPES.length)] };
+  L.pops[i] = data;
+  const hole = document.getElementById("hole"+i);
+  if(hole){
+    hole.innerHTML = data.myth
+      ? `<span class="popup myth"><span class="pe">👻</span><span class="pt">${data.m.t}</span></span>`
+      : `<span class="popup hope"><span class="pe">${data.e}</span><span class="pt">أمل!</span></span>`;
+  }
+  const tm = setTimeout(()=>{
+    if(!L || L.type!=="fest" || !L.pops[i]) return;
+    const wasMyth = L.pops[i].myth;
+    delete L.pops[i];
+    const h = document.getElementById("hole"+i);
+    if(h) h.innerHTML = `<span class="tent">🎪</span>`;
+    if(wasMyth){
+      // خرافة هربت
+      damage(7, "👻 هربت خرافة! كن أسرع");
+    }
+  }, L.upTime);
+  L.timers.push(tm);
+  // تسريع تدريجي
+  L.interval = Math.max(620, L.interval - 18);
+  L.upTime = Math.max(950, L.upTime - 20);
+}
+function fsWhack(i){
+  if(!L || L.type!=="fest" || !L.active) return;
+  const p = L.pops[i];
+  const hole = document.getElementById("hole"+i);
+  if(!p){ return; }
+  delete L.pops[i];
+  if(hole) hole.innerHTML = `<span class="tent">${p.myth ? "💥" : "😢"}</span>`;
+  setTimeout(()=>{ const h=document.getElementById("hole"+i); if(h && (!L || !L.pops || !L.pops[i])) h.innerHTML = `<span class="tent">🎪</span>`; }, 350);
+  if(p.myth){
+    L.busted++;
+    soundWhack();
+    gain(12, 5, `💥 <b>حطمت الخرافة!</b> الحقيقة: ${p.m.fix}`);
+    const b = document.getElementById("bustEl");
+    if(b) b.textContent = L.busted;
+    if(L.busted >= FS_GOAL){
+      L.active = false;
+      setTimeout(()=>{ if(L) completeLevel(`حطمت <b>${FS_GOAL}</b> خرافة وأنقذت مهرجان التوعية! 🎪`); }, 600);
+    }
+  } else {
+    damage(14, "💔 هذه رسالة أمل! لا نضرب الأمل أبداً");
+  }
 }
 
 /* ================= الشهادة ================= */
 function showCertificate(){
+  stopLevel();
   const totalStars = state.stars.reduce((a,b)=>a+b,0);
   soundWin(); confetti();
+  const fem = state.gender === "girl";
   render(`
     <div class="cert">
       <span style="font-size:2.8rem">🎗️🎓</span>
       <h2>شهادة بطل التوعية</h2>
       <p>تشهد لعبة <b>تفاؤل</b> بأن</p>
-      <div class="name">${esc(state.name)} ${state.gender==="girl"?"👧":"👦"} 🌟</div>
-      <p>أكمل${state.gender==="girl"?"ت":""} مغامرة الأبطال الصغار في المنزل والمدرسة والسوبرماركت والحديقة ومهرجان التوعية،
-      وأصبح${state.gender==="girl"?"ت":""} <b>سفير${state.gender==="girl"?"ة":""} للأمل</b>!</p>
+      <div class="name">${esc(state.name)} ${fem?"👧":"👦"} 🌟</div>
+      <p>أكمل${fem?"ت":""} خمس مهمات مختلفة: استكشاف المنزل، وممر المدرسة ثلاثي الأبعاد،
+      وتحدي السوبرماركت، وسباق الحديقة، وتحطيم الخرافات —
+      وأصبح${fem?"ت":""} <b>سفير${fem?"ة":""} للأمل</b>!</p>
       <div class="stars">${"⭐".repeat(Math.min(totalStars,15))}</div>
       <p class="chip">🏆 النقاط: ${state.score} | النجوم: ${totalStars} / 15</p>
     </div>
